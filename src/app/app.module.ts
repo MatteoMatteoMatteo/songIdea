@@ -19,6 +19,11 @@ import { MatInputModule } from "@angular/material/input";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatListModule } from "@angular/material/list";
+import { MainNavComponent } from "./nav/mainNav/mainNav.component";
+import { SideNavComponent } from "./nav/sideNav/sideNav.component";
 
 @NgModule({
   declarations: [
@@ -29,6 +34,8 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
     CurrentSongComponent,
     AddSongComponent,
     StartComponent,
+    MainNavComponent,
+    SideNavComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +50,9 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
