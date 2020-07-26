@@ -1,4 +1,6 @@
-import { Component, OnInit, EventEmitter, Output } from "@angular/core";
+import { AuthService } from "./../../auth/auth-service";
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from "@angular/core";
+import { Subscription } from "rxjs/subscription";
 
 @Component({
   selector: "app-sideNav",
@@ -7,10 +9,25 @@ import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 })
 export class SideNavComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
+  isAuth = false;
+  authSub: Subscription;
 
-  constructor() {}
+  constructor(private authServcie: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authSub = this.authServcie.authChange.subscribe((authStat) => {
+      this.isAuth = authStat;
+    });
+  }
+
+  ngOnDestroy() {
+    this.authSub.unsubscribe();
+  }
+
+  handleLogout() {
+    this.closeSidenav();
+    this.authServcie.logout();
+  }
 
   closeSidenav() {
     this.close.emit();

@@ -1,3 +1,4 @@
+import { AuthService } from "./auth/auth-service";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -70,7 +71,7 @@ import { CancelComponent } from "./helper/cancel/cancel.component";
     MatProgressBarModule,
     MatDialogModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent],
   entryComponents: [CancelComponent],
 })
