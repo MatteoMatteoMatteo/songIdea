@@ -1,3 +1,4 @@
+import { AuthGuard } from "./auth/auth.guard";
 import { SongsComponent } from "./songs/songs.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { SignupComponent } from "./auth/signup/signup.component";
@@ -9,11 +10,12 @@ const routes: Routes = [
   { path: "", component: StartComponent },
   { path: "signup", component: SignupComponent },
   { path: "login", component: LoginComponent },
-  { path: "songs", component: SongsComponent },
+  { path: "songs", component: SongsComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [AuthGuard],
 })
 export class AppRoutingModule {}
