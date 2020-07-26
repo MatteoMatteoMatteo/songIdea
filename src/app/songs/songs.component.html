@@ -1,1 +1,5 @@
-<p>songs works!</p>
+<mat-tab-group mat-align-tabs="center" *ngIf="!songOn">
+  <mat-tab label="Upload Song"><app-add-song (upload)="songOn = true"></app-add-song></mat-tab>
+  <mat-tab label="My Songs"><app-my-songs></app-my-songs> </mat-tab>
+</mat-tab-group>
+<app-current-song *ngIf="songOn" (exit)="songOn = false"></app-current-song>

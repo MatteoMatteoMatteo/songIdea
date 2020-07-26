@@ -11,7 +11,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { SignupComponent } from "./auth/signup/signup.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { SongsComponent } from "./songs/songs.component";
-import { CurrentSongComponent } from "./songs/current-song/current-song.component";
 import { AddSongComponent } from "./songs/add-song/add-song.component";
 import { StartComponent } from "./start/start.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -24,6 +23,15 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatListModule } from "@angular/material/list";
 import { MainNavComponent } from "./nav/mainNav/mainNav.component";
 import { SideNavComponent } from "./nav/sideNav/sideNav.component";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MySongsComponent } from "./songs/my-songs/my-songs.component";
+import { MatCardModule } from "@angular/material/card";
+import { MatSelectModule } from "@angular/material/select";
+import { CurrentSongComponent } from "./songs/current-song/current-song.component";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatDialogModule } from "@angular/material/dialog";
+import { CancelComponent } from "./helper/cancel/cancel.component";
 
 @NgModule({
   declarations: [
@@ -31,11 +39,13 @@ import { SideNavComponent } from "./nav/sideNav/sideNav.component";
     SignupComponent,
     LoginComponent,
     SongsComponent,
-    CurrentSongComponent,
     AddSongComponent,
     StartComponent,
     MainNavComponent,
     SideNavComponent,
+    MySongsComponent,
+    CurrentSongComponent,
+    CancelComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,8 +63,15 @@ import { SideNavComponent } from "./nav/sideNav/sideNav.component";
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
+    MatTabsModule,
+    MatCardModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
+  entryComponents: [CancelComponent],
 })
 export class AppModule {}

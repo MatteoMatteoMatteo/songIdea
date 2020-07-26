@@ -1,1 +1,8 @@
-<p>current-song works!</p>
+<section class="currentSong">
+  <h1>Song Title</h1>
+  <p>Genre:</p>
+
+  <mat-progress-bar class="progressBar" mode="determinate" [value]="progress"></mat-progress-bar>
+  <p>{{ progress }}%</p>
+  <button (click)="onStop()" mat-raised-button color="accent">Stop</button>
+</section>

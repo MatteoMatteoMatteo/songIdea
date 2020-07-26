@@ -1,5 +1,4 @@
-import { CurrentSongComponent } from "./songs/current-song/current-song.component";
-import { AddSongComponent } from "./songs/add-song/add-song.component";
+import { SongsComponent } from "./songs/songs.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { SignupComponent } from "./auth/signup/signup.component";
 import { StartComponent } from "./start/start.component";
@@ -10,8 +9,7 @@ const routes: Routes = [
   { path: "", component: StartComponent },
   { path: "signup", component: SignupComponent },
   { path: "login", component: LoginComponent },
-  { path: "songs", component: AddSongComponent },
-  { path: "current-song", component: CurrentSongComponent },
+  { path: "songs", component: SongsComponent },
 ];
 
 @NgModule({
