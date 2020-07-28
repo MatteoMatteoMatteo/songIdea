@@ -4,6 +4,9 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule } from "@angular/forms";
+import { AngularFireModule } from "@angular/fire";
+import { environment } from "../environments/environment";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -71,6 +74,8 @@ import { CancelComponent } from "./helper/cancel/cancel.component";
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatDialogModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
   ],
   providers: [AuthService, SongService],
   bootstrap: [AppComponent],
