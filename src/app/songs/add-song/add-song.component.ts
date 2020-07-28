@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-add-song",
@@ -6,12 +6,11 @@ import { Component, OnInit, EventEmitter, Output } from "@angular/core";
   styleUrls: ["./add-song.component.scss"],
 })
 export class AddSongComponent implements OnInit {
-  @Output() upload = new EventEmitter<void>();
   constructor() {}
 
   ngOnInit(): void {}
 
   onUpload() {
-    this.upload.emit();
+    alert("lol");
   }
 }

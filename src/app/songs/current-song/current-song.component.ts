@@ -1,3 +1,4 @@
+import { SongService } from "./../song.service";
 import { CancelComponent } from "./../../helper/cancel/cancel.component";
 import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
@@ -9,10 +10,12 @@ import { MatDialog } from "@angular/material/dialog";
 })
 export class CurrentSongComponent implements OnInit {
   progress = 0;
+  currentSong = this.songService.getPlayingSong();
+  name = "yourMom";
   timer: number;
   @Output() exit = new EventEmitter();
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private songService: SongService) {}
 
   ngOnInit(): void {
     this.timer = setInterval(() => {

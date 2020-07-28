@@ -1,18 +1,14 @@
-<section fxLayout class="mySongs" fxLayoutAlign="center">
-  <mat-card fxFlex.xs="100%" fxFlex="400px" class="card">
-    <mat-card-title class="title">Song Title</mat-card-title>
-    <mat-card-content
-      ><mat-form-field appearance="">
-        <mat-label>Song</mat-label>
-        <mat-select>
-          <mat-option value="electro">
-            Electro
-          </mat-option>
-          <mat-option value="house">
-            House
-          </mat-option>
-        </mat-select>
-      </mat-form-field></mat-card-content
-    >
-  </mat-card>
+<section fxLayout fxLayoutAlign="center">
+  <div class="mySongs">
+    <mat-card class="songCard" *ngFor="let songs of mySongs" [value]="songs.id">
+      <mat-card-title class="title">{{ songs.name }}</mat-card-title>
+      <mat-card-label>{{ songs.genre }}</mat-card-label>
+      <mat-card-content> </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="onPlay(songs.id)">
+          Listen
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </section>

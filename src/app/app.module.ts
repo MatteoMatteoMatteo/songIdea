@@ -1,3 +1,4 @@
+import { SongService } from "./songs/song.service";
 import { AuthService } from "./auth/auth-service";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
@@ -71,7 +72,7 @@ import { CancelComponent } from "./helper/cancel/cancel.component";
     MatProgressBarModule,
     MatDialogModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, SongService],
   bootstrap: [AppComponent],
   entryComponents: [CancelComponent],
 })

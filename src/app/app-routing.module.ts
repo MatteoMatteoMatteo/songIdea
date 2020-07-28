@@ -10,7 +10,8 @@ const routes: Routes = [
   { path: "", component: StartComponent },
   { path: "signup", component: SignupComponent },
   { path: "login", component: LoginComponent },
-  { path: "songs", component: SongsComponent, canActivate: [AuthGuard] },
+  // { path: "songs", component: SongsComponent, canActivate: [AuthGuard] },
+  { path: "songs", component: SongsComponent },
 ];
 
 @NgModule({

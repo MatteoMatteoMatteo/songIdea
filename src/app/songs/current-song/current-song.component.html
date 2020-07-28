@@ -1,6 +1,6 @@
 <section class="currentSong">
-  <h1>Song Title</h1>
-  <p>Genre:</p>
+  <h1>{{ currentSong.name }}</h1>
+  <p>{{ currentSong.genre }}</p>
 
   <mat-progress-bar class="progressBar" mode="determinate" [value]="progress"></mat-progress-bar>
   <p>{{ progress }}%</p>

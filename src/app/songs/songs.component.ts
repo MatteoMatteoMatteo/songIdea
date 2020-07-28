@@ -1,3 +1,5 @@
+import { SongService } from "./song.service";
+import { Subscription } from "rxjs/subscription";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -7,8 +9,17 @@ import { Component, OnInit } from "@angular/core";
 })
 export class SongsComponent implements OnInit {
   songOn = false;
+  songSubscription: Subscription;
 
-  constructor() {}
+  constructor(private songService: SongService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.songSubscription = this.songService.songPlaying.subscribe((song) => {
+      if (song) {
+        this.songOn = true;
+      } else {
+        this.songOn = false;
+      }
+    });
+  }
 }
