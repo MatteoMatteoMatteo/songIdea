@@ -1,6 +1,6 @@
 <section fxLayout fxLayoutAlign="center">
   <div class="mySongs">
-    <mat-card class="songCard" *ngFor="let songs of mySongs" [value]="songs.id">
+    <mat-card class="songCard" *ngFor="let songs of songs" [value]="songs.id">
       <mat-card-title class="title">{{ songs.name }}</mat-card-title>
       <mat-card-label>{{ songs.genre }}</mat-card-label>
       <mat-card-content> </mat-card-content>
