@@ -1,7 +1,9 @@
+import { Song } from "./../song.model";
 import { SongService } from "./../song.service";
-import { CancelComponent } from "./../../helper/cancel/cancel.component";
+import { CancelComponent } from "./../../uiHelper/cancel/cancel.component";
 import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
+import { Subscription } from "rxjs/subscription";
 
 @Component({
   selector: "app-current-song",
@@ -9,9 +11,9 @@ import { MatDialog } from "@angular/material/dialog";
   styleUrls: ["./current-song.component.scss"],
 })
 export class CurrentSongComponent implements OnInit {
+  songSubscription: Subscription;
+  mySongs: Song[];
   progress = 0;
-  currentSong = this.songService.getPlayingSong();
-  name = "yourMom";
   timer: number;
   @Output() exit = new EventEmitter();
 
@@ -37,7 +39,6 @@ export class CurrentSongComponent implements OnInit {
       if (result) {
         this.exit.emit();
       }
-      console.log(result);
     });
   }
 }

@@ -43,6 +43,7 @@
     <mat-checkbox required ngModel name="agree" class="terms">I make awesome music</mat-checkbox>
 
     <button
+      *ngIf="!isLoading"
       [disabled]="f.invalid"
       class="submitButton"
       type="submit"
@@ -51,5 +52,6 @@
     >
       Submit
     </button>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
   </form>
 </section>

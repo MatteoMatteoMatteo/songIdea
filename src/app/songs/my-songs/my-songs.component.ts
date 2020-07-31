@@ -1,5 +1,7 @@
+import { Subscription } from "rxjs";
+import { UiHelperService } from "./../../uiHelper/uiHelper.service";
 import { SongService } from "./../song.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Song } from "../song.model";
 
 @Component({
@@ -7,15 +9,43 @@ import { Song } from "../song.model";
   templateUrl: "./my-songs.component.html",
   styleUrls: ["./my-songs.component.scss"],
 })
-export class MySongsComponent implements OnInit {
-  mySongs: Song[] = [];
-  constructor(private songService: SongService) {}
+export class MySongsComponent implements OnInit, OnDestroy {
+  loadingSub: Subscription;
+  isLoading: boolean;
+  mySongSubscription: Subscription;
+  allSongsSubscription: Subscription;
+  mySongs: Song[];
+  allSongs: Song[];
+  constructor(private songService: SongService, private uiHelperService: UiHelperService) {}
 
   ngOnInit(): void {
-    this.mySongs = this.songService.getMySongs();
+    this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
+    this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
+      this.mySongs = songs;
+    });
+    this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
+      this.allSongs = songs;
+    });
+    this.songService.fetchAllSongs();
   }
 
   onPlay(id: string) {
     this.songService.playSong(id);
+  }
+
+  onDelete(id: string) {
+    this.songService.deleteSong(id);
+  }
+
+  ngOnDestroy() {
+    if (this.mySongSubscription) {
+      this.mySongSubscription.unsubscribe();
+    }
+    if (this.allSongsSubscription) {
+      this.allSongsSubscription.unsubscribe();
+    }
+    this.loadingSub.unsubscribe();
   }
 }

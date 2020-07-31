@@ -1,4 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Song } from "./../song.model";
+import { NgForm } from "@angular/forms";
+import { SongService } from "./../song.service";
+import { Subscription } from "rxjs";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 
 @Component({
   selector: "app-add-song",
@@ -6,11 +10,32 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./add-song.component.scss"],
 })
 export class AddSongComponent implements OnInit {
-  constructor() {}
+  uid: string;
+  uidSub: Subscription;
+  genres: string[] = [
+    "House",
+    "Electro",
+    "Chill",
+    "Future Bass",
+    "Dance",
+    "Rock",
+    "Pop",
+    "Synth Wave",
+    "Alternative",
+    "Acoustic",
+  ];
+  formData: { name: string; genre: string };
+  songs: Song[];
+  songSubscription: Subscription;
+  constructor(private songService: SongService) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.songService.fetchMySongs();
 
-  onUpload() {
-    alert("lol");
+    this.genres.sort();
+  }
+
+  onUpload(form: NgForm) {
+    this.songService.uploadSong(form);
   }
 }

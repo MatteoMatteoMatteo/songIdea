@@ -1,14 +1,18 @@
 <section fxLayout fxLayoutAlign="center">
-  <div class="mySongs">
-    <mat-card class="songCard" *ngFor="let songs of mySongs" [value]="songs.id">
-      <mat-card-title class="title">{{ songs.name }}</mat-card-title>
-      <mat-card-label>{{ songs.genre }}</mat-card-label>
+  <div class="mySongs" *ngIf="!isLoading">
+    <mat-card class="songCard" *ngFor="let song of mySongs" [value]="song.id">
+      <mat-card-title class="title">{{ song.name }}</mat-card-title>
+      <mat-card-label>{{ song.genre }}</mat-card-label>
       <mat-card-content> </mat-card-content>
       <mat-card-actions>
-        <button mat-button (click)="onPlay(songs.id)">
+        <button mat-button (click)="onPlay(song.songId)">
           Listen
+        </button>
+        <button mat-button (click)="onDelete(song.songId)">
+          Delete
         </button>
       </mat-card-actions>
     </mat-card>
   </div>
+  <mat-spinner [ngStyle]="{ margin: '40px' }" *ngIf="isLoading"></mat-spinner>
 </section>
