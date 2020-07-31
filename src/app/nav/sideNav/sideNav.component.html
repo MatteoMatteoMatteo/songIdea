@@ -1,0 +1,18 @@
+<mat-nav-list>
+  <a *ngIf="!isAuth" mat-list-item routerLink="/signup" (click)="closeSidenav()"
+    ><mat-icon>wc</mat-icon><span class="phoneNavText">Join</span></a
+  >
+  <a *ngIf="!isAuth" mat-list-item routerLink="/login" (click)="closeSidenav()"
+    ><mat-icon>roofing</mat-icon><span class="phoneNavText">Login</span></a
+  >
+  <a *ngIf="isAuth" mat-list-item routerLink="/song" (click)="closeSidenav()"
+    ><mat-icon>headset</mat-icon><span class="phoneNavText">Discover</span></a
+  >
+  <mat-list-item>
+    <button style="cursor: pointer;" (click)="handleLogout()" *ngIf="isAuth" mat-icon-button>
+      <mat-icon>exit_to_app</mat-icon>
+
+      <span class="phoneNavText">Logout</span>
+    </button>
+  </mat-list-item>
+</mat-nav-list>

@@ -1,0 +1,22 @@
+.addSong {
+  margin: 30px;
+}
+
+.card {
+  padding: 32px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  padding-bottom: 20px;
+}
+
+.uploadIcon {
+  position: relative;
+  top: 2px;
+  font-size: 1.1rem;
+}

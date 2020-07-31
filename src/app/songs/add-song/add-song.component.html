@@ -1,0 +1,24 @@
+<section fxLayout class="addSong" fxLayoutAlign="center">
+  <mat-card fxFlex.xs="100%" fxFlex="400px" class="card">
+    <mat-card-title class="title">Share your projects! </mat-card-title>
+    <mat-card-content
+      ><mat-form-field appearance="">
+        <mat-label>Song Genre</mat-label>
+        <mat-select>
+          <mat-option value="electro">
+            Electro
+          </mat-option>
+          <mat-option value="house">
+            House
+          </mat-option>
+        </mat-select>
+      </mat-form-field></mat-card-content
+    >
+    <mat-card-actions>
+      <button mat-button (click)="onUpload()">
+        <mat-icon class="uploadIcon">arrow_upward</mat-icon>
+        Upload
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</section>
