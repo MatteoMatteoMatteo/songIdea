@@ -1,6 +1,6 @@
 <section fxLayout fxLayoutAlign="center">
   <div class="allSongs" *ngIf="!isLoading">
-    <h1>Browse all Songs</h1>
+    <h1 [ngStyle]="{ marginTop: '40px' }">Browse all Songs</h1>
     <mat-card class="songCard" *ngFor="let song of allSongs" [value]="song.id">
       <mat-card-title class="title">{{ song.name }}</mat-card-title>
       <mat-card-label>{{ song.genre }}</mat-card-label>

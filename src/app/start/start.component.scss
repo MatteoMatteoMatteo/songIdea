@@ -1,8 +1,16 @@
-.start,
-.intro {
+.start {
+  width: 100%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  justify-content: space-evenly;
 }
 
-.intro {
-  margin-bottom: 100px;
+.section {
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border: solid 2px black;
 }
