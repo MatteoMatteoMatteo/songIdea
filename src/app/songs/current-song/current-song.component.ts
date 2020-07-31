@@ -1,6 +1,6 @@
 import { Song } from "./../song.model";
 import { SongService } from "./../song.service";
-import { CancelComponent } from "./../../helper/cancel/cancel.component";
+import { CancelComponent } from "./../../uiHelper/cancel/cancel.component";
 import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Subscription } from "rxjs/subscription";

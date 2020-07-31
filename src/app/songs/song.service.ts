@@ -1,3 +1,4 @@
+import { Subscription } from "rxjs/subscription";
 import { NgForm } from "@angular/forms";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs/Subject";
@@ -7,6 +8,7 @@ import { map } from "rxjs/operators";
 
 @Injectable()
 export class SongService {
+  private firebaseSub: Subscription;
   private mySongs: Song[] = [];
   private playingSong: Song;
   songPlaying = new Subject<Song>();
@@ -30,7 +32,7 @@ export class SongService {
   }
 
   fetchSongs() {
-    this.db
+    this.firebaseSub = this.db
       .collection("songs")
       .snapshotChanges()
       .pipe(
@@ -43,11 +45,17 @@ export class SongService {
           });
         })
       )
-      .subscribe((songs: Song[]) => {
-        this.mySongs = songs;
-        this.mySongsChanged.next([...this.mySongs]);
-        console.log(this.mySongs);
-      });
+      .subscribe(
+        (songs: Song[]) => {
+          this.mySongs = songs;
+          this.mySongsChanged.next([...this.mySongs]);
+        },
+        (error) => {}
+      );
+  }
+
+  cancelSub() {
+    this.firebaseSub.unsubscribe();
   }
 
   dataToDatabase(song: Song) {

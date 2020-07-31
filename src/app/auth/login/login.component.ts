@@ -1,5 +1,7 @@
+import { UiHelperService } from "./../../uiHelper/uiHelper.service";
+import { Subscription } from "rxjs/subscription";
 import { AuthService } from "./../auth-service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NgForm } from "@angular/forms";
 
 @Component({
@@ -7,10 +9,20 @@ import { NgForm } from "@angular/forms";
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"],
 })
-export class LoginComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+export class LoginComponent implements OnInit, OnDestroy {
+  loadingSub: Subscription;
+  isLoading: boolean;
+  constructor(private authService: AuthService, private uiHelperService: UiHelperService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
+  }
+
+  ngOnDestroy() {
+    this.loadingSub.unsubscribe();
+  }
 
   onSubmit(form: NgForm) {
     this.authService.login({

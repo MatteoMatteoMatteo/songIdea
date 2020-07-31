@@ -30,6 +30,7 @@
     </mat-form-field>
 
     <button
+      *ngIf="!isLoading"
       [disabled]="f.invalid"
       class="submitButton"
       type="submit"
@@ -38,5 +39,6 @@
     >
       Login
     </button>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
   </form>
 </section>
