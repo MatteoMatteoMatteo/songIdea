@@ -1,14 +1,15 @@
 import { UiHelperService } from "./../uiHelper/uiHelper.service";
-import { MatSnackBar } from "@angular/material/snack-bar";
 import { SongService } from "./../songs/song.service";
 import { Router } from "@angular/router";
 import { AuthData } from "./auth-data.model";
 import { Subject } from "rxjs/Subject";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Injectable } from "@angular/core";
+
 @Injectable()
 export class AuthService {
   authChange = new Subject<boolean>();
+  uid = new Subject<boolean>();
   private isAuthenticated = false;
 
   constructor(
@@ -36,6 +37,8 @@ export class AuthService {
     this.angularFireAuth
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
+        let res = result;
+        localStorage.setItem("userId", res.user.uid);
         this.uiHelperService.loadingStateChanged.next(false);
       })
       .catch((error) => {
@@ -49,6 +52,8 @@ export class AuthService {
     this.angularFireAuth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
+        let res = result;
+        localStorage.setItem("userId", res.user.uid);
         this.uiHelperService.loadingStateChanged.next(false);
       })
       .catch((error) => {

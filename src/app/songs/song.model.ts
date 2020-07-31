@@ -1,5 +1,6 @@
 export interface Song {
-  id?: string;
+  userId: string;
+  songId?: string;
   name: string;
   genre: string;
   date?: Date;

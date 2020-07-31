@@ -11,7 +11,7 @@ import { NgForm } from "@angular/forms";
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loadingSub: Subscription;
-  isLoading: boolean;
+  isLoading = false;
   constructor(private authService: AuthService, private uiHelperService: UiHelperService) {}
 
   ngOnInit(): void {

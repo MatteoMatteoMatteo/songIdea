@@ -9,7 +9,9 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
   templateUrl: "./add-song.component.html",
   styleUrls: ["./add-song.component.scss"],
 })
-export class AddSongComponent implements OnInit, OnDestroy {
+export class AddSongComponent implements OnInit {
+  uid: string;
+  uidSub: Subscription;
   genres: string[] = [
     "House",
     "Electro",
@@ -28,19 +30,12 @@ export class AddSongComponent implements OnInit, OnDestroy {
   constructor(private songService: SongService) {}
 
   ngOnInit() {
-    this.songSubscription = this.songService.mySongsChanged.subscribe(
-      (songs) => (this.songs = songs)
-    );
-    this.songService.fetchSongs();
+    this.songService.fetchMySongs();
 
     this.genres.sort();
   }
 
   onUpload(form: NgForm) {
     this.songService.uploadSong(form);
-  }
-
-  ngOnDestroy() {
-    this.songSubscription.unsubscribe();
   }
 }
