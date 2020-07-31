@@ -41,6 +41,7 @@ import { CurrentSongComponent } from "./songs/current-song/current-song.componen
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatDialogModule } from "@angular/material/dialog";
+import { BrowseComponent } from "./browse/browse.component";
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { MatDialogModule } from "@angular/material/dialog";
     MySongsComponent,
     CurrentSongComponent,
     CancelComponent,
+    BrowseComponent,
   ],
   imports: [
     BrowserModule,

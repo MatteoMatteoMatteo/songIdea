@@ -1,3 +1,4 @@
+import { BrowseComponent } from "./browse/browse.component";
 import { AuthGuard } from "./auth/auth.guard";
 import { SongsComponent } from "./songs/songs.component";
 import { LoginComponent } from "./auth/login/login.component";
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: "signup", component: SignupComponent },
   { path: "login", component: LoginComponent },
   { path: "songs", component: SongsComponent, canActivate: [AuthGuard] },
+  { path: "browse", component: BrowseComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

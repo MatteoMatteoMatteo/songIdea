@@ -1,15 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
+* {
+  font-family: "Quicksand", sans-serif;
+}
+
 html,
 body,
 code {
   height: 100%;
   font-size: 1rem;
   overflow: visible;
+  font-family: "Quicksand", sans-serif !important;
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Quicksand", sans-serif !important;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 100px;
 }
 
 a {
