@@ -43,6 +43,7 @@ export class SongService {
   playSong(selectedId: String) {
     // this.db.doc("songs/" + selectedId).update({ lastPlayed: new Date() });
     this.playingSong = this.mySongs.find((song) => song.songId === selectedId);
+    console.log(this.playingSong);
     this.songPlaying.next({ ...this.playingSong });
   }
 

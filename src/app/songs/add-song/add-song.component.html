@@ -18,18 +18,20 @@
         </mat-form-field>
       </mat-card-content>
 
-      <input
-        required
-        type="file"
-        (change)="uploadFile($event)"
-        accept="*.wav.mp3"
-        ngModel
-        name="songFile"
-        required
-      />
+      <label>
+        Select a file
+        <input
+          type="file"
+          (change)="uploadFile($event)"
+          accept="*.wav.mp3"
+          ngModel
+          name="songFile"
+          required
+        />
+      </label>
 
       <mat-card-actions>
-        <button mat-button type="submit" [disabled]="f.invalid">
+        <button mat-button class="uploadButton" type="submit" [disabled]="f.invalid">
           <mat-icon class="uploadIcon">arrow_upward</mat-icon>
           Upload
         </button>
