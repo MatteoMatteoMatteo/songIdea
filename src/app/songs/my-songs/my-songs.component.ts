@@ -15,7 +15,6 @@ export class MySongsComponent implements OnInit, OnDestroy {
   mySongSubscription: Subscription;
   allSongsSubscription: Subscription;
   mySongs: Song[];
-  allSongs: Song[];
   constructor(private songService: SongService, private uiHelperService: UiHelperService) {}
 
   ngOnInit(): void {
@@ -25,10 +24,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
     this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
       this.mySongs = songs;
     });
-    this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
-      this.allSongs = songs;
-    });
-    this.songService.fetchAllSongs();
+    this.songService.fetchMySongs();
   }
 
   onPlay(id: string) {
@@ -42,9 +38,6 @@ export class MySongsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.mySongSubscription) {
       this.mySongSubscription.unsubscribe();
-    }
-    if (this.allSongsSubscription) {
-      this.allSongsSubscription.unsubscribe();
     }
     this.loadingSub.unsubscribe();
   }

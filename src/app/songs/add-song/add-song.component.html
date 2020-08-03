@@ -15,8 +15,19 @@
               {{ genre }}
             </mat-option>
           </mat-select>
-        </mat-form-field></mat-card-content
-      >
+        </mat-form-field>
+      </mat-card-content>
+
+      <input
+        required
+        type="file"
+        (change)="uploadFile($event)"
+        accept="*.wav.mp3"
+        ngModel
+        name="songFile"
+        required
+      />
+
       <mat-card-actions>
         <button mat-button type="submit" [disabled]="f.invalid">
           <mat-icon class="uploadIcon">arrow_upward</mat-icon>

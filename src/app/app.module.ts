@@ -11,6 +11,7 @@ import { FormsModule } from "@angular/forms";
 import { AngularFireModule } from "@angular/fire";
 import { environment } from "../environments/environment";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireStorageModule } from "@angular/fire/storage";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -84,6 +85,7 @@ import { BrowseComponent } from "./browse/browse.component";
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AngularFireStorageModule,
   ],
   providers: [AuthService, SongService, UiHelperService],
   bootstrap: [AppComponent],

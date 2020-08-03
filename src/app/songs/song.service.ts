@@ -32,6 +32,7 @@ export class SongService {
       name: form.value.songName,
       genre: form.value.genre,
       userId: this.uid,
+      path: form.value.songFile,
     });
   }
 
@@ -40,7 +41,7 @@ export class SongService {
   }
 
   playSong(selectedId: String) {
-    this.db.doc("songs/" + selectedId).update({ lastPlayed: new Date() });
+    // this.db.doc("songs/" + selectedId).update({ lastPlayed: new Date() });
     this.playingSong = this.mySongs.find((song) => song.songId === selectedId);
     this.songPlaying.next({ ...this.playingSong });
   }
