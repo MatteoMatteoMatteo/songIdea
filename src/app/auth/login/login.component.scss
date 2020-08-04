@@ -1,3 +1,5 @@
+$second-color: #fff2ca;
+
 mat-form-field {
   width: 300px;
 }
@@ -11,5 +13,11 @@ mat-form-field {
 }
 
 .login {
+  margin: auto;
   margin-top: 50px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: $second-color;
+  border-radius: 10px;
+  width: 330px;
 }

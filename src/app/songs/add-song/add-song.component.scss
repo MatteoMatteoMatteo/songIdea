@@ -25,9 +25,10 @@ $third-color: #e6e6e6;
 
 label {
   padding: 10px;
-  border: solid 7px $third-color;
+  border: solid 3px $third-color;
   display: table;
   color: black;
+  border-radius: 4px;
   cursor: pointer;
 }
 

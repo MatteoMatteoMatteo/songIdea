@@ -1,3 +1,7 @@
+$first-color: #90d1db;
+$second-color: #fff2ca;
+$third-color: #e6e6e6;
+
 .start {
   width: 100%;
   text-align: center;
@@ -6,11 +10,22 @@
   align-items: center;
   margin-top: 40px;
   justify-content: space-evenly;
+  background-image: url("/image/rt.jpg");
 }
 
 .section {
   padding: 20px;
-  border-radius: 6px;
   margin-bottom: 20px;
-  border: solid 2px black;
+  background-color: $second-color;
+  border-radius: 10px;
+}
+
+.title {
+  border-bottom: $third-color 7px solid;
+  padding: 0px 20px 8px 20px;
+}
+
+.pic {
+  width: 100px;
+  height: auto;
 }

@@ -7,6 +7,11 @@ $third-color: #e6e6e6;
   font-family: "Quicksand", sans-serif;
 }
 
+main {
+  text-align: center;
+  position: relative;
+}
+
 html,
 body,
 code {
@@ -63,7 +68,7 @@ mat-ink-bar {
   border-bottom: solid 6px $third-color;
   font-style: normal;
   padding: 7px !important;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
 }
 
 mat-card-label {
@@ -79,7 +84,11 @@ mat-card-label {
 h1 {
   text-align: center;
   margin: 100px 100px 100px 100px;
-  color: white;
+  color: black;
+}
+
+p {
+  color: black;
 }
 
 a {
