@@ -13,6 +13,7 @@ $third-color: #e6e6e6;
 }
 
 .section {
+  position: relative;
   cursor: pointer;
   padding: 20px;
   background-color: white;
@@ -20,14 +21,34 @@ $third-color: #e6e6e6;
   width: 350px;
   border: solid 5px $third-color;
   letter-spacing: 2px;
-  font-weight: lighter;
-  transition: 200ms ease;
+  animation: left 400ms forwards;
 }
 
 .section:hover {
-  transition: 300ms;
-  transform: rotate(2deg);
-  background-color: $first-color;
+  animation: right 400ms forwards;
+  h1.title {
+    border-bottom: $first-color 4px dotted;
+    transition: 400ms;
+  }
+}
+
+@keyframes right {
+  0% {
+    left: 0px;
+    top: 0px;
+  }
+  100% {
+    left: 15px;
+  }
+}
+
+@keyframes left {
+  0% {
+    left: 15px;
+  }
+  100% {
+    left: 0px;
+  }
 }
 
 h1.title {
@@ -36,9 +57,5 @@ h1.title {
   font-weight: normal;
   font-size: 1.3rem;
   letter-spacing: 1px;
-}
-
-.pic {
-  width: 100px;
-  height: auto;
+  transition: 200ms ease;
 }

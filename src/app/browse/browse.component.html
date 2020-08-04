@@ -1,36 +1,8 @@
-<mat-tab-group color="accent" mat-align-tabs="center" animationDuration="1000ms">
-  <mat-tab label="All Songs"
-    ><section fxLayout fxLayoutAlign="center">
-      <div class="allSongs" *ngIf="!isLoading">
-        <mat-card class="songCard" *ngFor="let song of allSongs" [value]="song.id">
-          <mat-card-title class="title">{{ song.name }}</mat-card-title>
-          <mat-card-label>{{ song.genre }}</mat-card-label>
-          <mat-card-content> </mat-card-content>
-          <mat-card-actions>
-            <button mat-button (click)="onPlay(song.songId)">
-              Listen
-            </button>
-          </mat-card-actions>
-        </mat-card>
-      </div>
-      <mat-spinner [ngStyle]="{ margin: '40px' }" *ngIf="isLoading"></mat-spinner>
-    </section>
-  </mat-tab>
-  <mat-tab label="Newest Songs"
-    ><section fxLayout fxLayoutAlign="center">
-      <div class="allSongs" *ngIf="!isLoading">
-        <mat-card class="songCard" *ngFor="let song of allSongs" [value]="song.id">
-          <mat-card-title class="title">{{ song.name }}</mat-card-title>
-          <mat-card-label>{{ song.genre }}</mat-card-label>
-          <mat-card-content> </mat-card-content>
-          <mat-card-actions>
-            <button mat-button (click)="onPlay(song.songId)">
-              Listen
-            </button>
-          </mat-card-actions>
-        </mat-card>
-      </div>
-      <mat-spinner [ngStyle]="{ margin: '40px' }" *ngIf="isLoading"></mat-spinner>
-    </section>
-  </mat-tab>
+<mat-tab-group color="accent" mat-align-tabs="center" animationDuration="660ms">
+  <mat-tab label="All Songs">
+    <app-song-card [allSongs]="allSongs" [isLoading]="isLoading"></app-song-card
+  ></mat-tab>
+  <mat-tab label="Newest Songs">
+    <app-song-card [allSongs]="allSongs" [isLoading]="isLoading"></app-song-card
+  ></mat-tab>
 </mat-tab-group>

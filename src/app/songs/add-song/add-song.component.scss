@@ -1,4 +1,4 @@
-$third-color: #e6e6e6;
+@import "../../../styles.scss";
 
 .addSong {
   margin: 30px;
@@ -15,6 +15,7 @@ $third-color: #e6e6e6;
 
 .title {
   padding-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .uploadIcon {
@@ -25,10 +26,11 @@ $third-color: #e6e6e6;
 
 label {
   padding: 10px;
-  border: solid 4px $third-color;
+  border-left: solid 4px $third-color;
+  border-right: solid 4px $third-color;
+  border-bottom: solid 4px $third-color;
   display: table;
   color: black;
-  border-radius: 4px;
   cursor: pointer;
 }
 

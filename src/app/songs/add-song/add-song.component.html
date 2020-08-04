@@ -1,7 +1,7 @@
 <section fxLayout class="addSong" fxLayoutAlign="center">
   <form (ngSubmit)="onUpload(f)" #f="ngForm">
     <mat-card fxFlex.xs="100%" fxFlex="400px" class="card">
-      <mat-card-title class="title">Share your projects! </mat-card-title>
+      <mat-card-title class="title">Share your music! </mat-card-title>
       <mat-card-content>
         <mat-form-field appearance="">
           <mat-label>Song Name</mat-label>
@@ -32,7 +32,7 @@
 
       <mat-card-actions>
         <button mat-button class="uploadButton" type="submit" [disabled]="f.invalid">
-          <mat-icon class="uploadIcon">arrow_upward</mat-icon>
+          <!-- <mat-icon class="uploadIcon">arrow_upward</mat-icon> -->
           Upload
         </button>
       </mat-card-actions>

@@ -1,3 +1,5 @@
+@import "../../../styles.scss";
+
 .mySongs {
   display: flex;
   width: 400px;
@@ -13,8 +15,29 @@
   margin-bottom: 20px;
 }
 
+.upButton {
+  color: black;
+  border: solid $third-color 3px;
+  margin-top: 20px;
+  padding: 5px;
+  transition: 200ms;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.upButton:hover {
+  background-color: $third-color;
+  transition: 200ms;
+}
+
 .title {
   padding: 15px;
+  margin-bottom: 20px;
+}
+
+.audioControl {
+  margin: 0px 0px 0px 5px;
+  outline: none;
 }
 
 .uploadIcon {

@@ -1,7 +1,9 @@
+import { MatDialog } from "@angular/material/dialog";
 import { Subscription } from "rxjs";
 import { UiHelperService } from "./../../uiHelper/uiHelper.service";
+import { CancelComponent } from "./../../uiHelper/cancel/cancel.component";
 import { SongService } from "./../song.service";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { Song } from "../song.model";
 
 @Component({
@@ -14,8 +16,13 @@ export class MySongsComponent implements OnInit, OnDestroy {
   isLoading: boolean;
   mySongSubscription: Subscription;
   allSongsSubscription: Subscription;
-  mySongs: Song[];
-  constructor(private songService: SongService, private uiHelperService: UiHelperService) {}
+  mySongs: Song[] = [];
+  @Output() exit = new EventEmitter();
+  constructor(
+    private dialog: MatDialog,
+    private songService: SongService,
+    private uiHelperService: UiHelperService
+  ) {}
 
   ngOnInit(): void {
     this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
@@ -31,8 +38,18 @@ export class MySongsComponent implements OnInit, OnDestroy {
     this.songService.playSong(id);
   }
 
-  onDelete(id: string) {
-    this.songService.deleteSong(id);
+  onDelete(id: string, name: string) {
+    const dialogRef = this.dialog.open(CancelComponent, {
+      data: {
+        name: name,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.exit.emit();
+        this.songService.deleteSong(id);
+      }
+    });
   }
 
   ngOnDestroy() {

@@ -1,18 +1,25 @@
 <section fxLayout fxLayoutAlign="center">
-  <div class="mySongs" *ngIf="!isLoading">
+  <div class="mySongs" *ngIf="!isLoading && mySongs.length > 0">
     <mat-card class="songCard" *ngFor="let song of mySongs" [value]="song.id">
       <mat-card-title class="title">{{ song.name }}</mat-card-title>
       <mat-card-label>{{ song.genre }}</mat-card-label>
       <mat-card-content> </mat-card-content>
       <mat-card-actions>
-        <button mat-button (click)="onPlay(song.songId)">
-          Listen
-        </button>
-        <button mat-button (click)="onDelete(song.songId)">
+        <audio controls class="audioControl">
+          <source [src]="song.path" />
+          Your browser does not support the audio element.
+        </audio>
+        <button mat-button (click)="onDelete(song.songId, song.name)">
           Delete
         </button>
       </mat-card-actions>
     </mat-card>
   </div>
   <mat-spinner [ngStyle]="{ margin: '40px' }" *ngIf="isLoading"></mat-spinner>
+  <div class="mySongs" *ngIf="!isLoading && mySongs.length === 0">
+    <mat-card class="songCard">
+      <mat-card-title class="title">Get Started</mat-card-title>
+      <mat-card-label>Upload your first songs</mat-card-label>
+    </mat-card>
+  </div>
 </section>
