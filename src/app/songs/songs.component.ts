@@ -1,6 +1,7 @@
 import { SongService } from "./song.service";
 import { Subscription } from "rxjs/subscription";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { MatTabGroup } from "@angular/material/tabs";
 
 @Component({
   selector: "app-songs",
@@ -8,10 +9,19 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
   styleUrls: ["./songs.component.scss"],
 })
 export class SongsComponent implements OnInit, OnDestroy {
+  @ViewChild("switchTab", { static: false }) switchTab: MatTabGroup;
   songOn = false;
   songSubscription: Subscription;
 
   constructor(private songService: SongService) {}
+
+  onSwitchTab() {
+    const tabGroup = this.switchTab;
+    if (!tabGroup || !(tabGroup instanceof MatTabGroup)) return;
+
+    const tabCount = tabGroup._tabs.length;
+    tabGroup.selectedIndex = (tabGroup.selectedIndex - 1) % tabCount;
+  }
 
   ngOnInit(): void {
     this.songSubscription = this.songService.songPlaying.subscribe((song) => {

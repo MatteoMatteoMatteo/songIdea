@@ -14,6 +14,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
   isLoading: boolean;
   allSongsSubscription: Subscription;
   allSongs: Song[];
+  randomSong: Song;
   constructor(private songService: SongService, private uiHelperService: UiHelperService) {}
 
   ngOnInit(): void {
@@ -22,7 +23,9 @@ export class BrowseComponent implements OnInit, OnDestroy {
     });
     this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
       this.allSongs = songs;
+      this.randomSong = this.allSongs[Math.floor(Math.random() * this.allSongs.length)];
     });
+
     this.songService.fetchAllSongs();
   }
 

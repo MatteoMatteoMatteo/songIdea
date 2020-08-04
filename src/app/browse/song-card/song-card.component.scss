@@ -1,3 +1,9 @@
+.allSongs {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 10px;
+}
+
 .songCard {
   margin-top: 30px;
   display: flex;

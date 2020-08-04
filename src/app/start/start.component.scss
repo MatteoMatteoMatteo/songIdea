@@ -4,29 +4,31 @@ $third-color: #e6e6e6;
 
 .start {
   height: 100%;
-  width: 100%;
-  text-align: center;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  padding: 0px 10px;
 }
 
 .section {
+  margin-top: 20px;
   position: relative;
   cursor: pointer;
   padding: 20px;
   background-color: white;
   border-radius: 10px;
-  width: 350px;
-  border: solid 5px $third-color;
+  border: solid 4px $third-color;
   letter-spacing: 2px;
   animation: left 400ms forwards;
+  transition: 400ms;
 }
 
 .section:hover {
   animation: right 400ms forwards;
-  border: solid 5px $first-color;
+  border: solid 4px $first-color;
+  transition: 400ms;
   h1.title {
     border-bottom: $first-color 4px dotted;
     transition: 400ms;

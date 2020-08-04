@@ -4,5 +4,5 @@ export interface Song {
   path: string;
   name: string;
   genre: string;
-  date?: Date;
+  date: Date;
 }

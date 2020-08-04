@@ -54,6 +54,12 @@ mat-ink-bar {
   background-color: $second-color !important;
 }
 
+audio.audioControl {
+  margin: 0px;
+  outline: none;
+  padding: 0px 10px;
+}
+
 .mat-card {
   background-color: $second-color;
   color: black;
@@ -67,6 +73,7 @@ mat-ink-bar {
   border-bottom: dotted 4px $third-color;
   font-style: normal;
   padding: 7px !important;
+  line-height: 1.5;
   letter-spacing: 2px;
 }
 
@@ -107,6 +114,12 @@ a {
   height: calc(100vh - 64px);
   width: 100%;
   position: fixed;
+}
+
+@media only screen and (max-width: 500px) {
+  .all {
+    height: calc(100vh - 57px);
+  }
 }
 
 a:hover,

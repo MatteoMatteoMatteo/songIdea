@@ -44,6 +44,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatDialogModule } from "@angular/material/dialog";
 import { BrowseComponent } from "./browse/browse.component";
 import { SongCardComponent } from './browse/song-card/song-card.component';
+import { RandomSongComponent } from './browse/random-song/random-song.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { SongCardComponent } from './browse/song-card/song-card.component';
     CancelComponent,
     BrowseComponent,
     SongCardComponent,
+    RandomSongComponent,
   ],
   imports: [
     BrowserModule,
