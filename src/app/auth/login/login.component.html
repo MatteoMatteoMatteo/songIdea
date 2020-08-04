@@ -1,44 +1,46 @@
-<section class="login">
-  <form fxLayout="column" fxLayoutAlign="center center" #f="ngForm" (ngSubmit)="onSubmit(f)">
-    <mat-form-field>
-      <input
-        matInput
-        type="email"
-        placeholder="Email"
-        ngModel
-        name="email"
-        email
-        required
-        #emailInput="ngModel"
-      />
-      <mat-error *ngIf="emailInput.hasError('required')">Field must not be empty</mat-error>
-      <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        type="password"
-        placeholder="Password"
-        ngModel
-        name="password"
-        required
-        minlength="6"
-        #pwInput="ngModel"
-      />
-      <mat-hint align="end">{{ pwInput.value?.length }} / 6</mat-hint>
-      <mat-error>6 characters please!</mat-error>
-    </mat-form-field>
+<div class="all">
+  <div class="login">
+    <form fxLayout="column" fxLayoutAlign="center center" #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <mat-form-field>
+        <input
+          matInput
+          type="email"
+          placeholder="Email"
+          ngModel
+          name="email"
+          email
+          required
+          #emailInput="ngModel"
+        />
+        <mat-error *ngIf="emailInput.hasError('required')">Field must not be empty</mat-error>
+        <mat-error *ngIf="!emailInput.hasError('required')">Email is invalid</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          ngModel
+          name="password"
+          required
+          minlength="6"
+          #pwInput="ngModel"
+        />
+        <mat-hint align="end">{{ pwInput.value?.length }} / 6</mat-hint>
+        <mat-error>6 characters please!</mat-error>
+      </mat-form-field>
 
-    <button
-      *ngIf="!isLoading"
-      [disabled]="f.invalid"
-      class="submitButton"
-      type="submit"
-      mat-raised-button
-      color="primary"
-    >
-      Login
-    </button>
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
-  </form>
-</section>
+      <button
+        *ngIf="!isLoading"
+        [disabled]="f.invalid"
+        class="submitButton"
+        type="submit"
+        mat-raised-button
+        color="primary"
+      >
+        Login
+      </button>
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+    </form>
+  </div>
+</div>

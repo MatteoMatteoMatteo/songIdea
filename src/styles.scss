@@ -5,6 +5,7 @@ $second-color: #fff2ca;
 $third-color: #e6e6e6;
 * {
   font-family: "Quicksand", sans-serif;
+  box-sizing: border-box;
 }
 
 main {
@@ -15,15 +16,15 @@ main {
 html,
 body,
 code {
+  margin: 0;
+  padding: 0;
   height: 100%;
   font-size: 1rem;
   overflow: visible;
   font-family: "Quicksand", sans-serif !important;
-  background-color: #c9f4f4 !important;
   color: white !important;
 }
 body {
-  margin: 0;
   font-family: "Quicksand", sans-serif !important;
 }
 
@@ -61,11 +62,12 @@ mat-ink-bar {
   color: black;
   border-radius: 10px !important;
   box-shadow: none !important;
+  border: 7px solid $third-color;
 }
 
 .mat-card-title {
   font-weight: lighter;
-  border-bottom: solid 6px $third-color;
+  border-bottom: dotted 4px $third-color;
   font-style: normal;
   padding: 7px !important;
   letter-spacing: 2px;
@@ -97,6 +99,17 @@ a {
   font-weight: lighter;
   font-style: normal;
   font-size: 1rem;
+}
+
+.all {
+  background-image: url("../src/assets/image/bed.jpg") !important;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  height: calc(100vh - 64px);
+  width: 100%;
+  position: fixed;
 }
 
 a:hover,

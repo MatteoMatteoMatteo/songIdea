@@ -3,26 +3,39 @@ $second-color: #fff2ca;
 $third-color: #e6e6e6;
 
 .start {
+  height: 100%;
   width: 100%;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 40px;
-  justify-content: space-evenly;
-  background-image: url("/image/rt.jpg");
+  justify-content: space-around;
 }
 
 .section {
+  cursor: pointer;
   padding: 20px;
-  margin-bottom: 20px;
-  background-color: $second-color;
+  background-color: white;
   border-radius: 10px;
+  width: 350px;
+  border: solid 5px $third-color;
+  letter-spacing: 2px;
+  font-weight: lighter;
+  transition: 200ms ease;
 }
 
-.title {
-  border-bottom: $third-color 7px solid;
-  padding: 0px 20px 8px 20px;
+.section:hover {
+  transition: 300ms;
+  transform: rotate(2deg);
+  background-color: $first-color;
+}
+
+h1.title {
+  border-bottom: $third-color 4px dotted;
+  padding: 10px 20px 8px 20px;
+  font-weight: normal;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
 }
 
 .pic {

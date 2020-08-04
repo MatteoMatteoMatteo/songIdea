@@ -1,6 +1,12 @@
+$first-color: #90d1db;
+
 .navElements {
   list-style: none;
   padding: none;
   margin: none;
   padding: 0px 40px;
+}
+
+.icon {
+  color: $first-color !important;
 }
