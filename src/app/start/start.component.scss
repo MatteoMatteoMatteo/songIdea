@@ -9,7 +9,7 @@ $third-color: #e6e6e6;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .section {
@@ -26,6 +26,7 @@ $third-color: #e6e6e6;
 
 .section:hover {
   animation: right 400ms forwards;
+  border: solid 5px $first-color;
   h1.title {
     border-bottom: $first-color 4px dotted;
     transition: 400ms;

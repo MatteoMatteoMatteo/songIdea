@@ -57,7 +57,6 @@ export class AddSongComponent implements OnInit {
       .snapshotChanges()
       .pipe(
         finalize(() => {
-          alert("hi");
           fileRef.getDownloadURL().subscribe((url) => {
             form.value.songFile = url;
             this.songService.uploadSong(form);

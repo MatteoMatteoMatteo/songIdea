@@ -1,4 +1,4 @@
-$second-color: #fff2ca;
+@import "../../../utilities/variables.scss";
 
 mat-form-field {
   width: 300px;
@@ -20,4 +20,11 @@ mat-form-field {
   border-radius: 10px;
   width: 330px;
   margin-top: 50px;
+  border: solid $third-color 4px;
+  transition: 300ms;
+}
+
+.login:hover {
+  border: solid $first-color 4px;
+  transition: 300ms;
 }
