@@ -105,6 +105,10 @@ a {
   font-size: 1rem;
 }
 
+.submitButton {
+  color: white !important;
+}
+
 .all {
   background-image: url("../src/assets/image/bed.jpg") !important;
   background-position: center center;
@@ -113,17 +117,21 @@ a {
   background-size: cover;
   height: calc(100vh - 64px);
   width: 100%;
-  position: fixed;
 }
 
 @media only screen and (max-width: 500px) {
   .all {
-    height: calc(100vh - 57px);
+    height: calc(100vh - 56px);
+    border-bottom: solid 36px $second-color;
   }
 }
 
-a:hover,
-a:active {
+a:hover {
   color: $first-color;
   font-weight: lighter;
+}
+
+a:active,
+a:visited {
+  color: white;
 }

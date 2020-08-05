@@ -3,22 +3,21 @@ $second-color: #fff2ca;
 $third-color: #e6e6e6;
 
 .start {
-  height: 100%;
-  width: 100%;
+  margin: auto;
+  padding-top: 5%;
+  max-width: 300px;
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-evenly;
 }
 
 .section {
-  position: relative;
-  cursor: pointer;
+  margin-bottom: 40px;
   padding: 20px;
+  cursor: pointer;
   background-color: white;
   border-radius: 10px;
-  width: 350px;
   border: solid 4px $third-color;
   letter-spacing: 2px;
   animation: left 400ms forwards;
