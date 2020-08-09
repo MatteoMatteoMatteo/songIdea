@@ -47,9 +47,11 @@ export class AddSongComponent implements OnInit {
   constructor(private songService: SongService, private storage: AngularFireStorage) {}
 
   ngOnInit() {
+    this.songService.fetchMySongs();
     this.genres.sort();
   }
 
+  clearInput() {}
   onUpload(form: NgForm) {
     this.isLoading = true;
     const fileRef = this.storage.ref(this.filePath);

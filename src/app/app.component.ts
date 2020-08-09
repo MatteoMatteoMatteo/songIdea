@@ -1,4 +1,4 @@
-import { fader, nicer } from "./route-animations";
+import { nicer } from "./route-animations";
 import { AuthService } from "./auth/auth-service";
 import { Component, OnInit } from "@angular/core";
 import { RouterOutlet } from "@angular/router";

@@ -2,7 +2,7 @@
   <form (ngSubmit)="onAddComment(f)" #f="ngForm">
     <mat-form-field appearance="" color="accent">
       <mat-label>Write a comment</mat-label>
-      <textarea matInput ngModel name="text"></textarea>
+      <textarea matInput ngModel name="content"></textarea>
     </mat-form-field>
   </form>
   <mat-card-content align="start">{{ comment.content }}</mat-card-content>
