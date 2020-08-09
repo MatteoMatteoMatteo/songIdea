@@ -43,8 +43,9 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatDialogModule } from "@angular/material/dialog";
 import { BrowseComponent } from "./browse/browse.component";
-import { SongCardComponent } from './browse/song-card/song-card.component';
-import { RandomSongComponent } from './browse/random-song/random-song.component';
+import { SongCardComponent } from "./browse/song-card/song-card.component";
+import { RandomSongComponent } from "./browse/random-song/random-song.component";
+import { CommentsComponent } from "./comments/comments.component";
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { RandomSongComponent } from './browse/random-song/random-song.component'
     BrowseComponent,
     SongCardComponent,
     RandomSongComponent,
+    CommentsComponent,
   ],
   imports: [
     BrowserModule,

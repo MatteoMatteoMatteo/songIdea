@@ -1,0 +1,9 @@
+<mat-card class="commentsCard" *ngFor="let comment of comments" [value]="comment.id">
+  <form (ngSubmit)="onAddComment(f)" #f="ngForm">
+    <mat-form-field appearance="" color="accent">
+      <mat-label>Write a comment</mat-label>
+      <textarea matInput ngModel name="text"></textarea>
+    </mat-form-field>
+  </form>
+  <mat-card-content align="start">{{ comment.content }}</mat-card-content>
+</mat-card>

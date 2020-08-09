@@ -1,3 +1,4 @@
+import { Comment } from "./../comments/comment.model";
 import { UiHelperService } from "./../uiHelper/uiHelper.service";
 import { Subscription } from "rxjs/subscription";
 import { NgForm } from "@angular/forms";
@@ -28,7 +29,7 @@ export class SongService {
     if (localStorage.hasOwnProperty("userId")) {
       this.uid = localStorage.getItem("userId");
     }
-    this.dataToDatabase({
+    this.songToDatabase({
       name: form.value.songName,
       genre: form.value.genre,
       userId: this.uid,
@@ -37,8 +38,22 @@ export class SongService {
     });
   }
 
-  dataToDatabase(song: Song) {
+  songToDatabase(song: Song) {
     this.db.collection("songs").add(song);
+  }
+
+  commentToDatabase(comment: Comment) {
+    this.db.collection("songs").add(comment);
+  }
+
+  addComment(form: NgForm) {
+    if (localStorage.hasOwnProperty("userId")) {
+      this.uid = localStorage.getItem("userId");
+    }
+    this.commentToDatabase({
+      id: this.uid + new Date().getTime(),
+      text: form.value.content,
+    });
   }
 
   playSong(selectedId: String) {
