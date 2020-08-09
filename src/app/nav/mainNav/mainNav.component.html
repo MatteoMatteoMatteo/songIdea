@@ -10,7 +10,7 @@
       <li *ngIf="!isAuth"><a routerLink="/signup">Signup</a></li>
       <li *ngIf="!isAuth"><a routerLink="/login">Login</a></li>
       <li *ngIf="isAuth"><a routerLink="/browse">Discover</a></li>
-      <li *ngIf="isAuth"><a routerLink="/songs">Home</a></li>
+      <li *ngIf="isAuth"><a routerLink="/songs">My Songs</a></li>
       <li *ngIf="isAuth"><a style="cursor: pointer;" (click)="handleLogout()">Logout</a></li>
     </ul>
   </div>

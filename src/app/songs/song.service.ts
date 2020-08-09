@@ -25,15 +25,15 @@ export class SongService {
     return this.mySongs.slice();
   }
 
-  uploadSong(form: NgForm) {
+  uploadSong(songName: string, songGenre: string, url: string) {
     if (localStorage.hasOwnProperty("userId")) {
       this.uid = localStorage.getItem("userId");
     }
     this.songToDatabase({
-      name: form.value.songName,
-      genre: form.value.genre,
+      name: songName,
+      genre: songGenre,
       userId: this.uid,
-      path: form.value.songFile,
+      path: url,
       date: new Date(),
     });
   }

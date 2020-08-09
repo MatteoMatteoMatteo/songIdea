@@ -6,10 +6,10 @@
     ><mat-icon>roofing</mat-icon><span class="phoneNavText">Login</span></a
   >
   <a *ngIf="isAuth" mat-list-item routerLink="/songs" (click)="closeSidenav()"
-    ><mat-icon>headset</mat-icon><span class="phoneNavText">Profile</span></a
+    ><mat-icon>headset</mat-icon><span class="phoneNavText">My Songs</span></a
   >
   <a *ngIf="isAuth" mat-list-item routerLink="/browse" (click)="closeSidenav()"
-    ><mat-icon>rowing</mat-icon><span class="phoneNavText">Browse</span></a
+    ><mat-icon>rowing</mat-icon><span class="phoneNavText">Discover</span></a
   >
   <mat-list-item>
     <button style="cursor: pointer;" (click)="handleLogout()" *ngIf="isAuth" mat-icon-button>

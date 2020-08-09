@@ -12,6 +12,8 @@ import { finalize } from "rxjs/operators";
   styleUrls: ["./add-song.component.scss"],
 })
 export class AddSongComponent implements OnInit {
+  songName: string;
+  songGenre: string;
   isLoading = false;
   file: any;
   filePath: any;
@@ -40,7 +42,6 @@ export class AddSongComponent implements OnInit {
     "Alternative",
     "Acoustic",
   ];
-  formData: { name: string; genre: string };
   songs: Song[];
   songSubscription: Subscription;
   @Output() switchWhenUploaded: EventEmitter<any> = new EventEmitter();
@@ -54,6 +55,8 @@ export class AddSongComponent implements OnInit {
   clearInput() {}
   onUpload(form: NgForm) {
     this.isLoading = true;
+    this.songName = form.value.songName;
+    this.songGenre = form.value.genre;
     const fileRef = this.storage.ref(this.filePath);
     this.storage
       .upload(this.filePath, this.file)
@@ -61,8 +64,7 @@ export class AddSongComponent implements OnInit {
       .pipe(
         finalize(() => {
           fileRef.getDownloadURL().subscribe((url) => {
-            form.value.songFile = url;
-            this.songService.uploadSong(form);
+            this.songService.uploadSong(this.songName, this.songGenre, url);
             this.switchWhenUploaded.emit();
             this.isLoading = false;
           });
