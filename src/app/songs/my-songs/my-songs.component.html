@@ -2,7 +2,7 @@
   <div fxFlex.xs="100%" fxFlex="400px" class="mySongs" *ngIf="!isLoading && mySongs.length > 0">
     <mat-card class="songCard" *ngFor="let song of mySongs" [value]="song.id">
       <mat-card-title class="title">{{ song.name }}</mat-card-title>
-      <mat-card-label>{{ song.genre }}</mat-card-label>
+
       <mat-card-content> </mat-card-content>
 
       <audio controls class="audioControl">
@@ -10,10 +10,17 @@
         Your browser does not support the audio element.
       </audio>
       <mat-card-actions>
-        <button mat-button (click)="onDelete(song.songId, song.name)">
+        <button mat-button class="deleteButton" (click)="onDelete(song.songId, song.name)">
           Delete
         </button>
       </mat-card-actions>
+
+      <h2 class="h2"><span class="span">All Comments</span></h2>
+      <div class="commentsCard">
+        <p *ngFor="let comment of getMyComments(song.songId)" [value]="comment.id" align="start">
+          {{ comment.content }}
+        </p>
+      </div>
     </mat-card>
   </div>
   <mat-spinner

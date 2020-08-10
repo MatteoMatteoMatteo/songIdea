@@ -1,3 +1,4 @@
+import { CommentService } from "./../../comments/comment.service";
 import { MatDialog } from "@angular/material/dialog";
 import { Subscription } from "rxjs";
 import { UiHelperService } from "./../../uiHelper/uiHelper.service";
@@ -5,6 +6,7 @@ import { CancelComponent } from "./../../uiHelper/cancel/cancel.component";
 import { SongService } from "./../song.service";
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { Song } from "../song.model";
+import { Comment } from "./../../comments/comment.model";
 
 @Component({
   selector: "app-my-songs",
@@ -16,9 +18,12 @@ export class MySongsComponent implements OnInit, OnDestroy {
   isLoading: boolean;
   mySongSubscription: Subscription;
   allSongsSubscription: Subscription;
+  allCommentsSubscription: Subscription;
   mySongs: Song[] = [];
+  allComments: Comment[] = [];
   @Output() exit = new EventEmitter();
   constructor(
+    private commentService: CommentService,
     private dialog: MatDialog,
     private songService: SongService,
     private uiHelperService: UiHelperService
@@ -32,6 +37,15 @@ export class MySongsComponent implements OnInit, OnDestroy {
       this.mySongs = songs;
     });
     this.songService.fetchMySongs();
+
+    this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
+      this.allComments = comments;
+    });
+    this.commentService.fetchAllComments();
+  }
+
+  getMyComments(songId: string) {
+    return this.allComments.filter((comment) => comment.songId === songId);
   }
 
   onPlay(id: string) {

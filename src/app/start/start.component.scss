@@ -34,6 +34,16 @@ $third-color: #e6e6e6;
   }
 }
 
+@keyframes fiddle {
+  0% {
+    left: 20px;
+    top: 10px;
+  }
+  100% {
+    left: 0px;
+  }
+}
+
 @keyframes right {
   0% {
     left: 0px;
