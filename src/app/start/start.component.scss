@@ -16,31 +16,51 @@ $third-color: #e6e6e6;
   margin-bottom: 40px;
   padding: 20px;
   cursor: pointer;
-  background-color: white;
   border-radius: 10px;
-  border: solid 4px $third-color;
-  letter-spacing: 2px;
-  animation: left 400ms forwards;
-  transition: 400ms;
+  background-color: rgba(255, 255, 255, 0.938);
+  border: solid 3px $third-color;
+  animation: left 200ms forwards;
+  transition: 200ms;
+  background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 75%, white 80%, transparent 0),
+    radial-gradient(white 2px, transparent 0);
+  background-size: 30px 30px, 30px 30px;
+}
+
+.more {
+  margin-bottom: 40px;
+  padding: 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.959);
+  border: solid 3px $third-color;
+  animation: left 200ms forwards;
+  transition: 200ms;
+  background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 75%, white 80%, transparent 0),
+    radial-gradient(white 2px, transparent 0);
+  background-size: 30px 30px, 30px 30px;
 }
 
 .section:hover {
-  animation: right 400ms forwards;
-  border: solid 4px $first-color;
-  transition: 400ms;
+  animation: right 200ms forwards;
+  border: solid black;
+  transition: 200ms;
   h1.title {
-    border-bottom: $first-color 4px dotted;
-    transition: 400ms;
+    border-bottom: black 4px dotted;
+    transition: 200ms;
   }
 }
 
-@keyframes fiddle {
-  0% {
-    left: 20px;
-    top: 10px;
-  }
-  100% {
-    left: 0px;
+.more:hover {
+  animation: right 200ms forwards;
+  border: solid black;
+  transition: 200ms;
+  h1.title {
+    border-bottom: black 4px dotted;
+    transition: 200ms;
   }
 }
 
@@ -64,10 +84,15 @@ $third-color: #e6e6e6;
 }
 
 h1.title {
-  border-bottom: $third-color 4px dotted;
-  padding: 10px 20px 8px 20px;
+  border-bottom: black solid 2px;
+  padding: 10px 20px 15px 20px;
   font-weight: normal;
   font-size: 1.3rem;
   letter-spacing: 1px;
   transition: 200ms ease;
+  color: black;
+}
+
+p.theP {
+  color: black;
 }
