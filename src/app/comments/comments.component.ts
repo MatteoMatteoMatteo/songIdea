@@ -11,22 +11,15 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./comments.component.scss"],
 })
 export class CommentsComponent implements OnInit {
-  isLoading = false;
   comments: Comment[] = [];
   mySongSubscription: Subscription;
   mySongs: Song[] = [];
 
   constructor(private songService: SongService) {}
 
-  ngOnInit(): void {
-    this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
-      this.mySongs = songs;
-    });
-    this.songService.fetchMySongs();
-  }
+  ngOnInit(): void {}
 
   onAddComment(form: NgForm) {
-    this.isLoading = true;
     this.songService.addComment(form);
   }
 }
