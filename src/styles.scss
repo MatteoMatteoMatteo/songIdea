@@ -31,11 +31,11 @@ p {
 
 .mat-drawer-container {
   background-color: #90d1db;
-}
-
-.mat-tab-header {
-  margin-top: 20px;
-  border: none !important;
+  background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 20%, transparent 0),
+    radial-gradient(white 2px, transparent 0);
+  background-size: 30px 30px, 30px 30px;
 }
 
 .mat-toolbar {
@@ -43,11 +43,29 @@ p {
   color: black !important;
 }
 
+.mat-tab-header {
+  margin: auto;
+  background-color: #90d1db;
+  padding: 20px 20px;
+  width: 368px;
+  margin-bottom: 20px;
+
+  border: none;
+}
+
 .mat-tab-label-content,
 .mat-tab-label {
   opacity: 1 !important;
   font-weight: lighter !important;
   font-style: normal;
+}
+
+.mat-tab-label {
+  padding-bottom: 100px;
+}
+
+.mat-tab-label-active {
+  border-bottom: solid 5px $second-color;
 }
 
 mat-ink-bar {
