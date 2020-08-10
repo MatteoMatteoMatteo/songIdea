@@ -42,20 +42,6 @@ export class SongService {
     this.db.collection("songs").add(song);
   }
 
-  commentToDatabase(comment: Comment) {
-    this.db.collection("songs").add(comment);
-  }
-
-  addComment(form: NgForm) {
-    if (localStorage.hasOwnProperty("userId")) {
-      this.uid = localStorage.getItem("userId");
-    }
-    this.commentToDatabase({
-      id: this.uid + new Date().getTime(),
-      text: form.value.content,
-    });
-  }
-
   playSong(selectedId: String) {
     // this.db.doc("songs/" + selectedId).update({ lastPlayed: new Date() });
     this.playingSong = this.mySongs.find((song) => song.songId === selectedId);

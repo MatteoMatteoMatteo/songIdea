@@ -27,11 +27,11 @@ button.submitButton {
   min-width: 250px;
   max-width: 350px;
 
-  border: solid $third-color 4px;
+  border: solid $third-color 3px;
   transition: 300ms;
 }
 
 .signup:hover {
-  border: solid $first-color 4px;
+  border: solid $first-color 3px;
   transition: 300ms;
 }

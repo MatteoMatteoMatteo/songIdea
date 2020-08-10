@@ -1,16 +1,5 @@
 <mat-card class="commentsCard">
-  <form (ngSubmit)="onAddComment(f)" #f="ngForm">
-    <mat-form-field appearance="" color="accent">
-      <mat-label>Write a comment</mat-label>
-      <textarea matInput ngModel name="content"></textarea>
-    </mat-form-field>
-    <mat-card-actions [ngStyle]="{ marginBottom: '0px', marginTop: '0px' }">
-      <button mat-button type="submit" [disabled]="f.invalid">
-        Post
-      </button>
-    </mat-card-actions>
-  </form>
-  <mat-card-content *ngFor="let comment of comments" [value]="comment.id" align="start">
+  <mat-card-content *ngFor="let comment of allComments" [value]="comment.id" align="start">
     {{ comment.content }}
   </mat-card-content>
 </mat-card>

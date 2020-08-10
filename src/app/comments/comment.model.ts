@@ -1,4 +1,6 @@
 export interface Comment {
-  id: string;
-  text: string;
+  songId: string;
+  content: string;
+  uid: string;
+  commentId?: string;
 }

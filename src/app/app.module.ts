@@ -1,3 +1,4 @@
+import { CommentService } from "./comments/comment.service";
 import { UiHelperService } from "./uiHelper/uiHelper.service";
 import { CancelComponent } from "./uiHelper/cancel/cancel.component";
 import { AngularFireAuthModule } from "@angular/fire/auth";
@@ -93,7 +94,7 @@ import { CommentsComponent } from "./comments/comments.component";
     AngularFireAuthModule,
     AngularFireStorageModule,
   ],
-  providers: [AuthService, SongService, UiHelperService],
+  providers: [AuthService, SongService, UiHelperService, CommentService],
   bootstrap: [AppComponent],
   entryComponents: [CancelComponent],
 })

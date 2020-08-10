@@ -1,9 +1,7 @@
+import { CommentService } from "./comment.service";
 import { Comment } from "./comment.model";
-import { NgForm } from "@angular/forms";
-import { Song } from "./../songs/song.model";
 import { Subscription } from "rxjs/subscription";
-import { SongService } from "./../songs/song.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 
 @Component({
   selector: "app-comments",
@@ -12,14 +10,20 @@ import { Component, OnInit } from "@angular/core";
 })
 export class CommentsComponent implements OnInit {
   comments: Comment[] = [];
-  mySongSubscription: Subscription;
-  mySongs: Song[] = [];
+  allCommentsSubscription: Subscription;
+  allComments: Comment[] = [];
+  @Input() songId: [];
 
-  constructor(private songService: SongService) {}
+  constructor(private commentService: CommentService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
+      this.allComments = comments;
+    });
+    this.commentService.fetchAllComments();
 
-  onAddComment(form: NgForm) {
-    this.songService.addComment(form);
+    setTimeout(() => {
+      console.log(this.songId);
+    }, 2000);
   }
 }

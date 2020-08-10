@@ -16,10 +16,21 @@
   top: 9px;
   left: 5px;
   width: 30px;
+  transition: 200ms ease;
+}
+
+a:hover {
+  color: $first-color;
 }
 
 .logo {
   position: relative;
   bottom: 3px;
   left: 10px;
+}
+
+.logo:hover {
+  .logoPic {
+    transform: rotate(90deg);
+  }
 }
