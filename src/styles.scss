@@ -45,23 +45,25 @@ p {
 
 .mat-tab-header {
   margin: auto;
-  background-color: #90d1db;
-  padding: 20px 20px;
-  width: 368px;
+  background-color: black;
+  width: 100%;
   margin-bottom: 20px;
-
   border: none;
 }
 
 .mat-tab-label-content,
 .mat-tab-label {
   opacity: 1 !important;
-  font-weight: lighter !important;
-  font-style: normal;
+  font-size: 1rem !important;
+  font-weight: bolder;
+  letter-spacing: 1px;
+  font-family: "Raleway", serif;
 }
 
 .mat-tab-label {
+  border-top: solid white 2px;
   padding-bottom: 100px;
+  color: $first-color !important;
 }
 
 .mat-tab-label-active {
