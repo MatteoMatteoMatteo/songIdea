@@ -1,3 +1,5 @@
+import { PaginationService } from "./../infiniteScroll/pagination.service";
+import { AngularFirestore } from "@angular/fire/firestore";
 import { UiHelperService } from "./../uiHelper/uiHelper.service";
 import { SongService } from "./../songs/song.service";
 import { Song } from "./../songs/song.model";
@@ -15,7 +17,11 @@ export class BrowseComponent implements OnInit, OnDestroy {
   allSongsSubscription: Subscription;
   allSongs: Song[];
   randomSong: Song;
-  constructor(private songService: SongService, private uiHelperService: UiHelperService) {}
+  constructor(
+    public page: PaginationService,
+    private songService: SongService,
+    private uiHelperService: UiHelperService
+  ) {}
 
   ngOnInit(): void {
     this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {

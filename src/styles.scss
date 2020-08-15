@@ -17,9 +17,9 @@ code {
   padding: 0;
   height: 100%;
   font-size: 1rem;
-  overflow: visible;
   font-family: "Quicksand", sans-serif !important;
   color: white !important;
+  -webkit-font-smoothing: antialiased;
 }
 body {
   font-family: "Quicksand", sans-serif !important;
@@ -48,13 +48,12 @@ p {
   background-color: black;
   width: 100%;
   margin-bottom: 20px;
-  border: none;
+  border-bottom: solid 8px $first-color;
 }
 
 .mat-tab-label-content,
 .mat-tab-label {
   opacity: 1 !important;
-  font-size: 1rem !important;
   font-weight: bolder;
   letter-spacing: 1px;
   font-family: "Raleway", serif;
