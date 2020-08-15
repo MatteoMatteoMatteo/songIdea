@@ -1,6 +1,6 @@
 import { Comment } from "./comment.model";
 import { UiHelperService } from "./../uiHelper/uiHelper.service";
-import { Subscription } from "rxjs/subscription";
+import { Subscription } from "rxjs";
 import { NgForm } from "@angular/forms";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs/Subject";

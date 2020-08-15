@@ -1,6 +1,6 @@
 import { AuthService } from "./../../auth/auth-service";
 import { Component, OnInit, EventEmitter, Output, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs/subscription";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-mainNav",

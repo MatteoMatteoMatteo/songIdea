@@ -1,4 +1,4 @@
-import { Subscription } from "rxjs/subscription";
+import { Subscription } from "rxjs";
 import { CommentService } from "./../../comments/comment.service";
 import { NgForm } from "@angular/forms";
 import { Song } from "./../../songs/song.model";

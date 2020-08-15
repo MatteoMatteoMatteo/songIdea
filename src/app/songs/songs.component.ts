@@ -1,5 +1,5 @@
 import { SongService } from "./song.service";
-import { Subscription } from "rxjs/subscription";
+import { Subscription } from "rxjs";
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { MatTabGroup } from "@angular/material/tabs";
 
