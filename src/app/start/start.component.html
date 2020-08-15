@@ -1,24 +1,28 @@
 <div class="all">
-  <div class="start">
-    <a routerLink="/signup">
-      <div class="section">
-        <h1 class="title">Unfinished songs?</h1>
-        <p class="theP">
-          Your ideas are valuable, don't lose them!
-        </p>
-      </div>
-    </a>
-    <a routerLink="/signup">
-      <div class="section">
-        <h1 class="title">Share</h1>
-        <p class="theP">Show the world your ideas and get feedback!</p>
-      </div>
-    </a>
-    <a routerLink="/signup">
-      <div class="section">
-        <h1 class="title">Discover</h1>
-        <p class="theP">Find ideas and get creative!</p>
-      </div>
-    </a>
+  <div class="headlineDiv">
+    <div class="headline">
+      <h1>YOUR <span [ngStyle]="{ color: '#90d1db' }">UNFINISHED</span> MUSIC IS GREAT</h1>
+    </div>
   </div>
+
+  <a routerLink="/signup">
+    <div class="section">
+      <h1 class="title">
+        SHARE & DISCOVER <br />
+        UNFINISHED MUSIC
+      </h1>
+      <div class="logo"></div>
+      <p class="theP">
+        <span [ngStyle]="{ color: '#90d1db' }">SoundHalf</span> is the place to save all your half
+        done music projects: <br />
+      </p>
+      <p class="theP">
+        A missing intro, a song you lost interest in, unmastered, not mixed? We don't care!
+      </p>
+      <p class="theP">
+        <span [ngStyle]="{ color: '#90d1db' }">SoundHalf</span> is for music that is everything but
+        perfect :)
+      </p>
+    </div>
+  </a>
 </div>

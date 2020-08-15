@@ -29,10 +29,9 @@
     *ngIf="isLoading"
     diameter="80"
   ></mat-spinner>
-  <div class="mySongs" *ngIf="!isLoading && mySongs.length === 0">
-    <mat-card class="songCard">
-      <mat-card-title class="title">Get Started</mat-card-title>
-      <mat-card-label>Upload your first songs</mat-card-label>
-    </mat-card>
+  <div class="section" *ngIf="!isLoading && mySongs.length === 0">
+    <p class="theP">
+      You have no songs yet, upload your first one! :)
+    </p>
   </div>
 </section>

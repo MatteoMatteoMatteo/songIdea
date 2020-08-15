@@ -1,0 +1,37 @@
+<ng-container *ngIf="infinite | async as songs">
+  <cdk-virtual-scroll-viewport
+    itemSize="250"
+    (scrolledIndexChange)="nextBatch($event, songs[songs.length - 1].name)"
+    class="container"
+  >
+    <mat-card
+      class="songCard animate__animated animate__fadeIn"
+      *cdkVirtualFor="let song of songs; let i = index; trackBy: trackByIdx"
+      [value]="song.songId"
+    >
+      <mat-card-title class="title">{{ song.name }}</mat-card-title>
+      <mat-card-content></mat-card-content>
+      <audio controls class="audioControl">
+        <source [src]="song.path" />
+        Your browser does not support the audio element.
+      </audio>
+      <h2 class="h2"><span class="span">Scroll down to load more songs!</span></h2>
+    </mat-card>
+
+    <iframe
+      style="margin: 0 auto; display: flex;"
+      *ngIf="theEnd"
+      src="https://giphy.com/embed/VHrFbmOtBwysbsYnka"
+      width="400"
+      height="352"
+      frameBorder="0"
+      class="giphy-embed"
+      allowFullScreen
+    ></iframe>
+  </cdk-virtual-scroll-viewport>
+</ng-container>
+
+<div class="section">
+  <div class="logo"></div>
+  <p class="theP"><span [ngStyle]="{ color: '#90d1db' }">Check out</span> songs & get inspired!</p>
+</div>

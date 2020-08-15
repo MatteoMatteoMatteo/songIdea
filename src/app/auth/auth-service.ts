@@ -28,6 +28,7 @@ export class AuthService {
       } else {
         this.authCancel();
         this.isAuthenticated = false;
+        console.log("you should be logged out");
       }
     });
   }

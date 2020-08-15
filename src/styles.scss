@@ -17,9 +17,9 @@ code {
   padding: 0;
   height: 100%;
   font-size: 1rem;
-  overflow: visible;
   font-family: "Quicksand", sans-serif !important;
   color: white !important;
+  -webkit-font-smoothing: antialiased;
 }
 body {
   font-family: "Quicksand", sans-serif !important;
@@ -31,11 +31,11 @@ p {
 
 .mat-drawer-container {
   background-color: #90d1db;
-}
-
-.mat-tab-header {
-  margin-top: 20px;
-  border: none !important;
+  background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 20%, transparent 0),
+    radial-gradient(white 2px, transparent 0);
+  background-size: 30px 30px, 30px 30px;
 }
 
 .mat-toolbar {
@@ -43,11 +43,30 @@ p {
   color: black !important;
 }
 
+.mat-tab-header {
+  margin: auto;
+  background-color: black;
+  width: 100%;
+  margin-bottom: 20px;
+  border-bottom: solid 8px $first-color;
+}
+
 .mat-tab-label-content,
 .mat-tab-label {
   opacity: 1 !important;
-  font-weight: lighter !important;
-  font-style: normal;
+  font-weight: bolder;
+  letter-spacing: 1px;
+  font-family: "Raleway", serif;
+}
+
+.mat-tab-label {
+  border-top: solid white 2px;
+  padding-bottom: 100px;
+  color: $first-color !important;
+}
+
+.mat-tab-label-active {
+  border-bottom: solid 5px $second-color;
 }
 
 mat-ink-bar {

@@ -1,12 +1,29 @@
-@import "../../../styles.scss";
+@import "../../../utilities//variables.scss";
 @import "../../start/start.component.scss";
-.mySongs {
+
+.container {
+  margin: auto;
+  height: 250px;
+  width: 400px;
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $second-color;
+    border-radius: 20px;
+    visibility: hidden;
+  }
+}
+
+.allSongs {
   display: flex;
   flex-direction: column;
   padding: 0px 10px;
 }
 
 .songCard {
+  height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -19,13 +36,8 @@
   margin-bottom: 5px;
 }
 
-.commentsCard {
-  width: 80%;
-  padding: 20px 20px 0px 20px;
-}
-
 .audioControl {
-  margin: 0px 0px 0px 5px;
+  margin: 0px 0px 20px 5px;
   outline: none;
 }
 
@@ -33,6 +45,21 @@
   position: relative;
   top: 2px;
   font-size: 1.1rem;
+}
+
+.writeComment {
+  background-color: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-top-left-radius: 21px;
+  border-top-right-radius: 6px;
+  padding: 20px 20px 0px 20px;
+  width: 80%;
+}
+
+.commentsCard {
+  width: 80%;
+  padding: 20px 20px 0px 20px;
 }
 
 .h2 {
@@ -50,14 +77,12 @@
   font-size: 1rem;
 }
 
-.theP {
-  font-size: 1rem;
-  margin: 0px 0px 0px 0px;
-  cursor: default;
+.section {
+  margin-top: 30px;
+  width: 550px;
+  box-shadow: none;
 }
 
-.section {
-  cursor: default;
-  padding: 20px;
-  box-shadow: none;
+.theP {
+  font-size: 1rem;
 }

@@ -13,6 +13,7 @@ import { AngularFireModule } from "@angular/fire";
 import { environment } from "../environments/environment";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
+import { ScrollingModule } from "@angular/cdk/scrolling";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -47,6 +48,7 @@ import { BrowseComponent } from "./browse/browse.component";
 import { SongCardComponent } from "./browse/song-card/song-card.component";
 import { RandomSongComponent } from "./browse/random-song/random-song.component";
 import { CommentsComponent } from "./comments/comments.component";
+import { ScrollComponent } from "./infiniteScroll/scroll/scroll.component";
 
 @NgModule({
   declarations: [
@@ -65,6 +67,7 @@ import { CommentsComponent } from "./comments/comments.component";
     SongCardComponent,
     RandomSongComponent,
     CommentsComponent,
+    ScrollComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +77,7 @@ import { CommentsComponent } from "./comments/comments.component";
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
+    ScrollingModule,
     FlexLayoutModule,
     FormsModule,
     MatDatepickerModule,

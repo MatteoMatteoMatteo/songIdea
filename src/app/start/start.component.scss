@@ -2,72 +2,82 @@ $first-color: #90d1db;
 $second-color: #fff2ca;
 $third-color: #e6e6e6;
 
-.start {
-  margin: auto;
-  padding-top: 5%;
-  max-width: 300px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+.headlineDiv {
+  height: 130px;
+  width: 100%;
+  background-color: $first-color;
+  background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 20%, transparent 0),
+    radial-gradient(white 2px, transparent 0);
+  background-size: 30px 30px, 30px 30px;
+}
+
+.headline h1 {
+  background-color: black;
+  color: white;
 }
 
 .section {
-  margin-bottom: 40px;
+  position: relative;
+  margin: auto;
+  margin-top: 50px;
+  max-width: 60%;
+  min-width: 300px;
   padding: 20px;
   cursor: pointer;
-  background-color: white;
-  border-radius: 10px;
-  border: solid 4px $third-color;
-  letter-spacing: 2px;
-  animation: left 400ms forwards;
-  transition: 400ms;
-}
+  background-color: black;
+  border: solid white;
+  transition: 200ms ease;
 
-.section:hover {
-  animation: right 400ms forwards;
-  border: solid 4px $first-color;
-  transition: 400ms;
-  h1.title {
-    border-bottom: $first-color 4px dotted;
-    transition: 400ms;
-  }
-}
-
-@keyframes fiddle {
-  0% {
-    left: 20px;
-    top: 10px;
-  }
-  100% {
-    left: 0px;
-  }
-}
-
-@keyframes right {
-  0% {
-    left: 0px;
-    top: 0px;
-  }
-  100% {
-    left: 15px;
-  }
-}
-
-@keyframes left {
-  0% {
-    left: 15px;
-  }
-  100% {
-    left: 0px;
-  }
+  -webkit-box-shadow: 10px 10px 19px -5px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 10px 10px 19px -5px rgba(0, 0, 0, 1);
+  box-shadow: 10px 10px 19px -5px rgba(0, 0, 0, 1);
+  margin-bottom: 20px;
 }
 
 h1.title {
-  border-bottom: $third-color 4px dotted;
-  padding: 10px 20px 8px 20px;
+  padding: 20px 20px 0px 5px;
   font-weight: normal;
   font-size: 1.3rem;
   letter-spacing: 1px;
   transition: 200ms ease;
+  color: white;
+}
+
+h1.secondTitle {
+  font-weight: normal;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  transition: 200ms ease;
+  color: white;
+}
+
+.text {
+  width: 80%;
+  margin: auto;
+}
+
+p.theP {
+  text-align: center;
+  color: white;
+  letter-spacing: 2px;
+  word-wrap: break-word;
+}
+
+.logo {
+  margin: auto;
+  background-color: $second-color;
+  height: 5px;
+  width: 90%;
+  border-radius: 30px;
+  margin-bottom: 20px;
+  transition: 200ms ease;
+}
+
+.section:hover {
+  .logo {
+    transition: 200ms ease;
+    height: 8px;
+  }
 }

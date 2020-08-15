@@ -29,5 +29,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       email: form.value.email,
       password: form.value.password,
     });
+    // setTimeout(() => {
+    //   this.authService.logout();
+    // }, 1000 * 200);
   }
 }

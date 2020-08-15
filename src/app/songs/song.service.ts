@@ -6,7 +6,7 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs/Subject";
 import { Song } from "./song.model";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { map } from "rxjs/operators";
+import { map, last } from "rxjs/operators";
 
 @Injectable()
 export class SongService {
