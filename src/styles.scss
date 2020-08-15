@@ -30,7 +30,7 @@ p {
 }
 
 .mat-drawer-container {
-  background-color: #90d1db;
+  background-color: $first-color;
   background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
     linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
     linear-gradient(-45deg, transparent 20%, white 20%, transparent 0),
@@ -49,6 +49,15 @@ p {
   width: 100%;
   margin-bottom: 20px;
   border-bottom: solid 8px $first-color;
+}
+
+div.mat-ripple.mat-tab-header-pagination.mat-tab-header-pagination-after.mat-elevation-z4,
+div.mat-ripple.mat-tab-header-pagination.mat-tab-header-pagination-before.mat-elevation-z4.mat-tab-header-pagination-disabled,
+div.mat-ripple.mat-tab-header-pagination.mat-tab-header-pagination-before.mat-elevation-z4 {
+  fill: white;
+  color: white;
+  background-color: white;
+  opacity: 1;
 }
 
 .mat-tab-label-content,
@@ -141,6 +150,28 @@ span.mat-button-raised {
   width: 100%;
 }
 
+.mat-drawer-inner-container {
+  background-color: $first-color;
+  background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 20%, transparent 0),
+    radial-gradient(white 2px, transparent 0);
+  background-size: 30px 30px, 30px 30px;
+}
+
+.mat-nav-list {
+  border: none;
+}
+
+mat-nav-list.mat-nav-list {
+  padding: 0px 0px 0px 0px;
+}
+
+.mat-list-item-content {
+  color: white;
+  background-color: black;
+  border-top: none;
+}
 @media only screen and (max-width: 500px) {
   .all {
     height: calc(100vh - 56px);
