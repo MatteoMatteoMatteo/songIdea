@@ -5,7 +5,7 @@
 
       <mat-card-content> </mat-card-content>
 
-      <audio controls class="audioControl">
+      <audio controls preload="none" class="audioControl">
         <source [src]="song.path" />
         Your browser does not support the audio element.
       </audio>

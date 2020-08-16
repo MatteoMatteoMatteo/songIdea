@@ -11,3 +11,9 @@
   padding-left: 13px;
   border: solid $second-color 3px;
 }
+
+@media only screen and (max-width: 500px) {
+  .phoneNavText {
+    font-size: 1.2rem;
+  }
+}

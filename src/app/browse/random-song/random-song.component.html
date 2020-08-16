@@ -4,7 +4,7 @@
       <mat-card-title class="title">{{ randomSong.name }}</mat-card-title>
       <mat-card-label>{{ randomSong.genre }}</mat-card-label>
       <mat-card-content></mat-card-content>
-      <audio controls class="audioControl">
+      <audio controls preload="none" class="audioControl">
         <source [src]="randomSong.path" />
         Your browser does not support the audio element.
       </audio>

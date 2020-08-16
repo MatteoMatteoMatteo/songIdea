@@ -11,28 +11,18 @@
     >
       <mat-card-title class="title">{{ song.name }}</mat-card-title>
       <mat-card-content></mat-card-content>
-      <audio controls class="audioControl">
+      <audio controls preload="none" class="audioControl">
         <source [src]="song.path" />
         Your browser does not support the audio element.
       </audio>
       <h2 class="h2"><span class="span">Scroll down to load more songs!</span></h2>
     </mat-card>
-
-    <iframe
-      style="margin: 0 auto; display: flex;"
-      *ngIf="theEnd"
-      src="https://giphy.com/embed/VHrFbmOtBwysbsYnka"
-      max-width="425"
-      min-width="250"
-      height="352"
-      frameBorder="0"
-      class="giphy-embed"
-      allowFullScreen
-    ></iframe>
   </cdk-virtual-scroll-viewport>
 </ng-container>
 
 <div class="section">
   <div class="logo"></div>
-  <p class="theP"><span [ngStyle]="{ color: '#90d1db' }">Check out</span> songs & get inspired!</p>
+  <p class="theP">
+    Visit the <span [ngStyle]="{ color: '#90d1db' }">feedback area</span> to leave a comment!
+  </p>
 </div>

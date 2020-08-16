@@ -3,7 +3,7 @@
     <mat-card class="songCard" *ngFor="let song of allSongs" [value]="song.songId">
       <mat-card-title class="title">{{ song.name }}</mat-card-title>
       <mat-card-content></mat-card-content>
-      <audio controls class="audioControl">
+      <audio controls preload="none" class="audioControl">
         <source [src]="song.path" />
         Your browser does not support the audio element.
       </audio>
