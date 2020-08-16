@@ -29,6 +29,10 @@ p {
   color: white;
 }
 
+.red-snackbar {
+  background-color: $warn-red;
+}
+
 .mat-drawer-container {
   background-color: $first-color;
   background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
@@ -175,7 +179,6 @@ mat-nav-list.mat-nav-list {
 @media only screen and (max-width: 500px) {
   .all {
     height: calc(100vh - 56px);
-    border-bottom: solid 36px $second-color;
   }
 }
 
