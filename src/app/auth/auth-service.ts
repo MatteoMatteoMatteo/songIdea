@@ -2,7 +2,7 @@ import { UiHelperService } from "./../uiHelper/uiHelper.service";
 import { SongService } from "./../songs/song.service";
 import { Router } from "@angular/router";
 import { AuthData } from "./auth-data.model";
-import { Subject } from "rxjs/Subject";
+import { Subject } from "rxjs";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Injectable } from "@angular/core";
 

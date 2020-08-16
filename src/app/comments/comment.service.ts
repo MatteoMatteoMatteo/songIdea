@@ -3,7 +3,7 @@ import { UiHelperService } from "./../uiHelper/uiHelper.service";
 import { Subscription } from "rxjs";
 import { NgForm } from "@angular/forms";
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs/Subject";
+import { Subject } from "rxjs";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { map } from "rxjs/operators";
 
