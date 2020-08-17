@@ -9,7 +9,6 @@ import { map } from "rxjs/operators";
 
 @Injectable()
 export class CommentService {
-  uid: string;
   private firebaseSub: Subscription;
   songPlaying = new Subject<Comment>();
   private allComments: Comment[] = [];
@@ -18,12 +17,9 @@ export class CommentService {
 
   constructor(private db: AngularFirestore, private uiHelperService: UiHelperService) {}
 
-  addComment(form: NgForm, songId: string) {
-    if (localStorage.hasOwnProperty("userId")) {
-      this.uid = localStorage.getItem("userId");
-    }
+  addComment(form: NgForm, songId: string, uid: string) {
     this.commentToDatabase({
-      uid: this.uid,
+      uid: uid,
       songId: songId,
       content: form.value.content,
     });
@@ -34,7 +30,6 @@ export class CommentService {
   }
 
   fetchAllComments() {
-    // this.uiHelperService.loadingStateChanged.next(true);
     this.firebaseSub = this.db
       .collection("comments")
       .snapshotChanges()
@@ -52,11 +47,8 @@ export class CommentService {
         (comments: Comment[]) => {
           this.allComments = comments;
           this.allCommentsListed.next([...this.allComments]);
-          //   this.uiHelperService.loadingStateChanged.next(false);
         },
-        (error) => {
-          //   this.uiHelperService.loadingStateChanged.next(false);
-        }
+        (error) => {}
       );
   }
 }

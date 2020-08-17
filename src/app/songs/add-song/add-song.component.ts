@@ -2,9 +2,11 @@ import { AngularFireStorage } from "@angular/fire/storage";
 import { Song } from "./../song.model";
 import { NgForm } from "@angular/forms";
 import { SongService } from "./../song.service";
-import { Subscription } from "rxjs";
+import { Subscription, Observable } from "rxjs";
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { finalize } from "rxjs/operators";
+import { Store } from "@ngrx/store";
+import * as fromRoot from "../../app.reducer";
 
 @Component({
   selector: "app-add-song",
@@ -19,7 +21,6 @@ export class AddSongComponent implements OnInit {
   filePath: any;
   path: string;
   uid: string;
-  uidSub: Subscription;
   genres: string[] = [
     "House",
     "Electro",
@@ -45,14 +46,20 @@ export class AddSongComponent implements OnInit {
   songs: Song[];
   songSubscription: Subscription;
   @Output() switchWhenUploaded: EventEmitter<any> = new EventEmitter();
-  constructor(private songService: SongService, private storage: AngularFireStorage) {}
+  constructor(
+    private songService: SongService,
+    private storage: AngularFireStorage,
+    private store: Store<fromRoot.State>
+  ) {}
 
   ngOnInit() {
     this.songService.fetchMySongs();
     this.genres.sort();
+    this.store.select(fromRoot.getUid).subscribe((uid) => {
+      this.uid = uid;
+    });
   }
 
-  clearInput() {}
   onUpload(form: NgForm) {
     this.isLoading = true;
     this.songName = form.value.songName;
@@ -64,7 +71,7 @@ export class AddSongComponent implements OnInit {
       .pipe(
         finalize(() => {
           fileRef.getDownloadURL().subscribe((url) => {
-            this.songService.uploadSong(this.songName, this.songGenre, url);
+            this.songService.uploadSong(this.songName, this.songGenre, url, this.uid);
             this.switchWhenUploaded.emit();
             this.isLoading = false;
           });

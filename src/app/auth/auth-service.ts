@@ -23,6 +23,7 @@ export class AuthService {
     this.angularFireAuth.authState.subscribe((user) => {
       if (user) {
         this.store.dispatch(new AUTH.SetAuthenticated());
+        this.store.dispatch(new AUTH.Uid(user.uid));
         this.router.navigate(["/songs"]);
       } else {
         this.store.dispatch(new AUTH.SetUnauthenticated());
@@ -38,7 +39,6 @@ export class AuthService {
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
         let res = result;
-        localStorage.setItem("userId", res.user.uid);
         this.store.dispatch(new UI.StopLoading());
         // this.uiHelperService.loadingStateChanged.next(false);
       })
@@ -56,7 +56,6 @@ export class AuthService {
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
         let res = result;
-        localStorage.setItem("userId", res.user.uid);
         this.store.dispatch(new UI.StopLoading());
         // this.uiHelperService.loadingStateChanged.next(false);
       })

@@ -23,14 +23,11 @@ export class SongService {
     return this.mySongs.slice();
   }
 
-  uploadSong(songName: string, songGenre: string, url: string) {
-    if (localStorage.hasOwnProperty("userId")) {
-      this.uid = localStorage.getItem("userId");
-    }
+  uploadSong(songName: string, songGenre: string, url: string, uid: string) {
     this.songToDatabase({
       name: songName,
       genre: songGenre,
-      userId: this.uid,
+      userId: uid,
       path: url,
       date: new Date(),
     });
