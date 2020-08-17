@@ -2,6 +2,7 @@
 .phoneNavText {
   display: inline-block;
   padding-left: 20px;
+  font-size: 1.2rem;
 }
 
 .phoneNavDiv {
@@ -12,8 +13,6 @@
   border: solid $second-color 3px;
 }
 
-@media only screen and (max-width: 500px) {
-  .phoneNavText {
-    font-size: 1.2rem;
-  }
+.phoneIcon {
+  color: $first-color;
 }

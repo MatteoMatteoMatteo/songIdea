@@ -5,6 +5,9 @@ import { AuthData } from "./auth-data.model";
 import { Subject } from "rxjs";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Injectable } from "@angular/core";
+import { Store } from "@ngrx/store";
+import * as fromRoot from "./../app.reducer";
+import * as UI from "./../uiHelper/ui.actions";
 
 @Injectable()
 export class AuthService {
@@ -16,7 +19,8 @@ export class AuthService {
     private angularFireAuth: AngularFireAuth,
     private router: Router,
     private ss: SongService,
-    private uiHelperService: UiHelperService
+    private uiHelperService: UiHelperService,
+    private store: Store<fromRoot.State>
   ) {}
 
   initAuthListener() {
@@ -28,37 +32,42 @@ export class AuthService {
       } else {
         this.authCancel();
         this.isAuthenticated = false;
-        console.log("you should be logged out");
       }
     });
   }
 
   registerUser(authData: AuthData) {
-    this.uiHelperService.loadingStateChanged.next(true);
+    this.store.dispatch(new UI.StartLoading());
+    // this.uiHelperService.loadingStateChanged.next(true);
     this.angularFireAuth
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
         let res = result;
         localStorage.setItem("userId", res.user.uid);
-        this.uiHelperService.loadingStateChanged.next(false);
+        this.store.dispatch(new UI.StopLoading());
+        // this.uiHelperService.loadingStateChanged.next(false);
       })
       .catch((error) => {
-        this.uiHelperService.loadingStateChanged.next(false);
+        this.store.dispatch(new UI.StopLoading());
+        // this.uiHelperService.loadingStateChanged.next(false);
         this.uiHelperService.showSnackbar(error.message, null, 4000);
       });
   }
 
   login(authData: AuthData) {
-    this.uiHelperService.loadingStateChanged.next(true);
+    this.store.dispatch(new UI.StartLoading());
+    // this.uiHelperService.loadingStateChanged.next(true);
     this.angularFireAuth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
         let res = result;
         localStorage.setItem("userId", res.user.uid);
-        this.uiHelperService.loadingStateChanged.next(false);
+        this.store.dispatch(new UI.StopLoading());
+        // this.uiHelperService.loadingStateChanged.next(false);
       })
       .catch((error) => {
-        this.uiHelperService.loadingStateChanged.next(false);
+        this.store.dispatch(new UI.StopLoading());
+        // this.uiHelperService.loadingStateChanged.next(false);
         this.uiHelperService.showSnackbar(error.message, null, 4000);
       });
   }

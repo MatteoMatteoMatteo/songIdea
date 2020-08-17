@@ -1,27 +1,21 @@
-import { UiHelperService } from "./../../uiHelper/uiHelper.service";
-import { Subscription } from "rxjs";
 import { AuthService } from "./../auth-service";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { Store } from "@ngrx/store";
+import * as fromRoot from "./../../app.reducer";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"],
 })
-export class LoginComponent implements OnInit, OnDestroy {
-  loadingSub: Subscription;
-  isLoading = false;
-  constructor(private authService: AuthService, private uiHelperService: UiHelperService) {}
+export class LoginComponent implements OnInit {
+  isLoading$: Observable<boolean>;
+  constructor(private authService: AuthService, private store: Store<fromRoot.State>) {}
 
-  ngOnInit(): void {
-    this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
-  }
-
-  ngOnDestroy() {
-    this.loadingSub.unsubscribe();
+  ngOnInit() {
+    this.isLoading$ = this.store.select(fromRoot.getIsLoading);
   }
 
   onSubmit(form: NgForm) {

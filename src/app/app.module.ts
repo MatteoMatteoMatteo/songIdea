@@ -7,6 +7,8 @@ import { AuthService } from "./auth/auth-service";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { StoreModule } from "@ngrx/store";
+import { reducers } from "./app.reducer";
 
 import { FormsModule } from "@angular/forms";
 import { AngularFireModule } from "@angular/fire";
@@ -95,6 +97,7 @@ import { ScrollComponent } from "./infiniteScroll/scroll/scroll.component";
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
+    StoreModule.forRoot(reducers),
   ],
   providers: [AuthService, SongService, UiHelperService, CommentService],
   bootstrap: [AppComponent],
