@@ -40,7 +40,6 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MySongsComponent } from "./songs/my-songs/my-songs.component";
 import { MatCardModule } from "@angular/material/card";
 import { MatSelectModule } from "@angular/material/select";
-import { CurrentSongComponent } from "./songs/current-song/current-song.component";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatDialogModule } from "@angular/material/dialog";
@@ -61,7 +60,6 @@ import { ScrollComponent } from "./infiniteScroll/scroll/scroll.component";
     MainNavComponent,
     SideNavComponent,
     MySongsComponent,
-    CurrentSongComponent,
     CancelComponent,
     BrowseComponent,
     SongCardComponent,
