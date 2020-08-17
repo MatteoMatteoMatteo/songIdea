@@ -7,6 +7,7 @@ import { SongService } from "./../song.service";
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { Song } from "../song.model";
 import { Comment } from "./../../comments/comment.model";
+import { AngularFireAuth } from "@angular/fire/auth";
 
 @Component({
   selector: "app-my-songs",
@@ -16,6 +17,7 @@ import { Comment } from "./../../comments/comment.model";
 export class MySongsComponent implements OnInit, OnDestroy {
   loadingSub: Subscription;
   isLoading: boolean;
+  uid: string;
   mySongSubscription: Subscription;
   allSongsSubscription: Subscription;
   allCommentsSubscription: Subscription;
@@ -23,6 +25,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
   allComments: Comment[] = [];
   @Output() exit = new EventEmitter();
   constructor(
+    private angularFireAuth: AngularFireAuth,
     private commentService: CommentService,
     private dialog: MatDialog,
     private songService: SongService,

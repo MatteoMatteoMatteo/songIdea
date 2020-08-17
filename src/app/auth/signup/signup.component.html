@@ -47,7 +47,7 @@
         >
 
         <button
-          *ngIf="!isLoading"
+          *ngIf="!(isLoading$ | async)"
           [disabled]="f.invalid"
           class="submitButton"
           type="submit"
@@ -56,7 +56,12 @@
         >
           Submit
         </button>
-        <mat-spinner color="accent" diameter="80" *ngIf="isLoading"></mat-spinner>
+        <mat-spinner
+          color="accent"
+          style="margin-top: 20px;"
+          diameter="80"
+          *ngIf="isLoading$ | async"
+        ></mat-spinner>
       </form>
     </div>
   </div>
