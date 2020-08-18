@@ -9,7 +9,7 @@ import { Subject } from "rxjs";
 @Injectable()
 export class UiHelperService {
   loadingStateChanged = new Subject<boolean>();
-  horizontalPosition: MatSnackBarHorizontalPosition = "start";
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
   verticalPosition: MatSnackBarVerticalPosition = "top";
 
   constructor(private snackbar: MatSnackBar) {}

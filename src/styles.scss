@@ -20,6 +20,7 @@ code {
   font-family: "Quicksand", sans-serif !important;
   color: white !important;
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
 }
 body {
   font-family: "Quicksand", sans-serif !important;
@@ -31,6 +32,10 @@ p {
 
 .red-snackbar {
   background-color: $warn-red;
+}
+
+.mat-sidenav-container {
+  overflow: hidden !important;
 }
 
 .mat-drawer-container {

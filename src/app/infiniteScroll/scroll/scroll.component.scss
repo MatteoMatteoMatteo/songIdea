@@ -8,6 +8,7 @@
   max-width: 425px;
   &::-webkit-scrollbar {
     width: 0px;
+    visibility: hidden;
   }
 
   &::-webkit-scrollbar-thumb {
