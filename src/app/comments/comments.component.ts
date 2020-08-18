@@ -21,9 +21,5 @@ export class CommentsComponent implements OnInit {
       this.allComments = comments;
     });
     this.commentService.fetchAllComments();
-
-    setTimeout(() => {
-      console.log(this.songId);
-    }, 2000);
   }
 }

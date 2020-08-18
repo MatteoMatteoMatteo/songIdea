@@ -65,7 +65,7 @@ p.theP {
   word-wrap: break-word;
 }
 
-.logo {
+.border {
   margin: auto;
   background-color: $second-color;
   height: 5px;
@@ -73,6 +73,11 @@ p.theP {
   border-radius: 30px;
   margin-bottom: 20px;
   transition: 200ms ease;
+}
+
+.logoPic {
+  width: 30px;
+  margin-top: 10px;
 }
 
 .section:hover {
