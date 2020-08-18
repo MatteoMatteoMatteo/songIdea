@@ -1,0 +1,5 @@
+<mat-card class="commentsCard">
+  <mat-card-content *ngFor="let comment of allComments" [value]="comment.id" align="start">
+    {{ comment.content }}
+  </mat-card-content>
+</mat-card>

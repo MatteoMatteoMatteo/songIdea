@@ -1,24 +1,193 @@
-/* You can add global styles to this file, and also import other style files */
+@import "utilities/variables";
+
+* {
+  font-family: "Quicksand", sans-serif;
+  box-sizing: border-box;
+}
+
+main {
+  text-align: center;
+  position: relative;
+}
 
 html,
 body,
 code {
+  margin: 0;
+  padding: 0;
   height: 100%;
   font-size: 1rem;
-  overflow: visible;
+  font-family: "Quicksand", sans-serif !important;
+  color: white !important;
+  -webkit-font-smoothing: antialiased;
 }
 body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Quicksand", sans-serif !important;
+}
+
+p {
+  color: white;
+}
+
+.red-snackbar {
+  background-color: $warn-red;
+}
+
+.mat-drawer-container {
+  background-color: $first-color;
+  background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 20%, transparent 0),
+    radial-gradient(white 2px, transparent 0);
+  background-size: 30px 30px, 30px 30px;
+}
+
+.mat-toolbar {
+  background-color: black !important;
+  color: black !important;
+}
+
+.mat-tab-header {
+  margin: auto;
+  background-color: black;
+  width: 100%;
+  margin-bottom: 20px;
+  border-bottom: solid 8px $first-color;
+}
+
+div.mat-ripple.mat-tab-header-pagination.mat-tab-header-pagination-after.mat-elevation-z4,
+div.mat-ripple.mat-tab-header-pagination.mat-tab-header-pagination-before.mat-elevation-z4.mat-tab-header-pagination-disabled,
+div.mat-ripple.mat-tab-header-pagination.mat-tab-header-pagination-before.mat-elevation-z4 {
+  fill: white;
+  color: white;
+  background-color: white;
+  opacity: 1;
+}
+
+.mat-tab-label-content,
+.mat-tab-label {
+  opacity: 1 !important;
+  font-weight: bolder;
+  letter-spacing: 1px;
+  font-family: "Raleway", serif;
+}
+
+.mat-tab-label {
+  border-top: solid white 2px;
+  padding-bottom: 100px;
+  color: $first-color !important;
+}
+
+.mat-tab-label-active {
+  border-bottom: solid 5px $second-color;
+}
+
+mat-ink-bar {
+  background-color: $second-color !important;
+}
+
+audio.audioControl {
+  outline: none;
+  padding: 0px 10px;
+}
+
+.mat-card {
+  background-color: $second-color;
+  color: black;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  border: 7px solid $third-color;
+}
+
+.mat-card-title {
+  font-weight: lighter;
+  border-bottom: dotted 4px $third-color;
+  font-style: normal;
+  padding: 7px !important;
+  line-height: 1.5;
+  letter-spacing: 2px;
+}
+
+mat-card-label {
+  font-style: italic !important;
+}
+
+.mat-tab-label-content {
+  color: white;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+h1 {
+  text-align: center;
+  margin: 100px 100px 100px 100px;
+  color: black;
+}
+
+p {
+  color: black;
 }
 
 a {
   text-decoration: none;
   color: white;
-  font-weight: normal;
+  font-weight: lighter;
+  font-style: normal;
+  font-size: 1rem;
 }
 
-a:hover,
-a:active {
-  color: black;
+.deleteButton {
+  color: red($color: #000000);
+}
+
+span.mat-button-raised {
+  font-family: "Raleway", serif;
+}
+
+.all {
+  background-image: url("../src/assets/image/bed.jpg") !important;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  height: calc(100vh - 64px);
+  width: 100%;
+}
+
+.mat-drawer-inner-container {
+  background-color: $first-color;
+  background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 20%, transparent 0),
+    radial-gradient(white 2px, transparent 0);
+  background-size: 30px 30px, 30px 30px;
+}
+
+.mat-nav-list {
+  border: none;
+}
+
+mat-nav-list.mat-nav-list {
+  padding: 0px 0px 0px 0px;
+}
+
+.mat-list-item-content {
+  color: white;
+  background-color: black;
+  border-top: none;
+}
+@media only screen and (max-width: 500px) {
+  .all {
+    height: calc(100vh - 56px);
+  }
+}
+
+a:hover {
+  color: $first-color;
+  font-weight: lighter;
+}
+
+a:active,
+a:visited {
+  color: white;
 }

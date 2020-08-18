@@ -1,0 +1,11 @@
+<mat-tab-group color="accent" mat-align-tabs="center" animationDuration="660ms">
+  <mat-tab label="Browse">
+    <app-scroll></app-scroll>
+  </mat-tab>
+  <mat-tab label="Feedback Area">
+    <app-song-card [allSongs]="allSongs" [isLoading]="isLoading"></app-song-card>
+  </mat-tab>
+  <mat-tab label="Spotlight">
+    <app-random-song [randomSong]="randomSong" [isLoading]="isLoading"></app-random-song>
+  </mat-tab>
+</mat-tab-group>

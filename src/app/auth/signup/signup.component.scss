@@ -1,15 +1,32 @@
-mat-form-field {
-  width: 300px;
-}
+@import "../../../utilities/variables.scss";
 
-.submitButton {
-  margin-top: 20px;
+mat-form-field {
+  width: 100%;
 }
 
 .datePicker {
   margin-top: 20px;
 }
 
+button.submitButton {
+  margin-top: 20px;
+  color: white;
+}
+
+.signupHolder {
+  padding: 20px 5px 0px 5px;
+}
+
 .signup {
+  margin: auto;
   margin-top: 50px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: white;
+  border-radius: 10px;
+  min-width: 250px;
+  max-width: 350px;
+
+  border: solid $third-color 3px;
+  transition: 300ms;
 }

@@ -1,23 +1,29 @@
-<div class="intro">
-  <section>
-    <h1>Unfinished is great!</h1>
-    <p>Why lose ideas and work? Unfinished work should be shared!</p>
-  </section>
-</div>
+<div class="all">
+  <div class="headlineDiv">
+    <div class="headline">
+      <h1 style="padding: 0px 2px;">
+        30 SECONDS OF<span [ngStyle]="{ color: '#90d1db' }"> PURE ENERGY</span>
+      </h1>
+    </div>
+  </div>
 
-<div
-  class="start"
-  fxLayout="column"
-  fxLayout.gt-md="row"
-  fxLayoutAlign="center center"
-  fxLayoutGap.gt-md="100px"
->
-  <section>
-    <h1>Share</h1>
-    <p>Show the world your ideas and get feedback!</p>
-  </section>
-  <section>
-    <h1>Discover</h1>
-    <p>Find ideas and get creative!</p>
-  </section>
+  <a routerLink="/signup">
+    <div class="section">
+      <h1 class="title">
+        YOUR PLATFORM FOR THE FINEST BEAT DROPS
+      </h1>
+      <div class="border"></div>
+
+      <p class="theP">
+        Each song on
+        <span [ngStyle]="{ color: '#90d1db' }">ONLYDROPS</span> is limited to
+        <span [ngStyle]="{ color: '#90d1db' }">30 SECONDS</span> to keep up the energy.
+      </p>
+      <p class="theP">
+        Get started by <span>uploading</span> your songs & <span>discover</span> hundrets of
+        playlists!
+      </p>
+      <img src="./../../assets/image/logo.png" class="logoPic" />
+    </div>
+  </a>
 </div>

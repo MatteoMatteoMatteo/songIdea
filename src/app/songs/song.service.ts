@@ -1,30 +1,107 @@
-import { Subject } from "rxjs/Subject";
+import { UiHelperService } from "./../uiHelper/uiHelper.service";
+import { Subscription } from "rxjs";
+import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 import { Song } from "./song.model";
+import { AngularFirestore } from "@angular/fire/firestore";
+import { map } from "rxjs/operators";
 
+@Injectable()
 export class SongService {
-  private mySongs: Song[] = [
-    { id: "song1", name: "Canvai - Love", genre: "Electro" },
-    { id: "song2", name: "Canvai - Fly", genre: "House" },
-    { id: "song3", name: "Canvai - Sunshine", genre: "Chill" },
-  ];
-
+  uid: string;
+  private firebaseSub: Subscription;
+  private mySongs: Song[] = [];
+  private allSongs: Song[] = [];
   private playingSong: Song;
   songPlaying = new Subject<Song>();
+  mySongsListed = new Subject<Song[]>();
+  allSongsListed = new Subject<Song[]>();
+
+  constructor(private db: AngularFirestore, private uiHelperService: UiHelperService) {}
 
   getMySongs() {
     return this.mySongs.slice();
   }
 
+  uploadSong(songName: string, songGenre: string, url: string, uid: string) {
+    this.songToDatabase({
+      name: songName,
+      genre: songGenre,
+      userId: uid,
+      path: url,
+      date: new Date(),
+    });
+  }
+
+  songToDatabase(song: Song) {
+    this.db.collection("songs").add(song);
+  }
+
   playSong(selectedId: String) {
-    // this.playingSong = this.mySongs.find((song) => {
-    //   song.id === selectedId;
-    // });
-    this.playingSong = this.mySongs.find((song) => song.id === selectedId);
-    console.log(this.playingSong);
+    // this.db.doc("songs/" + selectedId).update({ lastPlayed: new Date() });
+    this.playingSong = this.mySongs.find((song) => song.songId === selectedId);
     this.songPlaying.next({ ...this.playingSong });
   }
 
-  getPlayingSong() {
-    return { ...this.playingSong };
+  deleteSong(selectedId: String) {
+    this.db.doc("songs/" + selectedId).delete();
+  }
+
+  fetchAllSongs() {
+    this.uiHelperService.loadingStateChanged.next(true);
+    this.firebaseSub = this.db
+      .collection("songs")
+      .snapshotChanges()
+      .pipe(
+        map((docArray) => {
+          return docArray.map((doc) => {
+            return {
+              songId: doc.payload.doc.id,
+              ...(doc.payload.doc.data() as Song),
+            };
+          });
+        })
+      )
+      .subscribe(
+        (songs: Song[]) => {
+          this.allSongs = songs;
+          this.allSongsListed.next([...this.allSongs]);
+          this.uiHelperService.loadingStateChanged.next(false);
+        },
+        (error) => {
+          this.uiHelperService.loadingStateChanged.next(false);
+        }
+      );
+  }
+
+  fetchMySongs() {
+    this.uiHelperService.loadingStateChanged.next(true);
+    this.firebaseSub = this.db
+      .collection("songs", (ref) => ref.where("userId", "==", localStorage.getItem("userId")))
+      .snapshotChanges()
+      .pipe(
+        map((docArray) => {
+          return docArray.map((doc) => {
+            return {
+              songId: doc.payload.doc.id,
+              ...(doc.payload.doc.data() as Song),
+            };
+          });
+        })
+      )
+      .subscribe(
+        (songs: Song[]) => {
+          this.mySongs = songs;
+          this.mySongsListed.next([...this.mySongs]);
+          this.uiHelperService.loadingStateChanged.next(false);
+        },
+        (error) => {
+          this.uiHelperService.loadingStateChanged.next(false);
+        }
+      );
+  }
+
+  cancelSub() {
+    this.firebaseSub.unsubscribe();
   }
 }

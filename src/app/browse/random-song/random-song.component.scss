@@ -1,0 +1,25 @@
+.randomSong {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 10px;
+}
+
+.songCard {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.uploadIcon {
+  position: relative;
+  top: 2px;
+  font-size: 1.1rem;
+}

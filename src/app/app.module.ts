@@ -1,9 +1,21 @@
+import { CommentService } from "./comments/comment.service";
+import { UiHelperService } from "./uiHelper/uiHelper.service";
+import { CancelComponent } from "./uiHelper/cancel/cancel.component";
+import { AngularFireAuthModule } from "@angular/fire/auth";
 import { SongService } from "./songs/song.service";
 import { AuthService } from "./auth/auth-service";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { StoreModule } from "@ngrx/store";
+import { reducers } from "./app.reducer";
+
 import { FormsModule } from "@angular/forms";
+import { AngularFireModule } from "@angular/fire";
+import { environment } from "../environments/environment";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireStorageModule } from "@angular/fire/storage";
+import { ScrollingModule } from "@angular/cdk/scrolling";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -14,6 +26,7 @@ import { SignupComponent } from "./auth/signup/signup.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { SongsComponent } from "./songs/songs.component";
 import { AddSongComponent } from "./songs/add-song/add-song.component";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { StartComponent } from "./start/start.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
@@ -29,11 +42,14 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MySongsComponent } from "./songs/my-songs/my-songs.component";
 import { MatCardModule } from "@angular/material/card";
 import { MatSelectModule } from "@angular/material/select";
-import { CurrentSongComponent } from "./songs/current-song/current-song.component";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatDialogModule } from "@angular/material/dialog";
-import { CancelComponent } from "./helper/cancel/cancel.component";
+import { BrowseComponent } from "./browse/browse.component";
+import { SongCardComponent } from "./browse/song-card/song-card.component";
+import { RandomSongComponent } from "./browse/random-song/random-song.component";
+import { CommentsComponent } from "./comments/comments.component";
+import { ScrollComponent } from "./infiniteScroll/scroll/scroll.component";
 
 @NgModule({
   declarations: [
@@ -46,8 +62,12 @@ import { CancelComponent } from "./helper/cancel/cancel.component";
     MainNavComponent,
     SideNavComponent,
     MySongsComponent,
-    CurrentSongComponent,
     CancelComponent,
+    BrowseComponent,
+    SongCardComponent,
+    RandomSongComponent,
+    CommentsComponent,
+    ScrollComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +77,7 @@ import { CancelComponent } from "./helper/cancel/cancel.component";
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
+    ScrollingModule,
     FlexLayoutModule,
     FormsModule,
     MatDatepickerModule,
@@ -66,13 +87,19 @@ import { CancelComponent } from "./helper/cancel/cancel.component";
     MatToolbarModule,
     MatListModule,
     MatTabsModule,
+    MatSnackBarModule,
     MatCardModule,
     MatSelectModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatDialogModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireStorageModule,
+    StoreModule.forRoot(reducers),
   ],
-  providers: [AuthService, SongService],
+  providers: [AuthService, SongService, UiHelperService, CommentService],
   bootstrap: [AppComponent],
   entryComponents: [CancelComponent],
 })

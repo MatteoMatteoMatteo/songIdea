@@ -1,27 +1,24 @@
 import { AuthService } from "./../../auth/auth-service";
-import { Component, OnInit, EventEmitter, Output, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs/subscription";
+import { Component, OnInit, EventEmitter, Output } from "@angular/core";
+import { Subscription, Observable } from "rxjs";
+import { Store } from "@ngrx/store";
+import { take } from "rxjs/operators";
+import * as fromRoot from "../../app.reducer";
 
 @Component({
   selector: "app-mainNav",
   templateUrl: "./mainNav.component.html",
   styleUrls: ["./mainNav.component.scss"],
 })
-export class MainNavComponent implements OnInit, OnDestroy {
+export class MainNavComponent implements OnInit {
   @Output() toggle = new EventEmitter<void>();
-  isAuth = false;
+  isAuth$: Observable<boolean>;
   authSub: Subscription;
 
-  constructor(private authServcie: AuthService) {}
+  constructor(private store: Store<fromRoot.State>, private authServcie: AuthService) {}
 
   ngOnInit(): void {
-    this.authSub = this.authServcie.authChange.subscribe((authStat) => {
-      this.isAuth = authStat;
-    });
-  }
-
-  ngOnDestroy() {
-    this.authSub.unsubscribe();
+    this.isAuth$ = this.store.select(fromRoot.getIsAuth).pipe(take(1));
   }
 
   handleLogout() {

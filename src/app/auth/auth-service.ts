@@ -1,52 +1,73 @@
+import { UiHelperService } from "./../uiHelper/uiHelper.service";
+import { SongService } from "./../songs/song.service";
 import { Router } from "@angular/router";
 import { AuthData } from "./auth-data.model";
-
-import { User } from "./user.model";
-import { Subject } from "rxjs/Subject";
+import { AngularFireAuth } from "@angular/fire/auth";
 import { Injectable } from "@angular/core";
+import { Store } from "@ngrx/store";
+import * as fromRoot from "./../app.reducer";
+import * as UI from "./../uiHelper/ui.actions";
+import * as AUTH from "./auth.actions";
+
 @Injectable()
 export class AuthService {
-  authChange = new Subject<boolean>();
-  private user: User;
+  constructor(
+    private angularFireAuth: AngularFireAuth,
+    private router: Router,
+    private ss: SongService,
+    private uiHelperService: UiHelperService,
+    private store: Store<fromRoot.State>
+  ) {}
 
-  constructor(private router: Router) {}
+  initAuthListener() {
+    this.angularFireAuth.authState.subscribe((user) => {
+      if (user) {
+        this.store.dispatch(new AUTH.SetAuthenticated());
+        this.store.dispatch(new AUTH.Uid(user.uid));
+        this.router.navigate(["/songs"]);
+      } else {
+        this.store.dispatch(new AUTH.SetUnauthenticated());
+        this.router.navigate(["/login"]);
+      }
+    });
+  }
 
   registerUser(authData: AuthData) {
-    this.user = {
-      email: authData.email,
-      userId: Math.round(Math.random() * 10000).toString(),
-    };
-    this.authSuccessfully();
+    this.store.dispatch(new UI.StartLoading());
+    // this.uiHelperService.loadingStateChanged.next(true);
+    this.angularFireAuth
+      .createUserWithEmailAndPassword(authData.email, authData.password)
+      .then((result) => {
+        let res = result;
+        this.store.dispatch(new UI.StopLoading());
+        // this.uiHelperService.loadingStateChanged.next(false);
+      })
+      .catch((error) => {
+        this.store.dispatch(new UI.StopLoading());
+        // this.uiHelperService.loadingStateChanged.next(false);
+        this.uiHelperService.showSnackbar(error.message, null, 4000);
+      });
   }
 
   login(authData: AuthData) {
-    this.user = {
-      email: authData.email,
-      userId: Math.round(Math.random() * 10000).toString(),
-    };
-    this.authSuccessfully();
+    this.store.dispatch(new UI.StartLoading());
+    // this.uiHelperService.loadingStateChanged.next(true);
+    this.angularFireAuth
+      .signInWithEmailAndPassword(authData.email, authData.password)
+      .then((result) => {
+        let res = result;
+        this.store.dispatch(new UI.StopLoading());
+        // this.uiHelperService.loadingStateChanged.next(false);
+      })
+      .catch((error) => {
+        this.store.dispatch(new UI.StopLoading());
+        // this.uiHelperService.loadingStateChanged.next(false);
+        this.uiHelperService.showSnackbar(error.message, null, 4000);
+      });
   }
 
   logout() {
-    this.user = null;
-    this.authCancel();
-  }
-
-  getUser() {
-    return { ...this.user };
-  }
-
-  isAuth() {
-    return this.user != null;
-  }
-
-  private authSuccessfully() {
-    this.authChange.next(true);
-    this.router.navigate(["/songs"]);
-  }
-
-  private authCancel() {
-    this.authChange.next(false);
-    this.router.navigate(["/login"]);
+    this.angularFireAuth.signOut();
+    this.ss.cancelSub();
   }
 }

@@ -1,5 +1,48 @@
+@import "../../../utilities//variables.scss";
+
 .navElements {
   list-style: none;
   padding: none;
   margin: none;
+  padding: 0px 40px;
+}
+
+.navItem {
+  font-size: 1.1rem;
+  font-weight: normal;
+  font-family: "Raleway", serif;
+}
+
+.icon {
+  color: $first-color !important;
+}
+
+.logoPic {
+  position: relative;
+  top: 9px;
+  left: 8px;
+  width: 30px;
+  transition: 200ms ease;
+}
+
+a:hover {
+  color: $first-color;
+}
+
+.logo {
+  position: relative;
+  bottom: 3px;
+  left: 10px;
+}
+
+.logo:hover {
+  .logoPic {
+    transform: rotate(90deg);
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .logoText {
+    font-weight: bold;
+  }
 }

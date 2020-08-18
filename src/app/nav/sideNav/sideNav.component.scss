@@ -1,4 +1,18 @@
+@import "../../../utilities/variables.scss";
 .phoneNavText {
   display: inline-block;
   padding-left: 20px;
+  font-size: 1.2rem;
+}
+
+.phoneNavDiv {
+  background-color: black;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 13px;
+  border: solid $second-color 3px;
+}
+
+.phoneIcon {
+  color: $first-color;
 }

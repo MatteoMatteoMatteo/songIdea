@@ -1,8 +1,88 @@
-.start,
-.intro {
-  text-align: center;
+$first-color: #90d1db;
+$second-color: #fff2ca;
+$third-color: #e6e6e6;
+
+.headlineDiv {
+  height: 130px;
+  width: 100%;
+  background-color: $first-color;
+  background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 20%, transparent 0),
+    radial-gradient(white 2px, transparent 0);
+  background-size: 30px 30px, 30px 30px;
 }
 
-.intro {
-  margin-bottom: 100px;
+.headline h1 {
+  background-color: black;
+  color: white;
+}
+
+.section {
+  position: relative;
+  margin: auto;
+  margin-top: 50px;
+  max-width: 60%;
+  min-width: 300px;
+  padding: 20px;
+  cursor: pointer;
+  background-color: black;
+  border: solid white;
+  transition: 200ms ease;
+
+  -webkit-box-shadow: 10px 10px 19px -5px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 10px 10px 19px -5px rgba(0, 0, 0, 1);
+  box-shadow: 10px 10px 19px -5px rgba(0, 0, 0, 1);
+  margin-bottom: 20px;
+}
+
+h1.title {
+  padding: 20px 5px 0px 5px;
+  font-weight: normal;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  transition: 200ms ease;
+  color: white;
+}
+
+h1.secondTitle {
+  font-weight: normal;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  transition: 200ms ease;
+  color: white;
+}
+
+.text {
+  width: 80%;
+  margin: auto;
+}
+
+p.theP {
+  text-align: center;
+  color: white;
+  letter-spacing: 2px;
+  word-wrap: break-word;
+}
+
+.border {
+  margin: auto;
+  background-color: $second-color;
+  height: 5px;
+  width: 90%;
+  border-radius: 30px;
+  margin-bottom: 20px;
+  transition: 200ms ease;
+}
+
+.logoPic {
+  width: 30px;
+  margin-top: 10px;
+}
+
+.section:hover {
+  .logo {
+    transition: 200ms ease;
+    height: 8px;
+  }
 }

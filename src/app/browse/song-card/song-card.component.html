@@ -1,0 +1,38 @@
+<section fxLayout fxLayoutAlign="center">
+  <div fxFlex.xs="100%" fxFlex="400px" class="allSongs" *ngIf="!isLoading">
+    <mat-card class="songCard" *ngFor="let song of allSongs" [value]="song.songId">
+      <mat-card-title class="title">{{ song.name }}</mat-card-title>
+      <mat-card-content></mat-card-content>
+      <audio controls preload="none" class="audioControl">
+        <source [src]="song.path" />
+        Your browser does not support the audio element.
+      </audio>
+      <h2 class="h2"><span class="span">Write a Comment</span></h2>
+
+      <form class="writeComment" (ngSubmit)="onAddComment(f, song.songId)" #f="ngForm">
+        <mat-form-field appearance="" color="accent">
+          <mat-label>Sounds good?</mat-label>
+          <textarea matInput ngModel name="content"></textarea>
+        </mat-form-field>
+        <mat-card-actions [ngStyle]="{ marginBottom: '0px', marginTop: '0px' }">
+          <button mat-button type="submit" [disabled]="f.invalid">
+            Post
+          </button>
+        </mat-card-actions>
+      </form>
+
+      <h2 class="h2"><span class="span">All Comments</span></h2>
+      <div class="commentsCard">
+        <p *ngFor="let comment of getMyComments(song.songId)" [value]="comment.id" align="start">
+          {{ comment.content }}
+        </p>
+      </div>
+    </mat-card>
+  </div>
+  <mat-spinner
+    diameter="80"
+    color="accent"
+    [ngStyle]="{ margin: '40px' }"
+    *ngIf="isLoading"
+  ></mat-spinner>
+</section>

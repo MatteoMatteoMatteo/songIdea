@@ -4,8 +4,8 @@
   ></mat-sidenav>
   <mat-sidenav-content>
     <app-mainNav (toggle)="sidenav.toggle()"></app-mainNav>
-    <main>
-      <router-outlet></router-outlet>
+    <main [@routeAnimations]="prepareRoute(outlet)" class="content">
+      <router-outlet #outlet="outlet"></router-outlet>
     </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
