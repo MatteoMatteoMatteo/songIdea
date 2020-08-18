@@ -20,6 +20,7 @@ code {
   font-family: "Quicksand", sans-serif !important;
   color: white !important;
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
 }
 body {
   font-family: "Quicksand", sans-serif !important;
@@ -31,6 +32,10 @@ p {
 
 .red-snackbar {
   background-color: $warn-red;
+}
+
+.mat-sidenav-container {
+  overflow: hidden !important;
 }
 
 .mat-drawer-container {
@@ -83,7 +88,7 @@ div.mat-ripple.mat-tab-header-pagination.mat-tab-header-pagination-before.mat-el
 }
 
 mat-ink-bar {
-  background-color: $second-color !important;
+  background-color: transparent !important;
 }
 
 audio.audioControl {
@@ -152,6 +157,7 @@ span.mat-button-raised {
   background-size: cover;
   height: calc(100vh - 64px);
   width: 100%;
+  border-bottom: 50px black solid;
 }
 
 .mat-drawer-inner-container {

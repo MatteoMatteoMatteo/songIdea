@@ -18,7 +18,7 @@ export class MainNavComponent implements OnInit {
   constructor(private store: Store<fromRoot.State>, private authServcie: AuthService) {}
 
   ngOnInit(): void {
-    this.isAuth$ = this.store.select(fromRoot.getIsAuth).pipe(take(1));
+    this.isAuth$ = this.store.select(fromRoot.getIsAuth);
   }
 
   handleLogout() {
