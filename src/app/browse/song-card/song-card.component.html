@@ -1,5 +1,5 @@
-<section fxLayout fxLayoutAlign="center">
-  <div fxFlex.xs="100%" fxFlex="400px" class="allSongs" *ngIf="!isLoading">
+<section>
+  <div fxFlex.xs="100%" class="allSongs" *ngIf="!isLoading">
     <mat-card class="songCard" *ngFor="let song of allSongs" [value]="song.songId">
       <mat-card-title class="title">{{ song.name }}</mat-card-title>
       <mat-card-content></mat-card-content>
