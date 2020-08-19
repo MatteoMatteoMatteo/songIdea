@@ -1,9 +1,9 @@
 <mat-nav-list>
   <div class="phoneNavDiv">
-    <a *ngIf="!(isAuth$ | async)" mat-list-item routerLink="/signup" (click)="closeSidenav()"
+    <!-- <a *ngIf="!(isAuth$ | async)" mat-list-item routerLink="/signup" (click)="closeSidenav()"
       ><mat-icon class="phoneIcon">assignment-ind</mat-icon
       ><span class="phoneNavText">Signup</span></a
-    >
+    > -->
     <a *ngIf="!(isAuth$ | async)" mat-list-item routerLink="/login" (click)="closeSidenav()"
       ><mat-icon class="phoneIcon">account_circle</mat-icon
       ><span class="phoneNavText">Login</span></a

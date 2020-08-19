@@ -9,7 +9,7 @@ import { Routes, RouterModule } from "@angular/router";
 
 const routes: Routes = [
   { path: "", component: StartComponent, data: { animation: "1" } },
-  { path: "signup", component: SignupComponent },
+  // { path: "signup", component: SignupComponent },
   { path: "login", component: LoginComponent },
   {
     path: "songs",
