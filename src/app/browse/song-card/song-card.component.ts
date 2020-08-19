@@ -28,7 +28,6 @@ export class SongCardComponent implements OnInit {
       this.allComments = comments;
     });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
-      console.log(uid);
       this.uid = uid;
     });
     this.commentService.fetchAllComments();

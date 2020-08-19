@@ -74,10 +74,10 @@ export class SongService {
       );
   }
 
-  fetchMySongs() {
+  fetchMySongs(uid: string) {
     this.uiHelperService.loadingStateChanged.next(true);
     this.firebaseSub = this.db
-      .collection("songs", (ref) => ref.where("userId", "==", localStorage.getItem("userId")))
+      .collection("songs", (ref) => ref.where("userId", "==", uid))
       .snapshotChanges()
       .pipe(
         map((docArray) => {

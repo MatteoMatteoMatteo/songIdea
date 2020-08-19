@@ -8,6 +8,8 @@ import { Component, OnInit, OnDestroy, Output, EventEmitter } from "@angular/cor
 import { Song } from "../song.model";
 import { Comment } from "./../../comments/comment.model";
 import { AngularFireAuth } from "@angular/fire/auth";
+import { Store } from "@ngrx/store";
+import * as fromRoot from "../../app.reducer";
 
 @Component({
   selector: "app-my-songs",
@@ -17,7 +19,6 @@ import { AngularFireAuth } from "@angular/fire/auth";
 export class MySongsComponent implements OnInit, OnDestroy {
   loadingSub: Subscription;
   isLoading: boolean;
-  uid: string;
   mySongSubscription: Subscription;
   allSongsSubscription: Subscription;
   allCommentsSubscription: Subscription;
@@ -29,7 +30,8 @@ export class MySongsComponent implements OnInit, OnDestroy {
     private commentService: CommentService,
     private dialog: MatDialog,
     private songService: SongService,
-    private uiHelperService: UiHelperService
+    private uiHelperService: UiHelperService,
+    private store: Store<fromRoot.State>
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +41,9 @@ export class MySongsComponent implements OnInit, OnDestroy {
     this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
       this.mySongs = songs;
     });
-    this.songService.fetchMySongs();
+    this.store.select(fromRoot.getUid).subscribe((uid) => {
+      this.songService.fetchMySongs(uid);
+    });
 
     this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
       this.allComments = comments;
