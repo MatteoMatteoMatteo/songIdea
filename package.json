@@ -26,6 +26,8 @@
     "@ngrx/store": "^10.0.0",
     "animate.css": "^4.1.0",
     "firebase": "^7.13.1",
+    "hover.css": "^2.3.2",
+    "howler": "^2.2.0",
     "ngx-infinite-scroll": "^9.0.0",
     "rxjs": "~6.5.5",
     "rxjs-compat": "^6.6.0",

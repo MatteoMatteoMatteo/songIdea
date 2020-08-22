@@ -45,6 +45,7 @@ p {
     linear-gradient(-45deg, transparent 20%, white 20%, transparent 0),
     radial-gradient(white 2px, transparent 0);
   background-size: 30px 30px, 30px 30px;
+  overflow: hidden !important;
 }
 
 .mat-toolbar {
@@ -150,7 +151,7 @@ span.mat-button-raised {
 }
 
 .all {
-  background-image: url("../src/assets/image/bed.jpg") !important;
+  background-image: url("../src/assets/image/bed.jpeg") !important;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;

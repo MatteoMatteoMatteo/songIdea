@@ -50,6 +50,7 @@ import { SongCardComponent } from "./browse/song-card/song-card.component";
 import { RandomSongComponent } from "./browse/random-song/random-song.component";
 import { CommentsComponent } from "./comments/comments.component";
 import { ScrollComponent } from "./infiniteScroll/scroll/scroll.component";
+import { DropButtonComponent } from './drop-button/drop-button.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { ScrollComponent } from "./infiniteScroll/scroll/scroll.component";
     RandomSongComponent,
     CommentsComponent,
     ScrollComponent,
+    DropButtonComponent,
   ],
   imports: [
     BrowserModule,
