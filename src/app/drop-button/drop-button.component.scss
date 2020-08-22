@@ -10,6 +10,7 @@
   font-size: 16px;
   transition: 300ms ease;
   cursor: pointer;
+  outline: none;
 }
 
 .dropButton {
@@ -19,9 +20,7 @@
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
 }
-.dropButton:hover,
-.dropButton:focus,
-.dropButton:active {
+.dropButton:hover {
   -webkit-animation-name: hvr-buzz;
   animation-name: hvr-buzz;
   -webkit-animation-duration: 0.15s;

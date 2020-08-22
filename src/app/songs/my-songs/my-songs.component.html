@@ -1,9 +1,9 @@
-<div fxFlex.xs="100%" class="mySongs" *ngIf="!isLoading && mySongs.length > 0">
-  <mat-card class="songCard" *ngFor="let song of mySongs" [value]="song.id">
+<div fxFlex.xs="100%" class="mySongs" *ngIf="!isLoading">
+  <mat-card class="songCard" *ngFor="let song of mySongs; let i = index" [value]="song.id">
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
 
     <mat-card-content> </mat-card-content>
-    <app-drop-button></app-drop-button>
+    <app-drop-button (dropped)="hi(i)"></app-drop-button>
     <mat-card-actions>
       <button mat-button class="deleteButton" (click)="onDelete(song.songId, song.name)">
         Delete
