@@ -4,6 +4,7 @@ import { CancelComponent } from "./uiHelper/cancel/cancel.component";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { SongService } from "./songs/song.service";
 import { AuthService } from "./auth/auth-service";
+import { DragDropModule } from "@angular/cdk/drag-drop";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -50,8 +51,8 @@ import { SongCardComponent } from "./browse/song-card/song-card.component";
 import { RandomSongComponent } from "./browse/random-song/random-song.component";
 import { CommentsComponent } from "./comments/comments.component";
 import { ScrollComponent } from "./infiniteScroll/scroll/scroll.component";
-import { DropButtonComponent } from './drop-button/drop-button.component';
-import { AudioPlayerComponent } from './audio-player/audio-player.component';
+import { DropButtonComponent } from "./drop-button/drop-button.component";
+import { AudioPlayerComponent } from "./audio-player/audio-player.component";
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { AudioPlayerComponent } from './audio-player/audio-player.component';
     MatToolbarModule,
     MatListModule,
     MatTabsModule,
+    DragDropModule,
     MatSnackBarModule,
     MatCardModule,
     MatSelectModule,

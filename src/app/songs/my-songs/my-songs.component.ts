@@ -7,10 +7,12 @@ import { CancelComponent } from "./../../uiHelper/cancel/cancel.component";
 import { SongService } from "./../song.service";
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { Song } from "../song.model";
+import { Subject } from "rxjs";
 import { Comment } from "./../../comments/comment.model";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../../app.reducer";
+import * as AUDIO from "./../../audio-player/audio.actions";
 import * as Tone from "tone";
 import { AngularFireStorage } from "@angular/fire/storage";
 
@@ -28,6 +30,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
   mySongSubscription: Subscription;
   allSongsSubscription: Subscription;
   allCommentsSubscription: Subscription;
+  allPlayersSubscription: Subscription;
   mySongs: Song[] = [];
   allComments: Comment[] = [];
   @Output() exit = new EventEmitter();
@@ -42,26 +45,21 @@ export class MySongsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.store.select(fromRoot.getUid).subscribe((uid) => {
-      this.songService.fetchMySongs(uid);
-    });
     this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
     this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
       this.mySongs = songs;
-      for (let i = 0; i < songs.length; i++) {
-        this.toneSounds.push(
-          new Tone.Player({
-            url: "",
-            autostart: false,
-          }).toDestination()
-        );
-      }
+    });
+    this.allPlayersSubscription = this.songService.allPlayersListed.subscribe((players) => {
+      this.toneSounds = players;
     });
 
     this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
       this.allComments = comments;
+    });
+    this.store.select(fromRoot.getUid).subscribe((uid) => {
+      this.songService.fetchMySongs(uid);
     });
     this.commentService.fetchAllComments();
   }

@@ -2,7 +2,7 @@
   <mat-sidenav #sidenav role="navigation"
     ><app-sideNav (close)="sidenav.close()"></app-sideNav
   ></mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content class="example-boundary">
     <app-mainNav (toggle)="sidenav.toggle()"></app-mainNav>
     <main [@routeAnimations]="prepareRoute(outlet)" class="content">
       <router-outlet #outlet="outlet"></router-outlet>

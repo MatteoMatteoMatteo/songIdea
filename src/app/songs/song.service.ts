@@ -5,6 +5,7 @@ import { Subject } from "rxjs";
 import { Song } from "./song.model";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { map } from "rxjs/operators";
+import * as Tone from "tone";
 
 @Injectable()
 export class SongService {
@@ -12,10 +13,12 @@ export class SongService {
   private firebaseSub: Subscription;
   private mySongs: Song[] = [];
   private allSongs: Song[] = [];
+  private allPlayers: Tone.Player[] = [];
   private playingSong: Song;
   songPlaying = new Subject<Song>();
   mySongsListed = new Subject<Song[]>();
   allSongsListed = new Subject<Song[]>();
+  allPlayersListed = new Subject<Tone.Player[]>();
 
   constructor(private db: AngularFirestore, private uiHelperService: UiHelperService) {}
 
@@ -93,6 +96,15 @@ export class SongService {
         (songs: Song[]) => {
           this.mySongs = songs;
           this.mySongsListed.next([...this.mySongs]);
+          for (let i = 0; i < songs.length; i++) {
+            this.allPlayers.push(
+              new Tone.Player({
+                url: "",
+                autostart: false,
+              }).toDestination()
+            );
+          }
+          this.allPlayersListed.next([...this.allPlayers]);
           this.uiHelperService.loadingStateChanged.next(false);
         },
         (error) => {
