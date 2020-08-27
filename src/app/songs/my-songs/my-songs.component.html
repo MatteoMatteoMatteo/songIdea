@@ -3,7 +3,11 @@
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
 
     <mat-card-content> </mat-card-content>
-    <app-drop-button (dropped)="hi(i)"></app-drop-button>
+    <app-drop-button
+      [dropState]="dropState[i]"
+      [songLoading]="songLoading[i]"
+      (dropped)="dropSong(i)"
+    ></app-drop-button>
     <mat-card-actions>
       <button mat-button class="deleteButton" (click)="onDelete(song.songId, song.name)">
         Delete
@@ -18,9 +22,7 @@
     </div>
   </mat-card>
 </div>
-<mat-spinner style="margin: auto;" color="accent" *ngIf="isLoading" diameter="80"></mat-spinner>
+<mat-spinner style="margin: auto" color="accent" *ngIf="isLoading" diameter="80"></mat-spinner>
 <div class="section" *ngIf="!isLoading && mySongs.length === 0">
-  <p class="theP">
-    You have no songs yet, upload your first one! :)
-  </p>
+  <p class="theP">You have no songs yet, upload your first one! :)</p>
 </div>

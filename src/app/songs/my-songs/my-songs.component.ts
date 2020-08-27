@@ -1,3 +1,4 @@
+import { AngularFirestore } from "@angular/fire/firestore";
 import { CommentService } from "./../../comments/comment.service";
 import { MatDialog } from "@angular/material/dialog";
 import { Subscription } from "rxjs";
@@ -10,7 +11,8 @@ import { Comment } from "./../../comments/comment.model";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../../app.reducer";
-import { Howl } from "howler";
+import * as Tone from "tone";
+import { AngularFireStorage } from "@angular/fire/storage";
 
 @Component({
   selector: "app-my-songs",
@@ -18,7 +20,9 @@ import { Howl } from "howler";
   styleUrls: ["./my-songs.component.scss"],
 })
 export class MySongsComponent implements OnInit, OnDestroy {
-  howlerSounds: Howl = [];
+  songLoading: boolean[] = [];
+  dropState: boolean[] = [];
+  toneSounds: Tone.Player[] = [];
   loadingSub: Subscription;
   isLoading: boolean;
   mySongSubscription: Subscription;
@@ -28,6 +32,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
   allComments: Comment[] = [];
   @Output() exit = new EventEmitter();
   constructor(
+    private storage: AngularFireStorage,
     private angularFireAuth: AngularFireAuth,
     private commentService: CommentService,
     private dialog: MatDialog,
@@ -46,15 +51,11 @@ export class MySongsComponent implements OnInit, OnDestroy {
     this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
       this.mySongs = songs;
       for (let i = 0; i < songs.length; i++) {
-        this.howlerSounds.push(
-          new Howl({
-            src: [this.mySongs[i].path],
-            format: ["mp3"],
-            preload: false,
-            onload: function () {
-              this.play();
-            },
-          })
+        this.toneSounds.push(
+          new Tone.Player({
+            url: "",
+            autostart: false,
+          }).toDestination()
         );
       }
     });
@@ -69,11 +70,26 @@ export class MySongsComponent implements OnInit, OnDestroy {
     return this.allComments.filter((comment) => comment.songId === songId);
   }
 
-  hi(id: number) {
-    this.howlerSounds.forEach((element) => {
-      element.stop();
-    });
-    this.howlerSounds[id].load();
+  dropSong(id: number) {
+    if (this.toneSounds[id].state === "stopped") {
+      this.toneSounds.forEach((song) => {
+        song.stop();
+      });
+      if (this.toneSounds[id].loaded === false) {
+        this.songLoading[id] = true;
+        this.toneSounds[id].load(this.mySongs[id].path).then((song) => {
+          this.songLoading[id] = false;
+          song.start();
+          this.dropState[id] = true;
+        });
+      } else {
+        this.toneSounds[id].start();
+        this.dropState[id] = true;
+      }
+    } else {
+      this.toneSounds[id].stop();
+      this.dropState[id] = false;
+    }
   }
 
   onPlay(id: string) {

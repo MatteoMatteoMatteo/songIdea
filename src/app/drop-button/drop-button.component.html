@@ -1,3 +1,4 @@
-<button class="dropButton" (click)="onDrop()">
-  DROP
+<button [ngClass]="dropState ? 'dropped' : null" class="dropButton" (click)="onDrop()">
+  <span *ngIf="!songLoading"> DROP</span>
+  <div *ngIf="songLoading" class="spinner"></div>
 </button>

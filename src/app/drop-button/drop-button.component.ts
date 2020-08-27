@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 
 @Component({
   selector: "app-drop-button",
@@ -7,6 +7,9 @@ import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 })
 export class DropButtonComponent implements OnInit {
   @Output() dropped: EventEmitter<any> = new EventEmitter();
+  @Input() dropState: boolean;
+  @Input() songLoading: boolean;
+
   constructor() {}
 
   ngOnInit(): void {}
