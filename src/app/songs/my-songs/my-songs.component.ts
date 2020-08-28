@@ -60,16 +60,13 @@ export class MySongsComponent implements OnInit, OnDestroy {
     });
     this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
       this.mySongs = songs;
-      console.log(this.mySongs);
     });
-
     this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
       this.allComments = comments;
     });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
       this.songService.fetchMySongs(uid);
     });
-
     this.commentService.fetchAllComments();
   }
 

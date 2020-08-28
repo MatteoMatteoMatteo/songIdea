@@ -2,7 +2,7 @@
 
 .bigDropButton {
   background-color: $first-color;
-  border: solid white 3px;
+  border: solid white 5px;
   color: white;
   padding: 22px 38px;
   min-width: 130px;
@@ -11,12 +11,33 @@
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  font-weight: bolder;
   transition: 300ms ease;
   cursor: pointer;
   outline: none;
 }
 
 .smallDropButton {
+  border: none;
+  background-color: $first-color;
+  color: white;
+  min-height: 40px;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bolder;
+  transition: 0.3s linear;
+  cursor: pointer;
+  outline: none;
+}
+
+.smallDropButton:active {
+  background-color: black;
+  transition: 0s;
+}
+
+.playPauseButton {
   border: none;
   background-color: $first-color;
   color: white;
@@ -32,17 +53,20 @@
   outline: none;
 }
 
-.dropped {
-  -webkit-animation-name: hvr-buzz;
-  animation-name: hvr-buzz;
-  -webkit-animation-duration: 0.15s;
-  animation-duration: 0.15s;
-  -webkit-animation-timing-function: linear;
-  animation-timing-function: linear;
-  -webkit-animation-iteration-count: infinite;
-  animation-iteration-count: infinite;
-}
+// .dropped:focus {
+//   -webkit-animation-name: hvr-buzz;
+//   animation-name: hvr-buzz;
+//   -webkit-animation-duration: 0.21s;
+//   animation-duration: 0.21s;
+//   -webkit-animation-timing-function: linear;
+//   animation-timing-function: linear;
+//   -webkit-animation-iteration-count: infinite;
+//   animation-iteration-count: infinite;
+// }
 
+.dropped {
+  background-color: black;
+}
 @-webkit-keyframes hvr-buzz {
   50% {
     -webkit-transform: translateX(3px) rotate(2deg);

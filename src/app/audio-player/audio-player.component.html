@@ -1,26 +1,28 @@
-<div class="audioPlayer" cdkDragBoundary=".example-boundary" cdkDrag>
-  <div>This Song is Playing</div>
+<div *ngIf="!isLoading" class="audioPlayer" cdkDragBoundary=".example-boundary" cdkDrag>
+  <div class="songTitle">{{ mySongs[whichSongIsDropping].name }}</div>
   <div class="audioPlayerButtonHolder">
     <app-drop-button
       class="audioPlayerButton"
-      [buttonStyling]="buttonStyling"
+      [buttonStyling]="playPauseButton"
       [spinnerStyling]="spinnerStyling"
       [buttonTitle]="playStopTitle"
-      [dropStates]="dropStates[1]"
-      [songsLoading]="songsLoading[1]"
-      (dropped)="dropSong(1)"
-    ></app-drop-button>
-    <!-- <app-drop-button
-      class="audioPlayerButton"
-      [buttonStyling]="buttonStyling"
-      [spinnerStyling]="spinnerStyling"
-      [buttonTitle]="stopTitle"
+      [dropStates]="dropStates[whichSongIsDropping]"
+      [songsLoading]="songsLoading[whichSongIsDropping]"
+      (dropped)="dropSong(whichSongIsDropping)"
     ></app-drop-button>
     <app-drop-button
       class="audioPlayerButton"
       [buttonStyling]="buttonStyling"
       [spinnerStyling]="spinnerStyling"
       [buttonTitle]="nextTitle"
-    ></app-drop-button> -->
+      (dropped)="dropSong(whichSongIsDropping + 1)"
+    ></app-drop-button>
+    <app-drop-button
+      class="audioPlayerButton"
+      [buttonStyling]="buttonStyling"
+      [spinnerStyling]="spinnerStyling"
+      [buttonTitle]="previousTitle"
+      (dropped)="dropSong(whichSongIsDropping - 1)"
+    ></app-drop-button>
   </div>
 </div>

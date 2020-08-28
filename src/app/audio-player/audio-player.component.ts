@@ -1,3 +1,4 @@
+import { UiHelperService } from "./../uiHelper/uiHelper.service";
 import { Song } from "./../songs/song.model";
 import { SongService } from "./../songs/song.service";
 import { Subscription } from "rxjs";
@@ -16,16 +17,33 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   dropStates: boolean[] = [];
   dropStatesSub: Subscription;
   buttonStyling = "smallDropButton";
+  playPauseButton = "playPauseButton";
   spinnerStyling = "smallSpinner";
   playStopTitle = "PLAY | STOP";
-
+  nextTitle = "NEXT";
+  previousTitle = "BACK";
   mySongs: Song[] = [];
   mySongSubscription: Subscription;
-  constructor(private store: Store<fromRoot.State>, private songService: SongService) {}
+  whichSongIsDroppingSub: Subscription;
+  loadingSub: Subscription;
+  isLoading = true;
+  whichSongIsDropping = 0;
+  constructor(
+    private store: Store<fromRoot.State>,
+    private songService: SongService,
+    private uiHelperService: UiHelperService
+  ) {}
 
   ngOnInit(): void {
+    this.whichSongIsDroppingSub = this.songService.whichSongIsDroppingListed.subscribe((songId) => {
+      this.whichSongIsDropping = songId;
+    });
     this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
       this.mySongs = songs;
+      console.log(this.mySongs);
+    });
+    this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
+      this.isLoading = isLoading;
     });
     this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
       this.dropStates = dropStates;
@@ -41,5 +59,9 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.mySongSubscription.unsubscribe();
+    this.whichSongIsDroppingSub.unsubscribe();
+    this.dropStatesSub.unsubscribe();
+    this.songsLoadingSub.unsubscribe();
+    this.loadingSub.unsubscribe();
   }
 }

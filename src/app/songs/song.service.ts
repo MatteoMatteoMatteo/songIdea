@@ -13,6 +13,8 @@ import * as AUDIO from "./../audio-player/audio.actions";
 @Injectable()
 export class SongService {
   uid: string;
+  whichSongIsDropping: number;
+  whichSongIsDroppingListed = new Subject<number>();
   private firebaseSub: Subscription;
   private mySongs: Song[] = [];
   private allSongs: Song[] = [];
@@ -30,29 +32,35 @@ export class SongService {
   }
 
   dropSong(id: number) {
-    if (this.mySongs[id].player.state === "stopped") {
-      this.mySongs.forEach((song) => {
-        song.player.stop();
-      });
-      if (this.mySongs[id].player.loaded === false) {
-        this.songLoading[id] = true;
-        this.songLoadingListed.next([...this.songLoading]);
-        this.mySongs[id].player.load(this.mySongs[id].path).then(() => {
-          this.mySongs[id].player.start();
-          this.songLoading[id] = false;
+    if (id >= 0 && id < this.mySongs.length) {
+      this.whichSongIsDropping = id;
+      this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
+      if (this.mySongs[id].player.state === "stopped") {
+        this.dropState.fill(false);
+        this.dropStateListed.next([...this.dropState]);
+        this.mySongs.forEach((song) => {
+          song.player.stop();
+        });
+        if (this.mySongs[id].player.loaded === false) {
+          this.songLoading[id] = true;
           this.songLoadingListed.next([...this.songLoading]);
+          this.mySongs[id].player.load(this.mySongs[id].path).then(() => {
+            this.mySongs[id].player.start();
+            this.songLoading[id] = false;
+            this.songLoadingListed.next([...this.songLoading]);
+            this.dropState[id] = true;
+            this.dropStateListed.next([...this.dropState]);
+          });
+        } else {
+          this.mySongs[id].player.start();
           this.dropState[id] = true;
           this.dropStateListed.next([...this.dropState]);
-        });
+        }
       } else {
-        this.mySongs[id].player.start();
-        this.dropState[id] = true;
+        this.mySongs[id].player.stop();
+        this.dropState[id] = false;
         this.dropStateListed.next([...this.dropState]);
       }
-    } else {
-      this.mySongs[id].player.stop();
-      this.dropState[id] = false;
-      this.dropStateListed.next([...this.dropState]);
     }
   }
 
