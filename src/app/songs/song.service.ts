@@ -16,13 +16,44 @@ export class SongService {
   private firebaseSub: Subscription;
   private mySongs: Song[] = [];
   private allSongs: Song[] = [];
+  private songLoading: boolean[] = [];
+  private dropState: boolean[] = [];
   mySongsListed = new Subject<Song[]>();
   allSongsListed = new Subject<Song[]>();
+  songLoadingListed = new Subject<boolean[]>();
+  dropStateListed = new Subject<boolean[]>();
 
   constructor(private db: AngularFirestore, private uiHelperService: UiHelperService) {}
 
   getMySongs() {
     return this.mySongs.slice();
+  }
+
+  dropSong(id: number) {
+    if (this.mySongs[id].player.state === "stopped") {
+      this.mySongs.forEach((song) => {
+        song.player.stop();
+      });
+      if (this.mySongs[id].player.loaded === false) {
+        this.songLoading[id] = true;
+        this.songLoadingListed.next([...this.songLoading]);
+        this.mySongs[id].player.load(this.mySongs[id].path).then(() => {
+          this.mySongs[id].player.start();
+          this.songLoading[id] = false;
+          this.songLoadingListed.next([...this.songLoading]);
+          this.dropState[id] = true;
+          this.dropStateListed.next([...this.dropState]);
+        });
+      } else {
+        this.mySongs[id].player.start();
+        this.dropState[id] = true;
+        this.dropStateListed.next([...this.dropState]);
+      }
+    } else {
+      this.mySongs[id].player.stop();
+      this.dropState[id] = false;
+      this.dropStateListed.next([...this.dropState]);
+    }
   }
 
   uploadSong(songName: string, songGenre: string, url: string, uid: string) {

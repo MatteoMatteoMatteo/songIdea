@@ -2,6 +2,7 @@
 
 .audioPlayer {
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
   padding: 20px;
   text-align: center;
@@ -18,18 +19,8 @@
   cursor: grab;
 }
 
-.audioButton {
-  background-color: $first-color;
-  border: solid white 3px;
-  color: white;
-  padding: 10px;
-  border-radius: 6px;
-  margin-left: 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  transition: 300ms ease;
-  cursor: pointer;
-  outline: none;
+.audioPlayerButtonHolder {
+  width: 80%;
+  display: flex;
+  justify-content: space-evenly;
 }

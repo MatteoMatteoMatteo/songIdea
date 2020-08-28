@@ -22,8 +22,13 @@ import { AngularFireStorage } from "@angular/fire/storage";
   styleUrls: ["./my-songs.component.scss"],
 })
 export class MySongsComponent implements OnInit, OnDestroy {
-  songLoading: boolean[] = [];
-  dropState: boolean[] = [];
+  buttonStyling = "bigDropButton";
+  spinnerStyling = "bigSpinner";
+  buttonTitle = "DROP";
+  songsLoading: boolean[] = [];
+  songsLoadingSub: Subscription;
+  dropStates: boolean[] = [];
+  dropStatesSub: Subscription;
   loadingSub: Subscription;
   isLoading: boolean;
   mySongSubscription: Subscription;
@@ -44,6 +49,12 @@ export class MySongsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
+      this.dropStates = dropStates;
+    });
+    this.songsLoadingSub = this.songService.songLoadingListed.subscribe((songsLoading) => {
+      this.songsLoading = songsLoading;
+    });
     this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
@@ -67,25 +78,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
   }
 
   dropSong(id: number) {
-    if (this.mySongs[id].player.state === "stopped") {
-      this.mySongs.forEach((song) => {
-        song.player.stop();
-      });
-      if (this.mySongs[id].player.loaded === false) {
-        this.songLoading[id] = true;
-        this.mySongs[id].player.load(this.mySongs[id].path).then(() => {
-          this.mySongs[id].player.start();
-          this.songLoading[id] = false;
-          this.dropState[id] = true;
-        });
-      } else {
-        this.mySongs[id].player.start();
-        this.dropState[id] = true;
-      }
-    } else {
-      this.mySongs[id].player.stop();
-      this.dropState[id] = false;
-    }
+    this.songService.dropSong(id);
   }
 
   onPlay(id: string) {
@@ -111,5 +104,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
       this.mySongSubscription.unsubscribe();
     }
     this.loadingSub.unsubscribe();
+    this.dropStatesSub.unsubscribe();
+    this.songsLoadingSub.unsubscribe();
   }
 }

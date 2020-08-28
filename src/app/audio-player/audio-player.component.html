@@ -1,9 +1,26 @@
 <div class="audioPlayer" cdkDragBoundary=".example-boundary" cdkDrag>
-  <div>
-    <button class="audioButton" (click)="play()">PLAY</button>
-    <button class="audioButton" (click)="stop()">STOP</button>
-    <button class="audioButton" (click)="next()">NEXT</button>
-  </div>
-
   <div>This Song is Playing</div>
+  <div class="audioPlayerButtonHolder">
+    <app-drop-button
+      class="audioPlayerButton"
+      [buttonStyling]="buttonStyling"
+      [spinnerStyling]="spinnerStyling"
+      [buttonTitle]="playStopTitle"
+      [dropStates]="dropStates[1]"
+      [songsLoading]="songsLoading[1]"
+      (dropped)="dropSong(1)"
+    ></app-drop-button>
+    <!-- <app-drop-button
+      class="audioPlayerButton"
+      [buttonStyling]="buttonStyling"
+      [spinnerStyling]="spinnerStyling"
+      [buttonTitle]="stopTitle"
+    ></app-drop-button>
+    <app-drop-button
+      class="audioPlayerButton"
+      [buttonStyling]="buttonStyling"
+      [spinnerStyling]="spinnerStyling"
+      [buttonTitle]="nextTitle"
+    ></app-drop-button> -->
+  </div>
 </div>

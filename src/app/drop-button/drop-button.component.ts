@@ -6,9 +6,12 @@ import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
   styleUrls: ["./drop-button.component.scss"],
 })
 export class DropButtonComponent implements OnInit {
+  @Input() spinnerStyling: string;
+  @Input() buttonStyling: string;
   @Output() dropped: EventEmitter<any> = new EventEmitter();
-  @Input() dropState: boolean;
-  @Input() songLoading: boolean;
+  @Input() dropStates: boolean;
+  @Input() songsLoading: boolean;
+  @Input() buttonTitle: string;
 
   constructor() {}
 

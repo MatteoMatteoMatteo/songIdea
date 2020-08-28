@@ -1,6 +1,6 @@
 @import "./../../utilities/variables.scss";
 
-.dropButton {
+.bigDropButton {
   background-color: $first-color;
   border: solid white 3px;
   color: white;
@@ -16,7 +16,23 @@
   outline: none;
 }
 
-.dropped:focus {
+.smallDropButton {
+  border: none;
+  background-color: $first-color;
+  color: white;
+  min-width: 130px;
+  min-height: 40px;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bolder;
+  transition: 300ms ease;
+  cursor: pointer;
+  outline: none;
+}
+
+.dropped {
   -webkit-animation-name: hvr-buzz;
   animation-name: hvr-buzz;
   -webkit-animation-duration: 0.15s;
@@ -61,10 +77,20 @@
   }
 }
 
-.spinner {
+.bigSpinner {
   margin: auto;
   width: 34px;
   height: 34px;
+  background-color: white;
+  border-radius: 100%;
+  -webkit-animation: sk-scaleout 1s infinite ease-in-out;
+  animation: sk-scaleout 1s infinite ease-in-out;
+}
+
+.smallSpinner {
+  margin: auto;
+  width: 15px;
+  height: 15px;
   background-color: white;
   border-radius: 100%;
   -webkit-animation: sk-scaleout 1s infinite ease-in-out;

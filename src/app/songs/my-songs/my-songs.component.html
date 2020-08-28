@@ -4,9 +4,12 @@
 
     <mat-card-content> </mat-card-content>
     <app-drop-button
-      [dropState]="dropState[i]"
-      [songLoading]="songLoading[i]"
+      [dropStates]="dropStates[i]"
+      [songsLoading]="songsLoading[i]"
       (dropped)="dropSong(i)"
+      [buttonStyling]="buttonStyling"
+      [spinnerStyling]="spinnerStyling"
+      [buttonTitle]="buttonTitle"
     ></app-drop-button>
     <mat-card-actions>
       <button mat-button class="deleteButton" (click)="onDelete(song.songId, song.name)">

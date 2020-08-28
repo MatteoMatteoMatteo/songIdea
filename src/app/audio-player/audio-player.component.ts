@@ -11,6 +11,14 @@ import * as fromRoot from "../app.reducer";
   styleUrls: ["./audio-player.component.scss"],
 })
 export class AudioPlayerComponent implements OnInit, OnDestroy {
+  songsLoading: boolean[] = [];
+  songsLoadingSub: Subscription;
+  dropStates: boolean[] = [];
+  dropStatesSub: Subscription;
+  buttonStyling = "smallDropButton";
+  spinnerStyling = "smallSpinner";
+  playStopTitle = "PLAY | STOP";
+
   mySongs: Song[] = [];
   mySongSubscription: Subscription;
   constructor(private store: Store<fromRoot.State>, private songService: SongService) {}
@@ -19,31 +27,16 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
       this.mySongs = songs;
     });
+    this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
+      this.dropStates = dropStates;
+    });
+    this.songsLoadingSub = this.songService.songLoadingListed.subscribe((songsLoading) => {
+      this.songsLoading = songsLoading;
+    });
   }
 
-  play() {
-    if (this.mySongs[2].player.loaded === false) {
-      this.mySongs[2].player.load(this.mySongs[2].path).then(() => {
-        this.mySongs[2].player.start();
-      });
-    } else {
-      this.mySongs[2].player.start();
-    }
-  }
-
-  stop() {
-    this.mySongs.forEach((song) => song.player.stop());
-  }
-
-  next() {
-    this.stop();
-    if (this.mySongs[3].player.loaded === false) {
-      this.mySongs[3].player.load(this.mySongs[3].path).then(() => {
-        this.mySongs[3].player.start();
-      });
-    } else {
-      this.mySongs[3].player.start();
-    }
+  dropSong(id) {
+    this.songService.dropSong(id);
   }
 
   ngOnDestroy() {
