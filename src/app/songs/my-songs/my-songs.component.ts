@@ -34,9 +34,9 @@ export class MySongsComponent implements OnInit, OnDestroy {
   mySongSubscription: Subscription;
   allSongsSubscription: Subscription;
   allCommentsSubscription: Subscription;
-  allPlayersSubscription: Subscription;
   mySongs: Song[] = [];
   allComments: Comment[] = [];
+  whichSongIsDropping: number;
   @Output() exit = new EventEmitter();
   constructor(
     private storage: AngularFireStorage,
@@ -49,6 +49,10 @@ export class MySongsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.whichSongIsDropping = this.songService.whichSongIsDropping;
+    if (this.whichSongIsDropping >= 0) {
+      this.dropStates[this.whichSongIsDropping] = true;
+    }
     this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
       this.dropStates = dropStates;
     });

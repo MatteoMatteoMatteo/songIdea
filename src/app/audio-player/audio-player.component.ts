@@ -22,8 +22,8 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   playStopTitle = "PLAY | STOP";
   nextTitle = "NEXT";
   previousTitle = "BACK";
-  mySongs: Song[] = [];
-  mySongSubscription: Subscription;
+  allSongs: Song[] = [];
+  allSongSubscription: Subscription;
   whichSongIsDroppingSub: Subscription;
   loadingSub: Subscription;
   isLoading = true;
@@ -38,18 +38,17 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.whichSongIsDroppingSub = this.songService.whichSongIsDroppingListed.subscribe((songId) => {
       this.whichSongIsDropping = songId;
     });
-    this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
-      this.mySongs = songs;
-      console.log(this.mySongs);
-    });
-    this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
-      this.isLoading = isLoading;
+    this.allSongSubscription = this.songService.allSongsListed.subscribe((songs) => {
+      this.allSongs = songs;
     });
     this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
       this.dropStates = dropStates;
     });
     this.songsLoadingSub = this.songService.songLoadingListed.subscribe((songsLoading) => {
       this.songsLoading = songsLoading;
+    });
+    this.loadingSub = this.uiHelperService.allSongsLoadingStateChanged.subscribe((isLoading) => {
+      this.isLoading = isLoading;
     });
   }
 
@@ -58,7 +57,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.mySongSubscription.unsubscribe();
+    this.allSongSubscription.unsubscribe();
     this.whichSongIsDroppingSub.unsubscribe();
     this.dropStatesSub.unsubscribe();
     this.songsLoadingSub.unsubscribe();

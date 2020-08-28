@@ -1,11 +1,15 @@
 <div fxFlex.xs="100%" class="allSongs" *ngIf="!isLoading">
-  <mat-card class="songCard" *ngFor="let song of allSongs" [value]="song.songId">
+  <mat-card class="songCard" *ngFor="let song of allSongs; let i = index" [value]="song.songId">
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
     <mat-card-content></mat-card-content>
-    <audio controls preload="none" class="audioControl">
-      <source [src]="song.path" />
-      Your browser does not support the audio element.
-    </audio>
+    <app-drop-button
+      [dropStates]="dropStates[i]"
+      [songsLoading]="songsLoading[i]"
+      (dropped)="dropSong(i)"
+      [buttonStyling]="buttonStyling"
+      [spinnerStyling]="spinnerStyling"
+      [buttonTitle]="buttonTitle"
+    ></app-drop-button>
     <h2 class="h2"><span class="span">Write a Comment</span></h2>
 
     <form class="writeComment" (ngSubmit)="onAddComment(f, song.songId)" #f="ngForm">
@@ -14,9 +18,7 @@
         <textarea matInput ngModel name="content"></textarea>
       </mat-form-field>
       <mat-card-actions [ngStyle]="{ marginBottom: '0px', marginTop: '0px' }">
-        <button mat-button type="submit" [disabled]="f.invalid">
-          Post
-        </button>
+        <button mat-button type="submit" [disabled]="f.invalid">Post</button>
       </mat-card-actions>
     </form>
 
@@ -28,4 +30,4 @@
     </div>
   </mat-card>
 </div>
-<mat-spinner diameter="80" color="accent" style="margin: auto;" *ngIf="isLoading"></mat-spinner>
+<mat-spinner diameter="80" color="accent" style="margin: auto" *ngIf="isLoading"></mat-spinner>

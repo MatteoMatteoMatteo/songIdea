@@ -32,32 +32,32 @@ export class SongService {
   }
 
   dropSong(id: number) {
-    if (id >= 0 && id < this.mySongs.length) {
+    if (id >= 0 && id < this.allSongs.length) {
       this.whichSongIsDropping = id;
       this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
-      if (this.mySongs[id].player.state === "stopped") {
+      if (this.allSongs[id].player.state === "stopped") {
         this.dropState.fill(false);
         this.dropStateListed.next([...this.dropState]);
-        this.mySongs.forEach((song) => {
+        this.allSongs.forEach((song) => {
           song.player.stop();
         });
-        if (this.mySongs[id].player.loaded === false) {
+        if (this.allSongs[id].player.loaded === false) {
           this.songLoading[id] = true;
           this.songLoadingListed.next([...this.songLoading]);
-          this.mySongs[id].player.load(this.mySongs[id].path).then(() => {
-            this.mySongs[id].player.start();
+          this.allSongs[id].player.load(this.allSongs[id].path).then(() => {
+            this.allSongs[id].player.start();
             this.songLoading[id] = false;
             this.songLoadingListed.next([...this.songLoading]);
             this.dropState[id] = true;
             this.dropStateListed.next([...this.dropState]);
           });
         } else {
-          this.mySongs[id].player.start();
+          this.allSongs[id].player.start();
           this.dropState[id] = true;
           this.dropStateListed.next([...this.dropState]);
         }
       } else {
-        this.mySongs[id].player.stop();
+        this.allSongs[id].player.stop();
         this.dropState[id] = false;
         this.dropStateListed.next([...this.dropState]);
       }
@@ -89,15 +89,19 @@ export class SongService {
   }
 
   fetchAllSongs() {
-    this.uiHelperService.loadingStateChanged.next(true);
+    this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.firebaseSub = this.db
-      .collection("songs")
+      .collection("songs", (ref) => ref.orderBy("name"))
       .snapshotChanges()
       .pipe(
         map((docArray) => {
           return docArray.map((doc) => {
             return {
               songId: doc.payload.doc.id,
+              player: new Tone.Player({
+                url: "",
+                autostart: false,
+              }).toDestination(),
               ...(doc.payload.doc.data() as Song),
             };
           });
@@ -107,10 +111,10 @@ export class SongService {
         (songs: Song[]) => {
           this.allSongs = songs;
           this.allSongsListed.next([...this.allSongs]);
-          this.uiHelperService.loadingStateChanged.next(false);
+          this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },
         (error) => {
-          this.uiHelperService.loadingStateChanged.next(false);
+          this.uiHelperService.allSongsLoadingStateChanged.next(false);
         }
       );
   }

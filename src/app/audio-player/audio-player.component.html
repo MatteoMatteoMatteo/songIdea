@@ -1,5 +1,5 @@
 <div *ngIf="!isLoading" class="audioPlayer" cdkDragBoundary=".example-boundary" cdkDrag>
-  <div class="songTitle">{{ mySongs[whichSongIsDropping].name }}</div>
+  <div class="songTitle">{{ allSongs[whichSongIsDropping].name }}</div>
   <div class="audioPlayerButtonHolder">
     <app-drop-button
       class="audioPlayerButton"

@@ -1,3 +1,4 @@
+import { SongService } from "./../../songs/song.service";
 import { Subscription } from "rxjs";
 import { CommentService } from "./../../comments/comment.service";
 import { NgForm } from "@angular/forms";
@@ -13,24 +14,48 @@ import * as fromRoot from "../../app.reducer";
   styleUrls: ["./song-card.component.scss"],
 })
 export class SongCardComponent implements OnInit {
-  @Input() isLoading: boolean;
-  @Input() allSongs: Song[];
+  isLoading: true;
+  allSongs: Song[];
   comments: Comment[] = [];
   uid: string;
-  allCommentsSubscription: Subscription;
-  allComments: Comment[] = [];
   myComments: Comment[] = [];
+  buttonStyling = "bigDropButton";
+  spinnerStyling = "bigSpinner";
+  buttonTitle = "DROP";
+  songsLoading: boolean[] = [];
+  songsLoadingSub: Subscription;
+  dropStates: boolean[] = [];
+  dropStatesSub: Subscription;
+  whichSongIsDropping: number;
+  allCommentsSubscription: Subscription;
+  allSongsSubscription: Subscription;
+  allComments: Comment[] = [];
 
-  constructor(private commentService: CommentService, private store: Store<fromRoot.State>) {}
+  constructor(private commentService: CommentService, private songService: SongService) {}
 
   ngOnInit(): void {
+    this.whichSongIsDropping = this.songService.whichSongIsDropping;
+    if (this.whichSongIsDropping >= 0) {
+      this.dropStates[this.whichSongIsDropping] = true;
+    }
+    this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
+      this.dropStates = dropStates;
+    });
+    this.songsLoadingSub = this.songService.songLoadingListed.subscribe((songsLoading) => {
+      this.songsLoading = songsLoading;
+    });
     this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
       this.allComments = comments;
     });
-    this.store.select(fromRoot.getUid).subscribe((uid) => {
-      this.uid = uid;
+    this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
+      this.allSongs = songs;
     });
+    this.songService.fetchAllSongs();
     this.commentService.fetchAllComments();
+  }
+
+  dropSong(id: number) {
+    this.songService.dropSong(id);
   }
 
   getMyComments(songId: string) {
