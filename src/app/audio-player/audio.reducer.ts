@@ -2,7 +2,7 @@ import { AudioActions, SET_AUDIO } from "./audio.actions";
 import * as Tone from "tone";
 
 export interface State {
-  audio: Tone.Player[];
+  audio: any[];
 }
 
 const initialState: State = {

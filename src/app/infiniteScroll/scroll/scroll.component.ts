@@ -32,7 +32,6 @@ export class ScrollComponent {
   }
 
   getBatch(offset) {
-    console.log(offset);
     return this.db
       .collection("songs", (ref) => ref.orderBy("name").startAfter(offset).limit(this.batch))
       .snapshotChanges()
@@ -55,7 +54,7 @@ export class ScrollComponent {
 
     const end = this.viewport.getRenderedRange().end;
     const total = this.viewport.getDataLength();
-    console.log(`${end}, '>=', ${total}`);
+
     if (end === total) {
       this.offset.next(offset);
     }

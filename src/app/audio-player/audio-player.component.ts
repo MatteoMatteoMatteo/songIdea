@@ -1,46 +1,52 @@
 import { Song } from "./../songs/song.model";
 import { SongService } from "./../songs/song.service";
 import { Subscription } from "rxjs";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../app.reducer";
-import * as Tone from "tone";
 
 @Component({
   selector: "app-audio-player",
   templateUrl: "./audio-player.component.html",
   styleUrls: ["./audio-player.component.scss"],
 })
-export class AudioPlayerComponent implements OnInit {
-  toneSounds: Tone.Player[];
+export class AudioPlayerComponent implements OnInit, OnDestroy {
   mySongs: Song[] = [];
-  allPlayersSubscription: Subscription;
   mySongSubscription: Subscription;
   constructor(private store: Store<fromRoot.State>, private songService: SongService) {}
 
   ngOnInit(): void {
-    this.allPlayersSubscription = this.songService.allPlayersListed.subscribe((players) => {
-      this.toneSounds = players;
-    });
     this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
       this.mySongs = songs;
     });
   }
 
-  lol() {
-    if (this.toneSounds[0].state === "stopped") {
-      this.toneSounds.forEach((song) => {
-        song.stop();
+  play() {
+    if (this.mySongs[2].player.loaded === false) {
+      this.mySongs[2].player.load(this.mySongs[2].path).then(() => {
+        this.mySongs[2].player.start();
       });
-      if (this.toneSounds[0].loaded === false) {
-        this.toneSounds[0].load(this.mySongs[0].path).then((song) => {
-          song.start();
-        });
-      } else {
-        this.toneSounds[0].start();
-      }
     } else {
-      this.toneSounds[0].stop();
+      this.mySongs[2].player.start();
     }
+  }
+
+  stop() {
+    this.mySongs.forEach((song) => song.player.stop());
+  }
+
+  next() {
+    this.stop();
+    if (this.mySongs[3].player.loaded === false) {
+      this.mySongs[3].player.load(this.mySongs[3].path).then(() => {
+        this.mySongs[3].player.start();
+      });
+    } else {
+      this.mySongs[3].player.start();
+    }
+  }
+
+  ngOnDestroy() {
+    this.mySongSubscription.unsubscribe();
   }
 }

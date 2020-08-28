@@ -6,6 +6,9 @@ import { Song } from "./song.model";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { map } from "rxjs/operators";
 import * as Tone from "tone";
+import { Store } from "@ngrx/store";
+import * as fromRoot from "./../app.reducer";
+import * as AUDIO from "./../audio-player/audio.actions";
 
 @Injectable()
 export class SongService {
@@ -13,12 +16,8 @@ export class SongService {
   private firebaseSub: Subscription;
   private mySongs: Song[] = [];
   private allSongs: Song[] = [];
-  private allPlayers: Tone.Player[] = [];
-  private playingSong: Song;
-  songPlaying = new Subject<Song>();
   mySongsListed = new Subject<Song[]>();
   allSongsListed = new Subject<Song[]>();
-  allPlayersListed = new Subject<Tone.Player[]>();
 
   constructor(private db: AngularFirestore, private uiHelperService: UiHelperService) {}
 
@@ -42,8 +41,8 @@ export class SongService {
 
   playSong(selectedId: String) {
     // this.db.doc("songs/" + selectedId).update({ lastPlayed: new Date() });
-    this.playingSong = this.mySongs.find((song) => song.songId === selectedId);
-    this.songPlaying.next({ ...this.playingSong });
+    // this.playingSong = this.mySongs.find((song) => song.songId === selectedId);
+    // this.songPlaying.next({ ...this.playingSong });
   }
 
   deleteSong(selectedId: String) {
@@ -87,6 +86,10 @@ export class SongService {
           return docArray.map((doc) => {
             return {
               songId: doc.payload.doc.id,
+              player: new Tone.Player({
+                url: "",
+                autostart: false,
+              }).toDestination(),
               ...(doc.payload.doc.data() as Song),
             };
           });
@@ -96,15 +99,6 @@ export class SongService {
         (songs: Song[]) => {
           this.mySongs = songs;
           this.mySongsListed.next([...this.mySongs]);
-          for (let i = 0; i < songs.length; i++) {
-            this.allPlayers.push(
-              new Tone.Player({
-                url: "",
-                autostart: false,
-              }).toDestination()
-            );
-          }
-          this.allPlayersListed.next([...this.allPlayers]);
           this.uiHelperService.loadingStateChanged.next(false);
         },
         (error) => {

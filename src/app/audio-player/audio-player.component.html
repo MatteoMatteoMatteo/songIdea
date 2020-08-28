@@ -1,7 +1,8 @@
-<div class="audioPlayer" cdkDragBoundary=".example-boundary" cdkDrag (click)="lol()">
+<div class="audioPlayer" cdkDragBoundary=".example-boundary" cdkDrag>
   <div>
-    <button class="audioButton">PLAY</button> <button class="audioButton">PAUSE</button>
-    <button class="audioButton">NEXT</button>
+    <button class="audioButton" (click)="play()">PLAY</button>
+    <button class="audioButton" (click)="stop()">STOP</button>
+    <button class="audioButton" (click)="next()">NEXT</button>
   </div>
 
   <div>This Song is Playing</div>

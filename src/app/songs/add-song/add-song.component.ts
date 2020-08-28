@@ -55,7 +55,7 @@ export class AddSongComponent implements OnInit {
   ngOnInit() {
     this.store.select(fromRoot.getUid).subscribe((uid) => {
       this.uid = uid;
-      this.songService.fetchMySongs(this.uid);
+      // this.songService.fetchMySongs(this.uid);
     });
 
     this.genres.sort();

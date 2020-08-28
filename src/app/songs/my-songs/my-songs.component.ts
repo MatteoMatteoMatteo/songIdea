@@ -24,7 +24,6 @@ import { AngularFireStorage } from "@angular/fire/storage";
 export class MySongsComponent implements OnInit, OnDestroy {
   songLoading: boolean[] = [];
   dropState: boolean[] = [];
-  toneSounds: Tone.Player[] = [];
   loadingSub: Subscription;
   isLoading: boolean;
   mySongSubscription: Subscription;
@@ -50,9 +49,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
     });
     this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
       this.mySongs = songs;
-    });
-    this.allPlayersSubscription = this.songService.allPlayersListed.subscribe((players) => {
-      this.toneSounds = players;
+      console.log(this.mySongs);
     });
 
     this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
@@ -61,6 +58,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
     this.store.select(fromRoot.getUid).subscribe((uid) => {
       this.songService.fetchMySongs(uid);
     });
+
     this.commentService.fetchAllComments();
   }
 
@@ -69,23 +67,23 @@ export class MySongsComponent implements OnInit, OnDestroy {
   }
 
   dropSong(id: number) {
-    if (this.toneSounds[id].state === "stopped") {
-      this.toneSounds.forEach((song) => {
-        song.stop();
+    if (this.mySongs[id].player.state === "stopped") {
+      this.mySongs.forEach((song) => {
+        song.player.stop();
       });
-      if (this.toneSounds[id].loaded === false) {
+      if (this.mySongs[id].player.loaded === false) {
         this.songLoading[id] = true;
-        this.toneSounds[id].load(this.mySongs[id].path).then((song) => {
+        this.mySongs[id].player.load(this.mySongs[id].path).then(() => {
+          this.mySongs[id].player.start();
           this.songLoading[id] = false;
-          song.start();
           this.dropState[id] = true;
         });
       } else {
-        this.toneSounds[id].start();
+        this.mySongs[id].player.start();
         this.dropState[id] = true;
       }
     } else {
-      this.toneSounds[id].stop();
+      this.mySongs[id].player.stop();
       this.dropState[id] = false;
     }
   }

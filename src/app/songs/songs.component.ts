@@ -8,10 +8,9 @@ import { MatTabGroup } from "@angular/material/tabs";
   templateUrl: "./songs.component.html",
   styleUrls: ["./songs.component.scss"],
 })
-export class SongsComponent implements OnInit, OnDestroy {
+export class SongsComponent implements OnInit {
   @ViewChild("switchTab", { static: false }) switchTab: MatTabGroup;
   songOn = false;
-  songSubscription: Subscription;
 
   constructor(private songService: SongService) {}
 
@@ -23,19 +22,5 @@ export class SongsComponent implements OnInit, OnDestroy {
     tabGroup.selectedIndex = (tabGroup.selectedIndex - 1) % tabCount;
   }
 
-  ngOnInit(): void {
-    this.songSubscription = this.songService.songPlaying.subscribe((song) => {
-      if (song) {
-        this.songOn = true;
-      } else {
-        this.songOn = false;
-      }
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.songSubscription) {
-      this.songSubscription.unsubscribe();
-    }
-  }
+  ngOnInit(): void {}
 }

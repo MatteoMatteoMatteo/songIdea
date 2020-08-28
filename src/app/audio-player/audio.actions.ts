@@ -4,7 +4,7 @@ import * as Tone from "tone";
 
 export class SetAudio implements Action {
   readonly type = SET_AUDIO;
-  constructor(public payload: Tone.Player[]) {}
+  constructor(public payload: any[]) {}
 }
 
 export type AudioActions = SetAudio;
