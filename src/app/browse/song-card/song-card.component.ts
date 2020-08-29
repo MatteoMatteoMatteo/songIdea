@@ -31,7 +31,11 @@ export class SongCardComponent implements OnInit {
   allSongsSubscription: Subscription;
   allComments: Comment[] = [];
 
-  constructor(private commentService: CommentService, private songService: SongService) {}
+  constructor(
+    private commentService: CommentService,
+    private songService: SongService,
+    private store: Store<fromRoot.State>
+  ) {}
 
   ngOnInit(): void {
     this.whichSongIsDropping = this.songService.whichSongIsDropping;
@@ -49,6 +53,9 @@ export class SongCardComponent implements OnInit {
     });
     this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
       this.allSongs = songs;
+    });
+    this.store.select(fromRoot.getUid).subscribe((uid) => {
+      this.uid = uid;
     });
     this.songService.fetchAllSongs();
     this.commentService.fetchAllComments();

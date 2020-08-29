@@ -5,11 +5,13 @@
   flex-wrap: wrap;
   margin: auto;
   justify-content: space-between;
-  align-content: center;
+
   padding: 0px 100px;
 }
 
 .songCard {
+  align-content: center;
+  width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -12,7 +12,7 @@
     ></app-drop-button>
     <h2 class="h2"><span class="span">Write a Comment</span></h2>
 
-    <form class="writeComment" (ngSubmit)="onAddComment(f, song.songId)" #f="ngForm">
+    <form class="writeComment" (ngSubmit)="onAddComment(f, song.songId, song.userId)" #f="ngForm">
       <mat-form-field appearance="" color="accent">
         <mat-label>Sounds good?</mat-label>
         <textarea matInput ngModel name="content"></textarea>

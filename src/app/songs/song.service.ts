@@ -109,7 +109,9 @@ export class SongService {
       )
       .subscribe(
         (songs: Song[]) => {
-          this.allSongs = songs;
+          if (this.allSongs.length != songs.length) {
+            this.allSongs = songs;
+          }
           this.allSongsListed.next([...this.allSongs]);
           this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },

@@ -2,15 +2,14 @@
 
 .allSongs {
   display: flex;
-  flex-wrap: wrap;
   margin: auto;
-  justify-content: space-between;
-  align-content: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
   padding: 0px 100px;
 }
 
 .songCard {
-  max-width: 350px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
