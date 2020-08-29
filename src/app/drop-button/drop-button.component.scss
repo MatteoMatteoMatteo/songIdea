@@ -21,6 +21,7 @@
   border: none;
   background-color: $first-color;
   color: white;
+  min-width: 65px;
   min-height: 40px;
   padding: 10px 10px;
   text-align: center;
@@ -30,9 +31,27 @@
   transition: 0.3s linear;
   cursor: pointer;
   outline: none;
+  margin-top: 20px;
+  margin-right: 20px;
 }
 
-.smallDropButton:active {
+.smallPitchButton {
+  border: none;
+  background-color: $second-color;
+  min-width: 65px;
+  min-height: 40px;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bolder;
+  transition: 0.3s linear;
+  cursor: pointer;
+  outline: none;
+}
+.smallDropButton:active,
+.smallPitchButton:active {
   background-color: black;
   transition: 0s;
 }
@@ -51,6 +70,7 @@
   transition: 300ms ease;
   cursor: pointer;
   outline: none;
+  margin-right: 20px;
 }
 
 // .dropped:focus {
@@ -140,5 +160,11 @@
     -webkit-transform: scale(1);
     transform: scale(1);
     opacity: 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .smallDropButton {
+    margin-top: 15px;
   }
 }

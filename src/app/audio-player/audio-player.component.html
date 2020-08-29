@@ -1,28 +1,53 @@
 <div *ngIf="!isLoading" class="audioPlayer" cdkDragBoundary=".example-boundary" cdkDrag>
-  <div class="songTitle">{{ allSongs[whichSongIsDropping].name }}</div>
-  <div class="audioPlayerButtonHolder">
-    <app-drop-button
-      class="audioPlayerButton"
-      [buttonStyling]="playPauseButton"
-      [spinnerStyling]="spinnerStyling"
-      [buttonTitle]="playStopTitle"
-      [dropStates]="dropStates[whichSongIsDropping]"
-      [songsLoading]="songsLoading[whichSongIsDropping]"
-      (dropped)="dropSong(whichSongIsDropping)"
-    ></app-drop-button>
-    <app-drop-button
-      class="audioPlayerButton"
-      [buttonStyling]="buttonStyling"
-      [spinnerStyling]="spinnerStyling"
-      [buttonTitle]="nextTitle"
-      (dropped)="dropSong(whichSongIsDropping + 1)"
-    ></app-drop-button>
-    <app-drop-button
-      class="audioPlayerButton"
-      [buttonStyling]="buttonStyling"
-      [spinnerStyling]="spinnerStyling"
-      [buttonTitle]="previousTitle"
-      (dropped)="dropSong(whichSongIsDropping - 1)"
-    ></app-drop-button>
+  <div class="dragable" cdkDragHandle>
+    <div class="songTitle">{{ allSongs[whichSongIsDropping].name }}</div>
+    <div class="countdown">{{ countdown }}</div>
+    <div class="audioPlayerButtonHolder">
+      <app-drop-button
+        class="audioPlayerButton"
+        [buttonStyling]="playPauseButton"
+        [spinnerStyling]="spinnerStyling"
+        [buttonTitle]="playStopTitle"
+        [dropStates]="dropStates[whichSongIsDropping]"
+        [songsLoading]="songsLoading[whichSongIsDropping]"
+        (dropped)="dropSong(whichSongIsDropping)"
+      ></app-drop-button>
+      <app-drop-button
+        class="audioPlayerButton"
+        [buttonStyling]="buttonStyling"
+        [spinnerStyling]="spinnerStyling"
+        [buttonTitle]="nextTitle"
+        (dropped)="dropSong(whichSongIsDropping + 1)"
+      ></app-drop-button>
+      <app-drop-button
+        class="audioPlayerButton"
+        [buttonStyling]="buttonStyling"
+        [spinnerStyling]="spinnerStyling"
+        [buttonTitle]="previousTitle"
+        (dropped)="dropSong(whichSongIsDropping - 1)"
+      ></app-drop-button>
+    </div>
+  </div>
+  <div class="notDragable">
+    <mat-slider
+      vertical
+      class="pitchSlider"
+      (input)="onVolumeChange(whichSongIsDropping, $event)"
+      thumbLabel
+      min="-30"
+      max="1"
+      step="1"
+      value="1"
+    ></mat-slider>
+    <mat-slider
+      vertical
+      class="pitchSlider"
+      (input)="onPitchChange(whichSongIsDropping, $event)"
+      thumbLabel
+      min="0.8"
+      max="1"
+      step="0.01"
+      value="1"
+    ></mat-slider>
   </div>
 </div>

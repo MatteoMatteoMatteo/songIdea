@@ -54,6 +54,11 @@ p {
   border-bottom: $second-color 5px solid;
 }
 
+.mat-slider.mat-slider-horizontal .mat-slider-track-wrapper {
+  height: 12px;
+  border-radius: 10px;
+}
+
 .mat-tab-header {
   margin: auto;
   background-color: black;

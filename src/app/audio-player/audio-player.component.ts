@@ -5,6 +5,7 @@ import { Subscription } from "rxjs";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../app.reducer";
+import { MatSliderChange } from "@angular/material/slider";
 
 @Component({
   selector: "app-audio-player",
@@ -17,17 +18,22 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   dropStates: boolean[] = [];
   dropStatesSub: Subscription;
   buttonStyling = "smallDropButton";
+  smallPitchButton = "smallPitchButton";
   playPauseButton = "playPauseButton";
   spinnerStyling = "smallSpinner";
   playStopTitle = "PLAY | STOP";
   nextTitle = "NEXT";
   previousTitle = "BACK";
+  pitchMeUpTitle = "PU";
+  pitchMeDownTitle = "PD";
   allSongs: Song[] = [];
   allSongSubscription: Subscription;
   whichSongIsDroppingSub: Subscription;
   loadingSub: Subscription;
+  startCountdownSub: Subscription;
   isLoading = true;
   whichSongIsDropping = 0;
+  countdown = 30;
   constructor(
     private store: Store<fromRoot.State>,
     private songService: SongService,
@@ -37,6 +43,9 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.whichSongIsDroppingSub = this.songService.whichSongIsDroppingListed.subscribe((songId) => {
       this.whichSongIsDropping = songId;
+    });
+    this.startCountdownSub = this.songService.startCountdownListed.subscribe((number) => {
+      this.countdown = number;
     });
     this.allSongSubscription = this.songService.allSongsListed.subscribe((songs) => {
       this.allSongs = songs;
@@ -52,8 +61,15 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     });
   }
 
-  dropSong(id) {
+  dropSong(id: number) {
     this.songService.dropSong(id);
+  }
+
+  onPitchChange(id: number, event: MatSliderChange) {
+    this.songService.changePitch(id, event.value);
+  }
+  onVolumeChange(id: number, event: MatSliderChange) {
+    this.songService.changeVolume(id, event.value);
   }
 
   ngOnDestroy() {

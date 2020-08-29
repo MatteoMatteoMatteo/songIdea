@@ -9,6 +9,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { StoreModule } from "@ngrx/store";
+import { MatSliderModule } from "@angular/material/slider";
 import { reducers } from "./app.reducer";
 
 import { FormsModule } from "@angular/forms";
@@ -83,6 +84,7 @@ import { AudioPlayerComponent } from "./audio-player/audio-player.component";
     MatFormFieldModule,
     MatInputModule,
     ScrollingModule,
+    MatSliderModule,
     FlexLayoutModule,
     FormsModule,
     MatDatepickerModule,

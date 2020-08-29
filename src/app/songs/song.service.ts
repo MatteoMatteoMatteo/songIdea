@@ -24,6 +24,10 @@ export class SongService {
   allSongsListed = new Subject<Song[]>();
   songLoadingListed = new Subject<boolean[]>();
   dropStateListed = new Subject<boolean[]>();
+  startCountdownListed = new Subject<number>();
+  newSongTimer: any;
+  countdownNumber: number;
+  countdown: any;
 
   constructor(private db: AngularFirestore, private uiHelperService: UiHelperService) {}
 
@@ -33,6 +37,8 @@ export class SongService {
 
   dropSong(id: number) {
     if (id >= 0 && id < this.allSongs.length) {
+      clearInterval(this.countdown);
+      clearTimeout(this.newSongTimer);
       this.whichSongIsDropping = id;
       this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
       if (this.allSongs[id].player.state === "stopped") {
@@ -45,25 +51,58 @@ export class SongService {
           this.songLoading[id] = true;
           this.songLoadingListed.next([...this.songLoading]);
           this.allSongs[id].player.load(this.allSongs[id].path).then(() => {
-            this.allSongs[id].player.start();
+            this.allSongs[id].player.start(null, null, 30);
+            this.manageCountdown();
+            this.manageNextSongAfterCountdown(id);
             this.songLoading[id] = false;
             this.songLoadingListed.next([...this.songLoading]);
             this.dropState[id] = true;
             this.dropStateListed.next([...this.dropState]);
           });
         } else {
-          this.allSongs[id].player.start();
+          this.allSongs[id].player.start(null, null, 30);
+          this.manageCountdown();
+          this.manageNextSongAfterCountdown(id);
           this.dropState[id] = true;
           this.dropStateListed.next([...this.dropState]);
         }
       } else {
+        clearInterval(this.countdown);
+        clearTimeout(this.newSongTimer);
+        this.countdownNumber = 30;
         this.allSongs[id].player.stop();
         this.dropState[id] = false;
         this.dropStateListed.next([...this.dropState]);
       }
+    } else {
+      this.dropSong(0);
     }
   }
 
+  manageCountdown() {
+    clearInterval(this.countdown);
+    this.countdownNumber = 30;
+    this.countdown = setInterval(() => {
+      if (this.countdownNumber === 0) {
+        clearInterval(this.countdown);
+      }
+      this.countdownNumber--;
+      this.startCountdownListed.next(this.countdownNumber);
+    }, 1000);
+  }
+
+  manageNextSongAfterCountdown(id: number) {
+    this.newSongTimer = setTimeout(() => {
+      this.dropSong(id + 1);
+    }, 30000);
+  }
+
+  changePitch(id: number, value: any) {
+    this.allSongs[id].player.playbackRate = value;
+  }
+  changeVolume(id: number, val: any) {
+    this.allSongs[id].player.volume.value = val;
+  }
   uploadSong(songName: string, songGenre: string, url: string, uid: string) {
     this.songToDatabase({
       name: songName,
