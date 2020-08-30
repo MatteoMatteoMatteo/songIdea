@@ -34,6 +34,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   isLoading = true;
   whichSongIsDropping = 0;
   countdown = 30;
+  fxToggler = false;
   constructor(
     private store: Store<fromRoot.State>,
     private songService: SongService,
@@ -65,11 +66,24 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.songService.dropSong(id);
   }
 
+  fxToggle() {
+    this.fxToggler = !this.fxToggler;
+  }
+
   onPitchChange(id: number, event: MatSliderChange) {
     this.songService.changePitch(id, event.value);
   }
   onVolumeChange(id: number, event: MatSliderChange) {
     this.songService.changeVolume(id, event.value);
+  }
+  onFx1Change(id: number, event: MatSliderChange) {
+    this.songService.changeFx1(id, event.value);
+  }
+  onFx2Change(id: number, event: MatSliderChange) {
+    this.songService.changeFx2(id, event.value);
+  }
+  onFx3Change(id: number, event: MatSliderChange) {
+    this.songService.changeFx3(id, event.value);
   }
 
   ngOnDestroy() {

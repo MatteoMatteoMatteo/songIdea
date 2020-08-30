@@ -71,10 +71,10 @@
   .mySongs {
     display: flex;
     flex-direction: column;
-    padding: 0px 10px;
+    padding: 0px;
   }
   .songCard {
-    margin: 0px;
+    margin: auto;
     margin-bottom: 20px;
   }
 }

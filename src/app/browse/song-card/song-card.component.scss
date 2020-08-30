@@ -66,12 +66,14 @@
 @media only screen and (max-width: 500px) {
   .allSongs {
     display: flex;
+    align-self: center;
     flex-direction: column;
-    padding: 0px 10px;
+    justify-content: space-between;
+    padding: 0px;
   }
 
   .songCard {
-    margin: 0px;
+    margin: auto;
     margin-bottom: 20px;
   }
 }

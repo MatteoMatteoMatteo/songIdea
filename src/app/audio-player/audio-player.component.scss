@@ -15,6 +15,17 @@
   cursor: grab;
 }
 
+.phone {
+  display: none;
+}
+
+.pc {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
 .dragable {
   background-color: white;
   display: flex;
@@ -37,6 +48,8 @@
 
 .songTitle {
   display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
   align-items: center;
   justify-content: center;
   width: 200px;
@@ -45,8 +58,6 @@
   font-size: 1rem;
   background-color: black;
   color: white;
-  // border-top-left-radius: 41px;
-  // border-bottom-left-radius: 41px;
   height: 80px;
 }
 
@@ -58,6 +69,10 @@
   margin-left: 30px;
 }
 
+.Fx {
+  display: none;
+}
+
 .countdown {
   display: flex;
   align-items: center;
@@ -66,21 +81,92 @@
   background-color: $second-color;
   color: black;
   padding: 13px;
-  font-weight: bold;
+  font-weight: bolder;
   letter-spacing: 1px;
-  font-size: 2rem;
+  font-size: 1.4rem;
   width: 70px;
+}
+
+.notDragablePhone {
+  display: none;
 }
 
 @media only screen and (max-width: 500px) {
   .audioPlayer {
-    width: 100%;
-    padding: 20px;
+    max-width: 100%;
     margin: auto;
     left: 0;
+    flex-direction: column;
+    border-radius: 0px;
+  }
+  .Fx {
+    display: block;
+    font-weight: lighter;
+    padding: 25px 10px;
+    background-color: $third-color;
+    color: black;
+    transition: 300ms;
+    width: 100%;
   }
 
+  .Fx:active {
+    transition: 0s;
+    background-color: white;
+  }
+  .dragable {
+    border-radius: 0px;
+    max-width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+    align-items: stretch;
+  }
   .countdown {
-    font-size: 1.4rem;
+    height: auto;
+    font-size: 1.5rem;
+  }
+
+  .songTitle {
+    overflow: hidden;
+    font-size: 0.8rem;
+    word-wrap: break-word;
+    hyphens: auto;
+    width: 130px;
+    height: 92px;
+    padding: 10px 10px 10px 10px;
+  }
+  .audioPlayerButtonHolder {
+    border-left: solid black 5px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0px;
+  }
+
+  .notDragable {
+    display: none;
+  }
+
+  .notDragablePhone {
+    padding: 0px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    border: solid black 5px;
+    background-color: white;
+    border-radius: none;
+  }
+
+  .phone {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+  }
+
+  .pc {
+    display: none;
   }
 }

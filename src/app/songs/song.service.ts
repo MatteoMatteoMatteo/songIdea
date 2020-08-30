@@ -28,6 +28,15 @@ export class SongService {
   newSongTimer: any;
   countdownNumber: number;
   countdown: any;
+  autoFilter = new Tone.AutoFilter({
+    frequency: 0,
+    baseFrequency: 30000,
+    octaves: 0,
+  });
+  reverb = new Tone.Reverb({
+    wet: 0,
+    decay: 5,
+  });
 
   constructor(private db: AngularFirestore, private uiHelperService: UiHelperService) {}
 
@@ -103,6 +112,15 @@ export class SongService {
   changeVolume(id: number, val: any) {
     this.allSongs[id].player.volume.value = val;
   }
+  changeFx1(id: number, val: any) {
+    this.autoFilter.baseFrequency = val;
+  }
+  changeFx2(id: number, val: any) {
+    this.reverb.wet.value = val;
+  }
+  changeFx3(id: number, val: any) {
+    // this.shifter.frequency.value = val;
+  }
   uploadSong(songName: string, songGenre: string, url: string, uid: string) {
     this.songToDatabase({
       name: songName,
@@ -140,7 +158,8 @@ export class SongService {
               player: new Tone.Player({
                 url: "",
                 autostart: false,
-              }).toDestination(),
+                fadeOut: 0.3,
+              }).chain(this.reverb, this.autoFilter, Tone.Destination),
               ...(doc.payload.doc.data() as Song),
             };
           });
@@ -173,7 +192,7 @@ export class SongService {
               player: new Tone.Player({
                 url: "",
                 autostart: false,
-              }).toDestination(),
+              }).connect(this.autoFilter),
               ...(doc.payload.doc.data() as Song),
             };
           });

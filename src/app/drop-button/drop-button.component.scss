@@ -27,7 +27,7 @@
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  font-weight: bolder;
+  font-weight: lighter;
   transition: 0.3s linear;
   cursor: pointer;
   outline: none;
@@ -66,7 +66,7 @@
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  font-weight: bolder;
+  font-weight: lighter;
   transition: 300ms ease;
   cursor: pointer;
   outline: none;
@@ -165,6 +165,15 @@
 
 @media only screen and (max-width: 500px) {
   .smallDropButton {
+    width: 100%;
+    margin: 0px;
     margin-top: 15px;
+    padding: 13px;
+    font-weight: lighter;
+  }
+  .playPauseButton {
+    margin: 0px;
+    font-weight: lighter;
+    padding: 13px;
   }
 }
