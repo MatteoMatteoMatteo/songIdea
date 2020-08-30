@@ -78,10 +78,6 @@ export class MySongsComponent implements OnInit, OnDestroy {
     return this.allComments.filter((comment) => comment.songId === songId);
   }
 
-  dropSong(id: number) {
-    this.songService.dropSong(id);
-  }
-
   onPlay(id: string) {
     this.songService.playSong(id);
   }

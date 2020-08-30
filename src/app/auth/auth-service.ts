@@ -16,7 +16,8 @@ export class AuthService {
     private router: Router,
     private ss: SongService,
     private uiHelperService: UiHelperService,
-    private store: Store<fromRoot.State>
+    private store: Store<fromRoot.State>,
+    private songService: SongService
   ) {}
 
   initAuthListener() {
@@ -24,7 +25,7 @@ export class AuthService {
       if (user) {
         this.store.dispatch(new AUTH.SetAuthenticated());
         this.store.dispatch(new AUTH.Uid(user.uid));
-        this.router.navigate(["/songs"]);
+        this.router.navigate(["/browse"]);
       } else {
         this.store.dispatch(new AUTH.SetUnauthenticated());
         this.router.navigate(["/login"]);
@@ -67,6 +68,7 @@ export class AuthService {
   }
 
   logout() {
+    this.songService.stopAll();
     this.angularFireAuth.signOut();
     this.ss.cancelSub();
   }

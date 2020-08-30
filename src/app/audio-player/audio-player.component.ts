@@ -31,10 +31,12 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   whichSongIsDroppingSub: Subscription;
   loadingSub: Subscription;
   startCountdownSub: Subscription;
+  destroyMeSub: Subscription;
   isLoading = true;
   whichSongIsDropping = 0;
   countdown = 30;
   fxToggler = false;
+  destroyMe = false;
   constructor(
     private store: Store<fromRoot.State>,
     private songService: SongService,
@@ -44,6 +46,9 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.whichSongIsDroppingSub = this.songService.whichSongIsDroppingListed.subscribe((songId) => {
       this.whichSongIsDropping = songId;
+    });
+    this.destroyMeSub = this.songService.destroyAudioPlayer.subscribe((bool) => {
+      this.destroyMe = bool;
     });
     this.startCountdownSub = this.songService.startCountdownListed.subscribe((number) => {
       this.countdown = number;
@@ -92,5 +97,6 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.dropStatesSub.unsubscribe();
     this.songsLoadingSub.unsubscribe();
     this.loadingSub.unsubscribe();
+    this.destroyMeSub.unsubscribe();
   }
 }

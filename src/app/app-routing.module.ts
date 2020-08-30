@@ -1,3 +1,4 @@
+import { AudioPlayerComponent } from "./audio-player/audio-player.component";
 import { BrowseComponent } from "./browse/browse.component";
 import { AuthGuard } from "./auth/auth.guard";
 import { SongsComponent } from "./songs/songs.component";

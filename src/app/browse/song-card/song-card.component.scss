@@ -63,6 +63,31 @@
   font-size: 1rem;
 }
 
+.morePlease {
+  display: block;
+  text-align: center;
+  background-color: black;
+  margin: auto;
+  color: white;
+  border: solid 4px $third-color;
+  font-size: 1rem;
+  font-weight: lighter;
+  padding: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 300ms;
+  margin-bottom: 50px;
+}
+
+.morePleasePhone {
+  display: none;
+}
+
+.morePlease:hover {
+  transition: 300ms;
+  background-color: $first-color;
+}
+
 @media only screen and (max-width: 500px) {
   .allSongs {
     display: flex;
@@ -75,5 +100,25 @@
   .songCard {
     margin: auto;
     margin-bottom: 20px;
+  }
+
+  .morePlease {
+    display: none;
+  }
+
+  .morePleasePhone {
+    display: block;
+    text-align: center;
+    background-color: black;
+    margin: auto;
+    color: white;
+    border: solid 4px $third-color;
+    font-size: 1rem;
+    font-weight: lighter;
+    padding: 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 300ms;
+    margin-bottom: 50px;
   }
 }

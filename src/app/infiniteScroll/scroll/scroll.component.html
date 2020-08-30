@@ -11,10 +11,7 @@
     >
       <mat-card-title class="title">{{ song.name }}</mat-card-title>
       <mat-card-content></mat-card-content>
-      <audio controls preload="none" class="audioControl">
-        <source [src]="song.path" />
-        Your browser does not support the audio element.
-      </audio>
+
       <h2 class="h2"><span class="span">Scroll down to load more songs!</span></h2>
     </mat-card>
   </cdk-virtual-scroll-viewport>
@@ -22,7 +19,5 @@
 
 <div class="sectionVisit">
   <div class="logo"></div>
-  <p class="visit">
-    Visit the <span [ngStyle]="{ color: '#90d1db' }">feedback area</span> to leave a comment!
-  </p>
+  <p class="visit">Found your <span [ngStyle]="{ color: '#90d1db' }"> favourite drop</span> yet?</p>
 </div>

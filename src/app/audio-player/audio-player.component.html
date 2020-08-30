@@ -1,4 +1,9 @@
-<div *ngIf="!isLoading" class="audioPlayer" cdkDragBoundary=".example-boundary" cdkDrag>
+<div
+  *ngIf="!isLoading && !destroyMe"
+  class="audioPlayer"
+  cdkDragBoundary=".example-boundary"
+  cdkDrag
+>
   <div class="dragable" cdkDragHandle>
     <div
       style="

@@ -156,6 +156,10 @@ a {
   color: red($color: #000000);
 }
 
+button:focus {
+  outline: 0;
+}
+
 span.mat-button-raised {
   font-family: "Raleway", serif;
 }

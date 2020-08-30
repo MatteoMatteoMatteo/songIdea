@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { Song } from "./song.model";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { map } from "rxjs/operators";
+import { map, last } from "rxjs/operators";
 import * as Tone from "tone";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "./../app.reducer";
@@ -12,12 +12,16 @@ import * as AUDIO from "./../audio-player/audio.actions";
 
 @Injectable()
 export class SongService {
+  first: any;
+  docIDs: any = [];
   uid: string;
   whichSongIsDropping: number;
   whichSongIsDroppingListed = new Subject<number>();
   private firebaseSub: Subscription;
+  private moreSongsSub: Subscription;
+  private mySongsSub: Subscription;
   private mySongs: Song[] = [];
-  private allSongs: Song[] = [];
+  public allSongs: Song[] = [];
   private songLoading: boolean[] = [];
   private dropState: boolean[] = [];
   mySongsListed = new Subject<Song[]>();
@@ -25,6 +29,7 @@ export class SongService {
   songLoadingListed = new Subject<boolean[]>();
   dropStateListed = new Subject<boolean[]>();
   startCountdownListed = new Subject<number>();
+  destroyAudioPlayer = new Subject<boolean>();
   newSongTimer: any;
   countdownNumber: number;
   countdown: any;
@@ -42,6 +47,16 @@ export class SongService {
 
   getMySongs() {
     return this.mySongs.slice();
+  }
+
+  stopAll() {
+    clearInterval(this.countdown);
+    clearTimeout(this.newSongTimer);
+    this.allSongs.forEach((song) => {
+      song.player.stop();
+    });
+    this.allSongs = [];
+    this.destroyAudioPlayer.next(true);
   }
 
   dropSong(id: number) {
@@ -146,9 +161,47 @@ export class SongService {
   }
 
   fetchAllSongs() {
+    this.destroyAudioPlayer.next(false);
+    if (this.allSongs.length === 0) {
+      this.first = this.db.collection("songs", (ref) => ref.orderBy("name"));
+      this.uiHelperService.allSongsLoadingStateChanged.next(true);
+      this.firebaseSub = this.db
+        .collection("songs", (ref) => ref.orderBy("name").limit(3))
+        .snapshotChanges()
+        .pipe(
+          map((docArray) => {
+            return docArray.map((doc) => {
+              this.docIDs.push(doc);
+              return {
+                songId: doc.payload.doc.id,
+                player: new Tone.Player({
+                  url: "",
+                  autostart: false,
+                  fadeOut: 0.3,
+                }).chain(this.reverb, this.autoFilter, Tone.Destination),
+                ...(doc.payload.doc.data() as Song),
+              };
+            });
+          })
+        )
+        .subscribe(
+          (songs: Song[]) => {
+            this.allSongs = songs;
+            this.allSongsListed.next([...this.allSongs]);
+            this.uiHelperService.allSongsLoadingStateChanged.next(false);
+          },
+          (error) => {
+            this.uiHelperService.allSongsLoadingStateChanged.next(false);
+          }
+        );
+    } else {
+      this.allSongsListed.next([...this.allSongs]);
+    }
+  }
+  fetchMoreSongs(lastSongName: string) {
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
-    this.firebaseSub = this.db
-      .collection("songs", (ref) => ref.orderBy("name"))
+    this.moreSongsSub = this.db
+      .collection("songs", (ref) => ref.limit(3).orderBy("name").startAfter(lastSongName))
       .snapshotChanges()
       .pipe(
         map((docArray) => {
@@ -167,9 +220,10 @@ export class SongService {
       )
       .subscribe(
         (songs: Song[]) => {
-          if (this.allSongs.length != songs.length) {
-            this.allSongs = songs;
-          }
+          songs.forEach((el) => {
+            this.allSongs.push(el);
+          });
+          console.log(this.allSongs);
           this.allSongsListed.next([...this.allSongs]);
           this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },
@@ -181,12 +235,12 @@ export class SongService {
 
   fetchMySongs(uid: string) {
     this.uiHelperService.loadingStateChanged.next(true);
-    this.firebaseSub = this.db
+    this.mySongsSub = this.db
       .collection("songs", (ref) => ref.where("userId", "==", uid))
       .snapshotChanges()
       .pipe(
-        map((docArray) => {
-          return docArray.map((doc) => {
+        map((docs) => {
+          return docs.map((doc) => {
             return {
               songId: doc.payload.doc.id,
               player: new Tone.Player({
@@ -212,5 +266,7 @@ export class SongService {
 
   cancelSub() {
     this.firebaseSub.unsubscribe();
+    this.mySongsSub.unsubscribe();
+    this.moreSongsSub.unsubscribe();
   }
 }

@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { Comment } from "../../comments/comment.model";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../../app.reducer";
+import { last } from "rxjs/operators";
 
 @Component({
   selector: "app-song-card",
@@ -30,6 +31,7 @@ export class SongCardComponent implements OnInit {
   allCommentsSubscription: Subscription;
   allSongsSubscription: Subscription;
   allComments: Comment[] = [];
+  lastSongName: string;
 
   constructor(
     private commentService: CommentService,
@@ -67,6 +69,10 @@ export class SongCardComponent implements OnInit {
 
   getMyComments(songId: string) {
     return this.allComments.filter((comment) => comment.songId === songId);
+  }
+
+  onLoadMoreSongs(name: string) {
+    this.songService.fetchMoreSongs(name);
   }
 
   onAddComment(form: NgForm, songId: string, uid: string) {
