@@ -3,6 +3,9 @@
     ><app-sideNav (close)="sidenav.close()"></app-sideNav
   ></mat-sidenav>
   <mat-sidenav-content class="example-boundary">
+    <div class="wrapper">
+      <div [ngClass]="audioPlaying ? 'waveMeAnimation' : 'waveMe'"></div>
+    </div>
     <app-mainNav (toggle)="sidenav.toggle()"></app-mainNav>
     <main [@routeAnimations]="prepareRoute(outlet)" class="content">
       <router-outlet #outlet="outlet"></router-outlet>

@@ -30,6 +30,7 @@ export class SongService {
   dropStateListed = new Subject<boolean[]>();
   startCountdownListed = new Subject<number>();
   destroyAudioPlayer = new Subject<boolean>();
+  audioPlayingListed = new Subject<boolean>();
   newSongTimer: any;
   countdownNumber: number;
   countdown: any;
@@ -82,6 +83,7 @@ export class SongService {
             this.songLoadingListed.next([...this.songLoading]);
             this.dropState[id] = true;
             this.dropStateListed.next([...this.dropState]);
+            this.audioPlayingListed.next(true);
           });
         } else {
           this.allSongs[id].player.start(null, null, 30);
@@ -89,6 +91,7 @@ export class SongService {
           this.manageNextSongAfterCountdown(id);
           this.dropState[id] = true;
           this.dropStateListed.next([...this.dropState]);
+          this.audioPlayingListed.next(true);
         }
       } else {
         clearInterval(this.countdown);
@@ -97,6 +100,7 @@ export class SongService {
         this.allSongs[id].player.stop();
         this.dropState[id] = false;
         this.dropStateListed.next([...this.dropState]);
+        this.audioPlayingListed.next(false);
       }
     } else {
       this.dropSong(0);
