@@ -101,10 +101,11 @@
   }
   .Fx {
     display: block;
-    font-weight: lighter;
+    font-weight: bolder;
     padding: 25px 10px;
     background-color: $third-color;
     color: black;
+    font-size: 1rem;
     transition: 300ms;
     width: 100%;
   }
@@ -123,8 +124,9 @@
     align-items: stretch;
   }
   .countdown {
-    height: auto;
     font-size: 1.5rem;
+    background-color: white;
+    padding: 0px;
   }
 
   .songTitle {
@@ -133,8 +135,8 @@
     word-wrap: break-word;
     hyphens: auto;
     width: 130px;
-    height: 92px;
     padding: 10px 10px 10px 10px;
+    flex-grow: 1;
   }
   .audioPlayerButtonHolder {
     border-left: solid black 5px;
