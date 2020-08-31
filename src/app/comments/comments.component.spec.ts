@@ -1,16 +1,21 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { UiHelperService } from "./../uiHelper/uiHelper.service";
+import { CommentService } from "./comment.service";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { CommentsComponent } from "./comments.component";
+import { environment } from "../../environments/environment";
+import { AngularFireModule } from "@angular/fire";
 
-import { CommentsComponent } from './comments.component';
-
-describe('CommentsComponent', () => {
+describe("CommentsComponent", () => {
   let component: CommentsComponent;
   let fixture: ComponentFixture<CommentsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CommentsComponent ]
-    })
-    .compileComponents();
+      imports: [AngularFireModule.initializeApp(environment.firebase), MatSnackBarModule],
+      declarations: [CommentsComponent],
+      providers: [CommentService, UiHelperService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +24,7 @@ describe('CommentsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

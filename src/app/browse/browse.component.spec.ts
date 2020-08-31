@@ -1,16 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { BrowseComponent } from './browse.component';
+import { BrowseComponent } from "./browse.component";
 
-describe('BrowseComponent', () => {
+describe("BrowseComponent", () => {
   let component: BrowseComponent;
   let fixture: ComponentFixture<BrowseComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BrowseComponent ]
-    })
-    .compileComponents();
+      imports: [MatSnackBarModule],
+      declarations: [BrowseComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('BrowseComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
