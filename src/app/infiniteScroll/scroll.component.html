@@ -1,0 +1,23 @@
+<ng-container *ngIf="infinite | async as songs">
+  <cdk-virtual-scroll-viewport
+    itemSize="250"
+    (scrolledIndexChange)="nextBatch($event, songs[songs.length - 1].name)"
+    class="container"
+  >
+    <mat-card
+      class="songCard animate__animated animate__fadeIn"
+      *cdkVirtualFor="let song of songs; let i = index; trackBy: trackByIdx"
+      [value]="song.songId"
+    >
+      <mat-card-title class="title">{{ song.name }}</mat-card-title>
+      <mat-card-content></mat-card-content>
+
+      <h2 class="h2"><span class="span">Scroll down to load more songs!</span></h2>
+    </mat-card>
+  </cdk-virtual-scroll-viewport>
+</ng-container>
+
+<div class="sectionVisit">
+  <div class="logo"></div>
+  <p class="visit">Found your <span [ngStyle]="{ color: '#90d1db' }"> favourite drop</span> yet?</p>
+</div>

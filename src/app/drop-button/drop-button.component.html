@@ -1,0 +1,4 @@
+<button [ngClass]="dropStates ? 'dropped' : null" [class]="buttonStyling" (click)="onDrop()">
+  <span *ngIf="!songsLoading"> {{ buttonTitle }}</span>
+  <div *ngIf="songsLoading" [class]="spinnerStyling"></div>
+</button>

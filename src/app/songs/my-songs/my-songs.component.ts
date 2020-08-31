@@ -7,7 +7,8 @@ import { SongService } from "./../song.service";
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { Song } from "../song.model";
 import { Comment } from "./../../comments/comment.model";
-import { AngularFireAuth } from "@angular/fire/auth";
+import { Store } from "@ngrx/store";
+import * as fromRoot from "../../app.reducer";
 
 @Component({
   selector: "app-my-songs",
@@ -17,19 +18,17 @@ import { AngularFireAuth } from "@angular/fire/auth";
 export class MySongsComponent implements OnInit, OnDestroy {
   loadingSub: Subscription;
   isLoading: boolean;
-  uid: string;
   mySongSubscription: Subscription;
-  allSongsSubscription: Subscription;
   allCommentsSubscription: Subscription;
   mySongs: Song[] = [];
   allComments: Comment[] = [];
   @Output() exit = new EventEmitter();
   constructor(
-    private angularFireAuth: AngularFireAuth,
     private commentService: CommentService,
     private dialog: MatDialog,
     private songService: SongService,
-    private uiHelperService: UiHelperService
+    private uiHelperService: UiHelperService,
+    private store: Store<fromRoot.State>
   ) {}
 
   ngOnInit(): void {
@@ -39,20 +38,17 @@ export class MySongsComponent implements OnInit, OnDestroy {
     this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
       this.mySongs = songs;
     });
-    this.songService.fetchMySongs();
-
     this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
       this.allComments = comments;
+    });
+    this.store.select(fromRoot.getUid).subscribe((uid) => {
+      this.songService.fetchMySongs(uid);
     });
     this.commentService.fetchAllComments();
   }
 
   getMyComments(songId: string) {
     return this.allComments.filter((comment) => comment.songId === songId);
-  }
-
-  onPlay(id: string) {
-    this.songService.playSong(id);
   }
 
   onDelete(id: string, name: string) {
@@ -70,9 +66,8 @@ export class MySongsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.mySongSubscription) {
-      this.mySongSubscription.unsubscribe();
-    }
+    this.mySongSubscription.unsubscribe();
     this.loadingSub.unsubscribe();
+    this.allCommentsSubscription.unsubscribe();
   }
 }

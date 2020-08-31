@@ -4,19 +4,19 @@ import { CancelComponent } from "./uiHelper/cancel/cancel.component";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { SongService } from "./songs/song.service";
 import { AuthService } from "./auth/auth-service";
+import { DragDropModule } from "@angular/cdk/drag-drop";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { StoreModule } from "@ngrx/store";
+import { MatSliderModule } from "@angular/material/slider";
 import { reducers } from "./app.reducer";
-
 import { FormsModule } from "@angular/forms";
 import { AngularFireModule } from "@angular/fire";
 import { environment } from "../environments/environment";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
 import { ScrollingModule } from "@angular/cdk/scrolling";
-
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -47,9 +47,10 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatDialogModule } from "@angular/material/dialog";
 import { BrowseComponent } from "./browse/browse.component";
 import { SongCardComponent } from "./browse/song-card/song-card.component";
-import { RandomSongComponent } from "./browse/random-song/random-song.component";
 import { CommentsComponent } from "./comments/comments.component";
-import { ScrollComponent } from "./infiniteScroll/scroll/scroll.component";
+import { ScrollComponent } from "./infiniteScroll/scroll.component";
+import { DropButtonComponent } from "./drop-button/drop-button.component";
+import { AudioPlayerComponent } from "./audio-player/audio-player.component";
 
 @NgModule({
   declarations: [
@@ -65,9 +66,10 @@ import { ScrollComponent } from "./infiniteScroll/scroll/scroll.component";
     CancelComponent,
     BrowseComponent,
     SongCardComponent,
-    RandomSongComponent,
     CommentsComponent,
     ScrollComponent,
+    DropButtonComponent,
+    AudioPlayerComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +80,7 @@ import { ScrollComponent } from "./infiniteScroll/scroll/scroll.component";
     MatFormFieldModule,
     MatInputModule,
     ScrollingModule,
+    MatSliderModule,
     FlexLayoutModule,
     FormsModule,
     MatDatepickerModule,
@@ -87,6 +90,7 @@ import { ScrollComponent } from "./infiniteScroll/scroll/scroll.component";
     MatToolbarModule,
     MatListModule,
     MatTabsModule,
+    DragDropModule,
     MatSnackBarModule,
     MatCardModule,
     MatSelectModule,

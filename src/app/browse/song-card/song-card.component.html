@@ -1,38 +1,44 @@
-<section fxLayout fxLayoutAlign="center">
-  <div fxFlex.xs="100%" fxFlex="400px" class="allSongs" *ngIf="!isLoading">
-    <mat-card class="songCard" *ngFor="let song of allSongs" [value]="song.songId">
-      <mat-card-title class="title">{{ song.name }}</mat-card-title>
-      <mat-card-content></mat-card-content>
-      <audio controls preload="none" class="audioControl">
-        <source [src]="song.path" />
-        Your browser does not support the audio element.
-      </audio>
-      <h2 class="h2"><span class="span">Write a Comment</span></h2>
+<div fxFlex.xs="100%" class="allSongs" *ngIf="!isLoading">
+  <mat-card
+    class="songCard animate__animated animate__fadeIn"
+    *ngFor="let song of allSongs; let i = index"
+    [value]="song.songId"
+  >
+    <mat-card-title class="title">{{ song.name }}</mat-card-title>
+    <mat-card-content></mat-card-content>
+    <app-drop-button
+      [dropStates]="dropStates[i]"
+      [songsLoading]="songsLoading[i]"
+      (dropped)="dropSong(i)"
+      [buttonStyling]="buttonStyling"
+      [spinnerStyling]="spinnerStyling"
+      [buttonTitle]="buttonTitle"
+    ></app-drop-button>
+    <h2 class="h2"><span class="span">Write a Comment</span></h2>
 
-      <form class="writeComment" (ngSubmit)="onAddComment(f, song.songId)" #f="ngForm">
-        <mat-form-field appearance="" color="accent">
-          <mat-label>Sounds good?</mat-label>
-          <textarea matInput ngModel name="content"></textarea>
-        </mat-form-field>
-        <mat-card-actions [ngStyle]="{ marginBottom: '0px', marginTop: '0px' }">
-          <button mat-button type="submit" [disabled]="f.invalid">
-            Post
-          </button>
-        </mat-card-actions>
-      </form>
+    <form class="writeComment" (ngSubmit)="onAddComment(f, song.songId, song.userId)" #f="ngForm">
+      <mat-form-field appearance="" color="accent">
+        <mat-label>Sounds good?</mat-label>
+        <textarea matInput ngModel name="content"></textarea>
+      </mat-form-field>
+      <mat-card-actions [ngStyle]="{ marginBottom: '0px', marginTop: '0px' }">
+        <button mat-button type="submit" [disabled]="f.invalid">Post</button>
+      </mat-card-actions>
+    </form>
 
-      <h2 class="h2"><span class="span">All Comments</span></h2>
-      <div class="commentsCard">
-        <p *ngFor="let comment of getMyComments(song.songId)" [value]="comment.id" align="start">
-          {{ comment.content }}
-        </p>
-      </div>
-    </mat-card>
-  </div>
-  <mat-spinner
-    diameter="80"
-    color="accent"
-    [ngStyle]="{ margin: '40px' }"
-    *ngIf="isLoading"
-  ></mat-spinner>
-</section>
+    <h2 class="h2"><span class="span">All Comments</span></h2>
+    <div class="commentsCard">
+      <p *ngFor="let comment of getMyComments(song.songId)" [value]="comment.id" align="start">
+        {{ comment.content }}
+      </p>
+    </div>
+  </mat-card>
+  <button (click)="onLoadMoreSongs(allSongs[allSongs.length - 1].name)" class="morePleasePhone">
+    Load more songs
+  </button>
+</div>
+<button (click)="onLoadMoreSongs(allSongs[allSongs.length - 1].name)" class="morePlease">
+  Load more songs
+</button>
+
+<mat-spinner diameter="80" color="accent" style="margin: auto" *ngIf="isLoading"></mat-spinner>

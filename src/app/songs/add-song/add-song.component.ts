@@ -2,7 +2,6 @@ import { AngularFireStorage } from "@angular/fire/storage";
 import { Song } from "./../song.model";
 import { NgForm } from "@angular/forms";
 import { SongService } from "./../song.service";
-import { Subscription, Observable } from "rxjs";
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { finalize } from "rxjs/operators";
 import { Store } from "@ngrx/store";
@@ -44,7 +43,6 @@ export class AddSongComponent implements OnInit {
     "Acoustic",
   ];
   songs: Song[];
-  songSubscription: Subscription;
   @Output() switchWhenUploaded: EventEmitter<any> = new EventEmitter();
   constructor(
     private songService: SongService,
@@ -53,11 +51,11 @@ export class AddSongComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.songService.fetchMySongs();
-    this.genres.sort();
     this.store.select(fromRoot.getUid).subscribe((uid) => {
       this.uid = uid;
     });
+
+    this.genres.sort();
   }
 
   onUpload(form: NgForm) {

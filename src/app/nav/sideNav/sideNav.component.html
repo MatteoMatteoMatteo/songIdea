@@ -17,12 +17,5 @@
     <a *ngIf="isAuth$ | async" mat-list-item (click)="closeSidenav(); handleLogout()"
       ><mat-icon class="phoneIcon">exit_to_app</mat-icon><span class="phoneNavText">Logout</span></a
     >
-    <!-- <mat-list-item *ngIf="isAuth$">
-      <button style="cursor: pointer;" (click)="handleLogout()" mat-icon-button>
-        <mat-icon>exit_to_app</mat-icon>
-
-        <span class="phoneNavText">Logout</span>
-      </button>
-    </mat-list-item> -->
   </div>
 </mat-nav-list>

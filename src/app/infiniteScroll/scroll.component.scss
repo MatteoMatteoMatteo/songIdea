@@ -1,0 +1,104 @@
+@import "./../../utilities/variables.scss";
+@import "./../start/start.component.scss";
+
+.container {
+  margin: auto;
+  height: 250px;
+  min-width: 250px;
+  max-width: 425px;
+  &::-webkit-scrollbar {
+    width: 0px;
+    visibility: hidden;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $second-color;
+    border-radius: 20px;
+    visibility: hidden;
+  }
+}
+
+.allSongs {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 10px;
+}
+
+.songCard {
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  padding: 15px;
+  margin-bottom: 5px;
+}
+
+.audioControl {
+  margin: 0px 0px 20px 5px;
+  outline: none;
+}
+
+.uploadIcon {
+  position: relative;
+  top: 2px;
+  font-size: 1.1rem;
+}
+
+.writeComment {
+  background-color: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-top-left-radius: 21px;
+  border-top-right-radius: 6px;
+  padding: 20px 20px 0px 20px;
+  width: 80%;
+}
+
+.commentsCard {
+  width: 80%;
+  padding: 20px 20px 0px 20px;
+}
+
+.h2 {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  line-height: 0.1em;
+  margin-top: 20px;
+}
+
+.h2 .span {
+  background: $second-color;
+  padding: 0 10px;
+  font-family: "Raleway", serif;
+  font-size: 1rem;
+}
+
+.sectionVisit {
+  position: relative;
+  margin: auto;
+  margin-top: 50px;
+  max-width: 500px;
+  min-width: 300px;
+  padding: 20px;
+  cursor: pointer;
+  background-color: black;
+  border: solid white;
+  transition: 200ms ease;
+  cursor: default;
+
+  margin-bottom: 20px;
+}
+
+.visit {
+  font-size: 1rem;
+  margin: 0px 0px 0px 0px;
+  color: white;
+  letter-spacing: 2px;
+  word-wrap: break-word;
+}

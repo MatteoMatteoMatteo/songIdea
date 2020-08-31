@@ -1,0 +1,174 @@
+@import "./../../utilities/variables.scss";
+
+.audioPlayer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  position: fixed;
+  align-items: center;
+  z-index: 100;
+  top: 60%;
+  left: 50%;
+  align-items: center;
+  margin-left: -250px;
+  cursor: grab;
+}
+
+.phone {
+  display: none;
+}
+
+.pc {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.dragable {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  border: solid 4px black;
+  border-top-left-radius: 14px;
+  border-bottom-left-radius: 14px;
+  padding: 30px 20px;
+}
+
+.notDragable {
+  background-color: $first-color;
+  display: flex;
+  justify-content: space-between;
+  height: auto;
+  border: solid 4px black;
+  border-left: none;
+  padding: 16px;
+}
+
+.songTitle {
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  letter-spacing: 1px;
+  padding: 5px;
+  font-size: 1rem;
+  background-color: black;
+  color: white;
+  height: 80px;
+}
+
+.audioPlayerButtonHolder {
+  width: 180px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-left: 30px;
+}
+
+.Fx {
+  display: none;
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  background-color: $second-color;
+  color: black;
+  padding: 13px;
+  font-weight: bolder;
+  letter-spacing: 1px;
+  font-size: 1.4rem;
+  width: 70px;
+}
+
+.notDragablePhone {
+  display: none;
+}
+
+@media only screen and (max-width: 500px) {
+  .audioPlayer {
+    max-width: 100%;
+    margin: auto;
+    left: 0;
+    flex-direction: column;
+    border-radius: 20px;
+  }
+  .Fx {
+    display: block;
+    font-weight: bolder;
+    padding: 25px 10px;
+    background-color: $third-color;
+    color: black;
+    font-size: 1rem;
+    transition: 300ms;
+    width: 100%;
+  }
+
+  .Fx:active {
+    transition: 0s;
+    background-color: white;
+  }
+  .dragable {
+    border-radius: 0px;
+    max-width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+    align-items: stretch;
+  }
+  .countdown {
+    font-size: 1.5rem;
+    background-color: white;
+    padding: 0px;
+  }
+
+  .songTitle {
+    overflow: hidden;
+    font-size: 0.8rem;
+    word-wrap: break-word;
+    hyphens: auto;
+    width: 130px;
+    padding: 10px 10px 10px 10px;
+    flex-grow: 1;
+  }
+  .audioPlayerButtonHolder {
+    border-left: solid black 5px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0px;
+  }
+
+  .notDragable {
+    display: none;
+  }
+
+  .notDragablePhone {
+    padding: 0px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    border: solid black 5px;
+    background-color: white;
+    border-radius: none;
+  }
+
+  .phone {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+  }
+
+  .pc {
+    display: none;
+  }
+}

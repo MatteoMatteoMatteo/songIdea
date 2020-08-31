@@ -2,17 +2,19 @@
 
 .allSongs {
   display: flex;
-  flex-direction: column;
-  padding: 0px 10px;
+  margin: auto;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 0px 100px;
 }
 
 .songCard {
-  margin-top: 30px;
+  width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 0px 10px 30px 10px;
 }
 
 .title {
@@ -59,4 +61,64 @@
   padding: 0 10px;
   font-family: "Raleway", serif;
   font-size: 1rem;
+}
+
+.morePlease {
+  display: block;
+  text-align: center;
+  background-color: black;
+  margin: auto;
+  color: white;
+  border: solid 4px $third-color;
+  font-size: 1rem;
+  font-weight: lighter;
+  padding: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 300ms;
+  margin-bottom: 50px;
+}
+
+.morePleasePhone {
+  display: none;
+}
+
+.morePlease:hover {
+  transition: 300ms;
+  background-color: $first-color;
+}
+
+@media only screen and (max-width: 500px) {
+  .allSongs {
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0px;
+  }
+
+  .songCard {
+    margin: auto;
+    margin-bottom: 20px;
+  }
+
+  .morePlease {
+    display: none;
+  }
+
+  .morePleasePhone {
+    display: block;
+    text-align: center;
+    background-color: black;
+    margin: auto;
+    color: white;
+    border: solid 4px $third-color;
+    font-size: 1rem;
+    font-weight: lighter;
+    padding: 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 300ms;
+    margin-bottom: 50px;
+  }
 }

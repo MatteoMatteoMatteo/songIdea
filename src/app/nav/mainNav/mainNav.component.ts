@@ -2,7 +2,6 @@ import { AuthService } from "./../../auth/auth-service";
 import { Component, OnInit, EventEmitter, Output } from "@angular/core";
 import { Subscription, Observable } from "rxjs";
 import { Store } from "@ngrx/store";
-import { take } from "rxjs/operators";
 import * as fromRoot from "../../app.reducer";
 
 @Component({
@@ -13,7 +12,6 @@ import * as fromRoot from "../../app.reducer";
 export class MainNavComponent implements OnInit {
   @Output() toggle = new EventEmitter<void>();
   isAuth$: Observable<boolean>;
-  authSub: Subscription;
 
   constructor(private store: Store<fromRoot.State>, private authServcie: AuthService) {}
 

@@ -14,9 +14,9 @@ export class AuthService {
   constructor(
     private angularFireAuth: AngularFireAuth,
     private router: Router,
-    private ss: SongService,
     private uiHelperService: UiHelperService,
-    private store: Store<fromRoot.State>
+    private store: Store<fromRoot.State>,
+    private songService: SongService
   ) {}
 
   initAuthListener() {
@@ -24,7 +24,7 @@ export class AuthService {
       if (user) {
         this.store.dispatch(new AUTH.SetAuthenticated());
         this.store.dispatch(new AUTH.Uid(user.uid));
-        this.router.navigate(["/songs"]);
+        this.router.navigate(["/browse"]);
       } else {
         this.store.dispatch(new AUTH.SetUnauthenticated());
         this.router.navigate(["/login"]);
@@ -34,40 +34,34 @@ export class AuthService {
 
   registerUser(authData: AuthData) {
     this.store.dispatch(new UI.StartLoading());
-    // this.uiHelperService.loadingStateChanged.next(true);
     this.angularFireAuth
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
         let res = result;
         this.store.dispatch(new UI.StopLoading());
-        // this.uiHelperService.loadingStateChanged.next(false);
       })
       .catch((error) => {
         this.store.dispatch(new UI.StopLoading());
-        // this.uiHelperService.loadingStateChanged.next(false);
         this.uiHelperService.showSnackbar(error.message, null, 4000);
       });
   }
 
   login(authData: AuthData) {
     this.store.dispatch(new UI.StartLoading());
-    // this.uiHelperService.loadingStateChanged.next(true);
     this.angularFireAuth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
         let res = result;
         this.store.dispatch(new UI.StopLoading());
-        // this.uiHelperService.loadingStateChanged.next(false);
       })
       .catch((error) => {
         this.store.dispatch(new UI.StopLoading());
-        // this.uiHelperService.loadingStateChanged.next(false);
         this.uiHelperService.showSnackbar(error.message, null, 4000);
       });
   }
 
   logout() {
+    this.songService.stopAll();
     this.angularFireAuth.signOut();
-    this.ss.cancelSub();
   }
 }
