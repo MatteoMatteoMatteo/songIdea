@@ -18,6 +18,6 @@ Get started by uploading your songs and discover hundrets of playlists!
 
 ```ng serve```
 
-## [Netlify](awesome-jepsen-e757f5.netlify.app)
+## [Netlify](https://awesome-jepsen-e757f5.netlify.app/)
 
 
