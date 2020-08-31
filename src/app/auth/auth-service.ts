@@ -14,7 +14,6 @@ export class AuthService {
   constructor(
     private angularFireAuth: AngularFireAuth,
     private router: Router,
-    private ss: SongService,
     private uiHelperService: UiHelperService,
     private store: Store<fromRoot.State>,
     private songService: SongService
@@ -64,6 +63,5 @@ export class AuthService {
   logout() {
     this.songService.stopAll();
     this.angularFireAuth.signOut();
-    this.ss.cancelSub();
   }
 }
