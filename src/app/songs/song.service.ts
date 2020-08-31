@@ -4,11 +4,8 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { Song } from "./song.model";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { map, last } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import * as Tone from "tone";
-import { Store } from "@ngrx/store";
-import * as fromRoot from "./../app.reducer";
-import * as AUDIO from "./../audio-player/audio.actions";
 
 @Injectable()
 export class SongService {
@@ -45,10 +42,6 @@ export class SongService {
   });
 
   constructor(private db: AngularFirestore, private uiHelperService: UiHelperService) {}
-
-  getMySongs() {
-    return this.mySongs.slice();
-  }
 
   stopAll() {
     clearInterval(this.countdown);
@@ -137,9 +130,7 @@ export class SongService {
   changeFx2(id: number, val: any) {
     this.reverb.wet.value = val;
   }
-  changeFx3(id: number, val: any) {
-    // this.shifter.frequency.value = val;
-  }
+
   uploadSong(songName: string, songGenre: string, url: string, uid: string) {
     this.songToDatabase({
       name: songName,
@@ -152,12 +143,6 @@ export class SongService {
 
   songToDatabase(song: Song) {
     this.db.collection("songs").add(song);
-  }
-
-  playSong(selectedId: String) {
-    // this.db.doc("songs/" + selectedId).update({ lastPlayed: new Date() });
-    // this.playingSong = this.mySongs.find((song) => song.songId === selectedId);
-    // this.songPlaying.next({ ...this.playingSong });
   }
 
   deleteSong(selectedId: String) {

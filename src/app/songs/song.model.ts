@@ -1,4 +1,3 @@
-import * as Tone from "tone";
 export interface Song {
   userId: string;
   songId?: string;

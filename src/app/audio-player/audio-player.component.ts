@@ -24,8 +24,6 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   playStopTitle = "PLAY | STOP";
   nextTitle = "NEXT";
   previousTitle = "BACK";
-  pitchMeUpTitle = "PU";
-  pitchMeDownTitle = "PD";
   allSongs: Song[] = [];
   allSongSubscription: Subscription;
   whichSongIsDroppingSub: Subscription;
@@ -87,9 +85,6 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   onFx2Change(id: number, event: MatSliderChange) {
     this.songService.changeFx2(id, event.value);
   }
-  onFx3Change(id: number, event: MatSliderChange) {
-    this.songService.changeFx3(id, event.value);
-  }
 
   ngOnDestroy() {
     this.allSongSubscription.unsubscribe();
@@ -98,5 +93,6 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.songsLoadingSub.unsubscribe();
     this.loadingSub.unsubscribe();
     this.destroyMeSub.unsubscribe();
+    this.startCountdownSub.unsubscribe();
   }
 }

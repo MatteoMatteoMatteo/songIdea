@@ -2,13 +2,13 @@ import { Comment } from "./comment.model";
 import { UiHelperService } from "./../uiHelper/uiHelper.service";
 import { Subscription } from "rxjs";
 import { NgForm } from "@angular/forms";
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { Subject } from "rxjs";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { map } from "rxjs/operators";
 
 @Injectable()
-export class CommentService {
+export class CommentService implements OnDestroy {
   private firebaseSub: Subscription;
   songPlaying = new Subject<Comment>();
   private allComments: Comment[] = [];
@@ -50,5 +50,9 @@ export class CommentService {
         },
         (error) => {}
       );
+  }
+
+  ngOnDestroy() {
+    this.firebaseSub.unsubscribe();
   }
 }

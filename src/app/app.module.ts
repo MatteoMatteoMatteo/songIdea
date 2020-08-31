@@ -11,14 +11,12 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { StoreModule } from "@ngrx/store";
 import { MatSliderModule } from "@angular/material/slider";
 import { reducers } from "./app.reducer";
-
 import { FormsModule } from "@angular/forms";
 import { AngularFireModule } from "@angular/fire";
 import { environment } from "../environments/environment";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
 import { ScrollingModule } from "@angular/cdk/scrolling";
-
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -49,9 +47,8 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatDialogModule } from "@angular/material/dialog";
 import { BrowseComponent } from "./browse/browse.component";
 import { SongCardComponent } from "./browse/song-card/song-card.component";
-import { RandomSongComponent } from "./browse/random-song/random-song.component";
 import { CommentsComponent } from "./comments/comments.component";
-import { ScrollComponent } from "./infiniteScroll/scroll/scroll.component";
+import { ScrollComponent } from "./infiniteScroll/scroll.component";
 import { DropButtonComponent } from "./drop-button/drop-button.component";
 import { AudioPlayerComponent } from "./audio-player/audio-player.component";
 
@@ -69,7 +66,6 @@ import { AudioPlayerComponent } from "./audio-player/audio-player.component";
     CancelComponent,
     BrowseComponent,
     SongCardComponent,
-    RandomSongComponent,
     CommentsComponent,
     ScrollComponent,
     DropButtonComponent,

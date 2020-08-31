@@ -1,11 +1,11 @@
 @import "../../../styles.scss";
 @import "../../start/start.component.scss";
+
 .mySongs {
   display: flex;
   flex-wrap: wrap;
   margin: auto;
   justify-content: space-between;
-
   padding: 0px 100px;
 }
 

@@ -1,4 +1,3 @@
-import { AngularFirestore } from "@angular/fire/firestore";
 import { CommentService } from "./../../comments/comment.service";
 import { MatDialog } from "@angular/material/dialog";
 import { Subscription } from "rxjs";
@@ -7,14 +6,9 @@ import { CancelComponent } from "./../../uiHelper/cancel/cancel.component";
 import { SongService } from "./../song.service";
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { Song } from "../song.model";
-import { Subject } from "rxjs";
 import { Comment } from "./../../comments/comment.model";
-import { AngularFireAuth } from "@angular/fire/auth";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../../app.reducer";
-import * as AUDIO from "./../../audio-player/audio.actions";
-import * as Tone from "tone";
-import { AngularFireStorage } from "@angular/fire/storage";
 
 @Component({
   selector: "app-my-songs",
@@ -22,25 +16,14 @@ import { AngularFireStorage } from "@angular/fire/storage";
   styleUrls: ["./my-songs.component.scss"],
 })
 export class MySongsComponent implements OnInit, OnDestroy {
-  buttonStyling = "bigDropButton";
-  spinnerStyling = "bigSpinner";
-  buttonTitle = "DROP";
-  songsLoading: boolean[] = [];
-  songsLoadingSub: Subscription;
-  dropStates: boolean[] = [];
-  dropStatesSub: Subscription;
   loadingSub: Subscription;
   isLoading: boolean;
   mySongSubscription: Subscription;
-  allSongsSubscription: Subscription;
   allCommentsSubscription: Subscription;
   mySongs: Song[] = [];
   allComments: Comment[] = [];
-  whichSongIsDropping: number;
   @Output() exit = new EventEmitter();
   constructor(
-    private storage: AngularFireStorage,
-    private angularFireAuth: AngularFireAuth,
     private commentService: CommentService,
     private dialog: MatDialog,
     private songService: SongService,
@@ -49,16 +32,6 @@ export class MySongsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.whichSongIsDropping = this.songService.whichSongIsDropping;
-    if (this.whichSongIsDropping >= 0) {
-      this.dropStates[this.whichSongIsDropping] = true;
-    }
-    this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
-      this.dropStates = dropStates;
-    });
-    this.songsLoadingSub = this.songService.songLoadingListed.subscribe((songsLoading) => {
-      this.songsLoading = songsLoading;
-    });
     this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
@@ -78,10 +51,6 @@ export class MySongsComponent implements OnInit, OnDestroy {
     return this.allComments.filter((comment) => comment.songId === songId);
   }
 
-  onPlay(id: string) {
-    this.songService.playSong(id);
-  }
-
   onDelete(id: string, name: string) {
     const dialogRef = this.dialog.open(CancelComponent, {
       data: {
@@ -97,11 +66,8 @@ export class MySongsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.mySongSubscription) {
-      this.mySongSubscription.unsubscribe();
-    }
+    this.mySongSubscription.unsubscribe();
     this.loadingSub.unsubscribe();
-    this.dropStatesSub.unsubscribe();
-    this.songsLoadingSub.unsubscribe();
+    this.allCommentsSubscription.unsubscribe();
   }
 }

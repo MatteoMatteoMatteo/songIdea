@@ -19,7 +19,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.authService.initAuthListener();
     this.audioPlayingSub = this.songService.audioPlayingListed.subscribe((bool) => {
       this.audioPlaying = bool;
-      console.log(this.audioPlaying);
     });
   }
 

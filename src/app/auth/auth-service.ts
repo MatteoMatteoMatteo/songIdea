@@ -35,34 +35,28 @@ export class AuthService {
 
   registerUser(authData: AuthData) {
     this.store.dispatch(new UI.StartLoading());
-    // this.uiHelperService.loadingStateChanged.next(true);
     this.angularFireAuth
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
         let res = result;
         this.store.dispatch(new UI.StopLoading());
-        // this.uiHelperService.loadingStateChanged.next(false);
       })
       .catch((error) => {
         this.store.dispatch(new UI.StopLoading());
-        // this.uiHelperService.loadingStateChanged.next(false);
         this.uiHelperService.showSnackbar(error.message, null, 4000);
       });
   }
 
   login(authData: AuthData) {
     this.store.dispatch(new UI.StartLoading());
-    // this.uiHelperService.loadingStateChanged.next(true);
     this.angularFireAuth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
         let res = result;
         this.store.dispatch(new UI.StopLoading());
-        // this.uiHelperService.loadingStateChanged.next(false);
       })
       .catch((error) => {
         this.store.dispatch(new UI.StopLoading());
-        // this.uiHelperService.loadingStateChanged.next(false);
         this.uiHelperService.showSnackbar(error.message, null, 4000);
       });
   }

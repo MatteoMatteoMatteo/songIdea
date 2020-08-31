@@ -3,18 +3,17 @@ import { Subscription } from "rxjs";
 import { CommentService } from "./../../comments/comment.service";
 import { NgForm } from "@angular/forms";
 import { Song } from "./../../songs/song.model";
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 import { Comment } from "../../comments/comment.model";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../../app.reducer";
-import { last } from "rxjs/operators";
 
 @Component({
   selector: "app-song-card",
   templateUrl: "./song-card.component.html",
   styleUrls: ["./song-card.component.scss"],
 })
-export class SongCardComponent implements OnInit {
+export class SongCardComponent implements OnInit, OnDestroy {
   isLoading: true;
   allSongs: Song[];
   comments: Comment[] = [];
@@ -77,5 +76,12 @@ export class SongCardComponent implements OnInit {
 
   onAddComment(form: NgForm, songId: string, uid: string) {
     this.commentService.addComment(form, songId, uid);
+  }
+
+  ngOnDestroy() {
+    this.songsLoadingSub.unsubscribe();
+    this.allCommentsSubscription.unsubscribe();
+    this.dropStatesSub.unsubscribe();
+    this.allSongsSubscription.unsubscribe();
   }
 }
