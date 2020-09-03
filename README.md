@@ -18,6 +18,18 @@ Get started by uploading your songs and discover hundrets of playlists!
 
 ```ng serve```
 
-## [Netlify](https://awesome-jepsen-e757f5.netlify.app/)
+## Sign Up / Login
+
+Sign up with a new account
+
+or login:
+
+Email: *canvaimusic@gmail.com*
+
+Password: *123456*
+
+
+
+## Deployed on [Netlify](https://awesome-jepsen-e757f5.netlify.app/)
 
 
