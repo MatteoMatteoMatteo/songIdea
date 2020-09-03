@@ -62,6 +62,7 @@ export class AuthService {
 
   logout() {
     this.songService.stopAll();
+    this.songService.cancelSub();
     this.angularFireAuth.signOut();
   }
 }

@@ -1,5 +1,4 @@
 import { AngularFireStorage } from "@angular/fire/storage";
-import { Song } from "./../song.model";
 import { NgForm } from "@angular/forms";
 import { SongService } from "./../song.service";
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
@@ -13,12 +12,11 @@ import * as fromRoot from "../../app.reducer";
   styleUrls: ["./add-song.component.scss"],
 })
 export class AddSongComponent implements OnInit {
+  isLoading = false;
   songName: string;
   songGenre: string;
-  isLoading = false;
   file: any;
   filePath: any;
-  path: string;
   uid: string;
   genres: string[] = [
     "House",
@@ -42,7 +40,6 @@ export class AddSongComponent implements OnInit {
     "Alternative",
     "Acoustic",
   ];
-  songs: Song[];
   @Output() switchWhenUploaded: EventEmitter<any> = new EventEmitter();
   constructor(
     private songService: SongService,
@@ -54,7 +51,6 @@ export class AddSongComponent implements OnInit {
     this.store.select(fromRoot.getUid).subscribe((uid) => {
       this.uid = uid;
     });
-
     this.genres.sort();
   }
 
@@ -78,7 +74,7 @@ export class AddSongComponent implements OnInit {
       .subscribe();
   }
 
-  uploadFile(event) {
+  uploadFile(event: any) {
     this.file = event.target.files[0];
     this.filePath = `${localStorage.getItem("userId")}-${this.file.name}`;
   }

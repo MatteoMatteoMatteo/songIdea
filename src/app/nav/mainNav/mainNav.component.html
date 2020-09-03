@@ -16,7 +16,7 @@
       <li *ngIf="isAuth$ | async"><a class="navItem" routerLink="/browse">Discover</a></li>
       <li *ngIf="isAuth$ | async"><a class="navItem" routerLink="/songs">My Songs</a></li>
       <li *ngIf="isAuth$ | async">
-        <a class="navItem" style="cursor: pointer;" (click)="handleLogout()">Logout</a>
+        <a class="navItem" style="cursor: pointer" (click)="handleLogout()">Logout</a>
       </li>
     </ul>
   </div>

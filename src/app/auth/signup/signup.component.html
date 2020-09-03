@@ -30,18 +30,6 @@
           <mat-hint align="end">{{ pwInput.value?.length }} / 6</mat-hint>
           <mat-error>6 characters please!</mat-error>
         </mat-form-field>
-        <mat-form-field class="datePicker" color="accent">
-          <input
-            matInput
-            placeholder="When did you start to make music?"
-            [matDatepicker]="picker"
-            [max]="maxDate"
-            ngModel
-            name="startDate"
-          />
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
         <mat-checkbox color="accent" required ngModel name="agree" class="terms"
           >I make awesome music</mat-checkbox
         >

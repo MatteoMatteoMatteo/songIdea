@@ -15,7 +15,7 @@ export class UiHelperService {
 
   constructor(private snackbar: MatSnackBar) {}
 
-  showSnackbar(message, action, duration) {
+  showSnackbar(message: string, action: any, duration: any) {
     this.snackbar.open(message, action, {
       duration: duration,
       horizontalPosition: this.horizontalPosition,
