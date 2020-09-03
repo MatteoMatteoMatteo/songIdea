@@ -13,6 +13,7 @@ import { SongCardComponent } from "./song-card.component";
 describe("SongCardComponent", () => {
   let comp: SongCardComponent;
   let fixture: ComponentFixture<SongCardComponent>;
+  let songService: SongService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -36,7 +37,26 @@ describe("SongCardComponent", () => {
     expect(comp).toBeTruthy();
   });
 
-  it("should be undefined after construction", () => {
+  it("songs should be undefined after construction", () => {
     expect(comp.allSongs).toBeUndefined();
+  });
+
+  it("check on fx from songService", () => {
+    songService = TestBed.inject(SongService);
+    expect(songService.autoFilter).toBeDefined();
+    expect(songService.reverb).toBeDefined();
+  });
+
+  it("check on SongService if the first 3 songs get loaded", async(() => {
+    songService = TestBed.inject(SongService);
+    songService.allSongsListed.subscribe((songs) => expect(songs.length).toBe(3));
+  }));
+
+  it("check on button styling", () => {
+    expect(comp.buttonStyling).toMatch("bigDropButton");
+  });
+
+  it("check on button title", () => {
+    expect(comp.buttonTitle).toMatch("DROP");
   });
 });

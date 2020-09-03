@@ -210,7 +210,6 @@ export class SongService {
           songs.forEach((el) => {
             this.allSongs.push(el);
           });
-          console.log(this.allSongs);
           this.allSongsListed.next([...this.allSongs]);
           this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },

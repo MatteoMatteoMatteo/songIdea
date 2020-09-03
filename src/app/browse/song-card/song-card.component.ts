@@ -1,9 +1,10 @@
+import { UiHelperService } from "./../../uiHelper/uiHelper.service";
 import { SongService } from "./../../songs/song.service";
 import { Subscription } from "rxjs";
 import { CommentService } from "./../../comments/comment.service";
 import { NgForm } from "@angular/forms";
 import { Song } from "./../../songs/song.model";
-import { Component, OnInit, Input, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Comment } from "../../comments/comment.model";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../../app.reducer";
@@ -14,7 +15,7 @@ import * as fromRoot from "../../app.reducer";
   styleUrls: ["./song-card.component.scss"],
 })
 export class SongCardComponent implements OnInit, OnDestroy {
-  isLoading: true;
+  isLoading: boolean;
   uid: string;
   whichSongIsDropping: number;
   lastSongName: string;
@@ -29,11 +30,13 @@ export class SongCardComponent implements OnInit, OnDestroy {
   dropStatesSub: Subscription;
   allCommentsSubscription: Subscription;
   allSongsSubscription: Subscription;
+  loadingSub: Subscription;
 
   constructor(
     private commentService: CommentService,
     private songService: SongService,
-    private store: Store<fromRoot.State>
+    private store: Store<fromRoot.State>,
+    private uiHelperService: UiHelperService
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +58,9 @@ export class SongCardComponent implements OnInit, OnDestroy {
     });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
       this.uid = uid;
+    });
+    this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
+      this.isLoading = isLoading;
     });
     this.songService.fetchAllSongs();
     this.commentService.fetchAllComments();
@@ -81,5 +87,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.allCommentsSubscription.unsubscribe();
     this.dropStatesSub.unsubscribe();
     this.allSongsSubscription.unsubscribe();
+    this.loadingSub.unsubscribe();
   }
 }

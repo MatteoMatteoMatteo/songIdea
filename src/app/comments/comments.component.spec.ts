@@ -9,6 +9,7 @@ import { AngularFireModule } from "@angular/fire";
 describe("CommentsComponent", () => {
   let component: CommentsComponent;
   let fixture: ComponentFixture<CommentsComponent>;
+  let commentService: CommentService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,4 +29,11 @@ describe("CommentsComponent", () => {
     expect(component).toBeTruthy();
     done();
   });
+
+  it("check on CommentService if comments get loaded", async(() => {
+    commentService = TestBed.inject(CommentService);
+    commentService.allCommentsListed.subscribe((comments) =>
+      expect(comments.length).toBeGreaterThan(0)
+    );
+  }));
 });
