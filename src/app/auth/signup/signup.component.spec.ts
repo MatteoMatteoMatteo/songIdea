@@ -9,6 +9,7 @@ import { environment } from "../../../environments/environment";
 import { StoreModule } from "@ngrx/store";
 import { reducers } from "./../../app.reducer";
 import { FormsModule } from "@angular/forms";
+import { NgForm } from "@angular/forms";
 
 import { SignupComponent } from "./signup.component";
 
@@ -26,7 +27,7 @@ describe("SignupComponent", () => {
         AngularFireModule.initializeApp(environment.firebase),
       ],
       declarations: [SignupComponent],
-      providers: [AuthService, UiHelperService, SongService],
+      providers: [AuthService, UiHelperService, SongService, NgForm],
     }).compileComponents();
   }));
 
@@ -36,7 +37,7 @@ describe("SignupComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it("should create", (done) => {
     expect(component).toBeTruthy();
   });
 });

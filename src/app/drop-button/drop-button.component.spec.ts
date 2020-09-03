@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DropButtonComponent } from './drop-button.component';
+import { DropButtonComponent } from "./drop-button.component";
 
-describe('DropButtonComponent', () => {
+describe("DropButtonComponent", () => {
   let component: DropButtonComponent;
   let fixture: ComponentFixture<DropButtonComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DropButtonComponent ]
-    })
-    .compileComponents();
+      declarations: [DropButtonComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('DropButtonComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

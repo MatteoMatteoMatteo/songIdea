@@ -11,7 +11,7 @@ import { reducers } from "./../../app.reducer";
 import { SongCardComponent } from "./song-card.component";
 
 describe("SongCardComponent", () => {
-  let component: SongCardComponent;
+  let comp: SongCardComponent;
   let fixture: ComponentFixture<SongCardComponent>;
 
   beforeEach(async(() => {
@@ -28,11 +28,15 @@ describe("SongCardComponent", () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SongCardComponent);
-    component = fixture.componentInstance;
+    comp = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it("should create", () => {
-    expect(component).toBeTruthy();
+    expect(comp).toBeTruthy();
+  });
+
+  it("should be undefined after construction", () => {
+    expect(comp.allSongs).toBeUndefined();
   });
 });
