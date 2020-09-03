@@ -1,5 +1,4 @@
 import { Comment } from "./comment.model";
-import { UiHelperService } from "./../uiHelper/uiHelper.service";
 import { Subscription } from "rxjs";
 import { NgForm } from "@angular/forms";
 import { Injectable, OnDestroy } from "@angular/core";
@@ -9,13 +8,11 @@ import { map } from "rxjs/operators";
 
 @Injectable()
 export class CommentService implements OnDestroy {
-  private firebaseSub: Subscription;
-  songPlaying = new Subject<Comment>();
   private allComments: Comment[] = [];
-  myCommentsListed = new Subject<Comment[]>();
+  private firebaseSub: Subscription;
   allCommentsListed = new Subject<Comment[]>();
 
-  constructor(private db: AngularFirestore, private uiHelperService: UiHelperService) {}
+  constructor(private db: AngularFirestore) {}
 
   addComment(form: NgForm, songId: string, uid: string) {
     this.commentToDatabase({

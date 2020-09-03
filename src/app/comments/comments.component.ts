@@ -1,15 +1,14 @@
 import { CommentService } from "./comment.service";
 import { Comment } from "./comment.model";
 import { Subscription } from "rxjs";
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, OnDestroy } from "@angular/core";
 
 @Component({
   selector: "app-comments",
   templateUrl: "./comments.component.html",
   styleUrls: ["./comments.component.scss"],
 })
-export class CommentsComponent implements OnInit {
-  comments: Comment[] = [];
+export class CommentsComponent implements OnInit, OnDestroy {
   allCommentsSubscription: Subscription;
   allComments: Comment[] = [];
   @Input() songId: [];
@@ -21,5 +20,9 @@ export class CommentsComponent implements OnInit {
       this.allComments = comments;
     });
     this.commentService.fetchAllComments();
+  }
+
+  ngOnDestroy() {
+    this.allCommentsSubscription.unsubscribe();
   }
 }

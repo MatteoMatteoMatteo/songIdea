@@ -3,8 +3,6 @@ import { Song } from "./../songs/song.model";
 import { SongService } from "./../songs/song.service";
 import { Subscription } from "rxjs";
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Store } from "@ngrx/store";
-import * as fromRoot from "../app.reducer";
 import { MatSliderChange } from "@angular/material/slider";
 
 @Component({
@@ -13,10 +11,6 @@ import { MatSliderChange } from "@angular/material/slider";
   styleUrls: ["./audio-player.component.scss"],
 })
 export class AudioPlayerComponent implements OnInit, OnDestroy {
-  songsLoading: boolean[] = [];
-  songsLoadingSub: Subscription;
-  dropStates: boolean[] = [];
-  dropStatesSub: Subscription;
   buttonStyling = "smallDropButton";
   smallPitchButton = "smallPitchButton";
   playPauseButton = "playPauseButton";
@@ -24,22 +18,23 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   playStopTitle = "PLAY | STOP";
   nextTitle = "NEXT";
   previousTitle = "BACK";
+  songsLoading: boolean[] = [];
+  dropStates: boolean[] = [];
   allSongs: Song[] = [];
+  songsLoadingSub: Subscription;
+  dropStatesSub: Subscription;
   allSongSubscription: Subscription;
   whichSongIsDroppingSub: Subscription;
   loadingSub: Subscription;
   startCountdownSub: Subscription;
   destroyMeSub: Subscription;
+  fxToggler = false;
+  destroyMe = false;
   isLoading = true;
   whichSongIsDropping = 0;
   countdown = 30;
-  fxToggler = false;
-  destroyMe = false;
-  constructor(
-    private store: Store<fromRoot.State>,
-    private songService: SongService,
-    private uiHelperService: UiHelperService
-  ) {}
+
+  constructor(private songService: SongService, private uiHelperService: UiHelperService) {}
 
   ngOnInit(): void {
     this.whichSongIsDroppingSub = this.songService.whichSongIsDroppingListed.subscribe((songId) => {

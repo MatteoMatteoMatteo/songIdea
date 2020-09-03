@@ -31,7 +31,7 @@ export class ScrollComponent {
     this.infinite = batchMap.pipe(map((v) => Object.values(v)));
   }
 
-  getBatch(offset) {
+  getBatch(offset: number) {
     return this.db
       .collection("songs", (ref) => ref.orderBy("name").startAfter(offset).limit(this.batch))
       .snapshotChanges()
@@ -47,7 +47,7 @@ export class ScrollComponent {
       );
   }
 
-  nextBatch(e, offset) {
+  nextBatch(e: any, offset: any) {
     if (this.theEnd) {
       return;
     }
@@ -60,7 +60,7 @@ export class ScrollComponent {
     }
   }
 
-  trackByIdx(i) {
+  trackByIdx(i: number) {
     return i;
   }
 }

@@ -9,14 +9,9 @@ import * as Tone from "tone";
 
 @Injectable()
 export class SongService {
-  first: any;
-  docIDs: any = [];
   uid: string;
   whichSongIsDropping: number;
-  whichSongIsDroppingListed = new Subject<number>();
-  private firebaseSub: Subscription;
-  private moreSongsSub: Subscription;
-  private mySongsSub: Subscription;
+  newSongTimer: any;
   private mySongs: Song[] = [];
   public allSongs: Song[] = [];
   private songLoading: boolean[] = [];
@@ -26,9 +21,13 @@ export class SongService {
   songLoadingListed = new Subject<boolean[]>();
   dropStateListed = new Subject<boolean[]>();
   startCountdownListed = new Subject<number>();
+  whichSongIsDroppingListed = new Subject<number>();
   destroyAudioPlayer = new Subject<boolean>();
   audioPlayingListed = new Subject<boolean>();
-  newSongTimer: any;
+  private firebaseSub: Subscription;
+  private moreSongsSub: Subscription;
+  private mySongsSub: Subscription;
+
   countdownNumber: number;
   countdown: any;
   autoFilter = new Tone.AutoFilter({
@@ -152,7 +151,7 @@ export class SongService {
   fetchAllSongs() {
     this.destroyAudioPlayer.next(false);
     if (this.allSongs.length === 0) {
-      this.first = this.db.collection("songs", (ref) => ref.orderBy("name"));
+      this.db.collection("songs", (ref) => ref.orderBy("name"));
       this.uiHelperService.allSongsLoadingStateChanged.next(true);
       this.firebaseSub = this.db
         .collection("songs", (ref) => ref.orderBy("name").limit(3))
@@ -160,7 +159,6 @@ export class SongService {
         .pipe(
           map((docArray) => {
             return docArray.map((doc) => {
-              this.docIDs.push(doc);
               return {
                 songId: doc.payload.doc.id,
                 player: new Tone.Player({

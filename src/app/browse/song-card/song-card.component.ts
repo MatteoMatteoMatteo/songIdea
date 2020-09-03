@@ -15,22 +15,20 @@ import * as fromRoot from "../../app.reducer";
 })
 export class SongCardComponent implements OnInit, OnDestroy {
   isLoading: true;
-  allSongs: Song[];
-  comments: Comment[] = [];
   uid: string;
-  myComments: Comment[] = [];
+  whichSongIsDropping: number;
+  lastSongName: string;
+  allSongs: Song[];
+  allComments: Comment[] = [];
   buttonStyling = "bigDropButton";
   spinnerStyling = "bigSpinner";
   buttonTitle = "DROP";
   songsLoading: boolean[] = [];
-  songsLoadingSub: Subscription;
   dropStates: boolean[] = [];
+  songsLoadingSub: Subscription;
   dropStatesSub: Subscription;
-  whichSongIsDropping: number;
   allCommentsSubscription: Subscription;
   allSongsSubscription: Subscription;
-  allComments: Comment[] = [];
-  lastSongName: string;
 
   constructor(
     private commentService: CommentService,

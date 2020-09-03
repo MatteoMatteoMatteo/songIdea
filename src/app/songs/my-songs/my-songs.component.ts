@@ -16,8 +16,8 @@ import * as fromRoot from "../../app.reducer";
   styleUrls: ["./my-songs.component.scss"],
 })
 export class MySongsComponent implements OnInit, OnDestroy {
-  loadingSub: Subscription;
   isLoading: boolean;
+  loadingSub: Subscription;
   mySongSubscription: Subscription;
   allCommentsSubscription: Subscription;
   mySongs: Song[] = [];
@@ -45,6 +45,8 @@ export class MySongsComponent implements OnInit, OnDestroy {
       this.songService.fetchMySongs(uid);
     });
     this.commentService.fetchAllComments();
+
+    console.log(this.songService.uid);
   }
 
   getMyComments(songId: string) {
