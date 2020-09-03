@@ -12,8 +12,8 @@ import { RouterOutlet } from "@angular/router";
   animations: [nicer],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  audioPlayingSub: Subscription;
   audioPlaying = false;
+  audioPlayingSub: Subscription;
   constructor(private authService: AuthService, private songService: SongService) {}
   ngOnInit() {
     this.authService.initAuthListener();

@@ -45,8 +45,6 @@ export class MySongsComponent implements OnInit, OnDestroy {
       this.songService.fetchMySongs(uid);
     });
     this.commentService.fetchAllComments();
-
-    console.log(this.songService.uid);
   }
 
   getMyComments(songId: string) {

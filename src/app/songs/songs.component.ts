@@ -1,6 +1,4 @@
-import { SongService } from "./song.service";
-import { Subscription } from "rxjs";
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatTabGroup } from "@angular/material/tabs";
 
 @Component({
@@ -12,7 +10,7 @@ export class SongsComponent implements OnInit {
   @ViewChild("switchTab", { static: false }) switchTab: MatTabGroup;
   songOn = false;
 
-  constructor(private songService: SongService) {}
+  constructor() {}
 
   onSwitchTab() {
     const tabGroup = this.switchTab;

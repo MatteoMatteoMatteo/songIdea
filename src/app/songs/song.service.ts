@@ -252,8 +252,8 @@ export class SongService {
   }
 
   cancelSub() {
-    this.firebaseSub.unsubscribe();
-    this.mySongsSub.unsubscribe();
-    this.moreSongsSub.unsubscribe();
+    if (this.firebaseSub) this.firebaseSub.unsubscribe();
+    if (this.mySongsSub) this.mySongsSub.unsubscribe();
+    if (this.moreSongsSub) this.moreSongsSub.unsubscribe();
   }
 }
