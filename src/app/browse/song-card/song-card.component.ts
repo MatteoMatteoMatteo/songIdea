@@ -32,6 +32,12 @@ export class SongCardComponent implements OnInit, OnDestroy {
   allSongsSubscription: Subscription;
   loadingSub: Subscription;
 
+  public YT: any;
+  public video: any;
+  private player: any;
+  public reframed: Boolean = false;
+  youtube: any;
+
   constructor(
     private commentService: CommentService,
     private songService: SongService,
@@ -55,6 +61,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     });
     this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
       this.allSongs = songs;
+      this.init();
     });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
       this.uid = uid;
@@ -88,5 +95,45 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.dropStatesSub.unsubscribe();
     this.allSongsSubscription.unsubscribe();
     this.loadingSub.unsubscribe();
+  }
+
+  init() {
+    var tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    window["onYouTubeIframeAPIReady"] = () => this.startVideo();
+  }
+
+  lol(id: number) {
+    this.allSongs.forEach((song) => {
+      song.playerHolder.pauseVideo();
+    });
+    this.allSongs[id].playerHolder.playVideo();
+  }
+
+  startVideo() {
+    console.log(this.allSongs);
+    this.reframed = false;
+    this.allSongs.forEach((song) => {
+      song.playerHolder = new window["YT"].Player(song.playerId, {
+        videoId: song.videoId,
+        width: 300,
+        height: 200,
+        playerVars: {
+          start: 40,
+          end: 65,
+          autoplay: 0,
+          modestbranding: 0,
+          controls: 0,
+          disablekb: 0,
+          rel: 0,
+          showinfo: 0,
+          fs: 0,
+          playsinline: 0,
+        },
+        events: {},
+      });
+    });
   }
 }

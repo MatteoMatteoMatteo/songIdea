@@ -6,4 +6,7 @@ export interface Song {
   genre: string;
   date: Date;
   player?: any;
+  videoId: any;
+  playerId: any;
+  playerHolder: any;
 }

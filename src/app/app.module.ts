@@ -1,4 +1,4 @@
-import { YoutubePlayerComponent } from "./youtube-player/youtube-player.component";
+import { YoutubePlayerComponent } from "./youtube-manager/youtube-player/youtube-player.component";
 import { CommentService } from "./comments/comment.service";
 import { UiHelperService } from "./uiHelper/uiHelper.service";
 import { CancelComponent } from "./uiHelper/cancel/cancel.component";
@@ -52,6 +52,7 @@ import { CommentsComponent } from "./comments/comments.component";
 import { ScrollComponent } from "./infiniteScroll/scroll.component";
 import { DropButtonComponent } from "./drop-button/drop-button.component";
 import { AudioPlayerComponent } from "./audio-player/audio-player.component";
+import { YoutubeManagerComponent } from "./youtube-manager/youtube-manager.component";
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { AudioPlayerComponent } from "./audio-player/audio-player.component";
     ScrollComponent,
     DropButtonComponent,
     AudioPlayerComponent,
+    YoutubeManagerComponent,
   ],
   imports: [
     BrowserModule,

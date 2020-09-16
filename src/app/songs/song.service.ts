@@ -137,6 +137,9 @@ export class SongService {
       userId: uid,
       path: url,
       date: new Date(),
+      videoId: "2rvqTd7srVs",
+      playerId: "player3",
+      playerHolder: null,
     });
   }
 
@@ -148,13 +151,17 @@ export class SongService {
     this.db.doc("songs/" + selectedId).delete();
   }
 
+  doIt() {
+    window["onYouTubeIframeAPIReady"] = () => this.fetchAllSongs();
+  }
+
   fetchAllSongs() {
     this.destroyAudioPlayer.next(false);
     if (this.allSongs.length === 0) {
       this.db.collection("songs", (ref) => ref.orderBy("name"));
       this.uiHelperService.allSongsLoadingStateChanged.next(true);
       this.firebaseSub = this.db
-        .collection("songs", (ref) => ref.orderBy("name").limit(3))
+        .collection("songs", (ref) => ref.orderBy("name").limit(2))
         .snapshotChanges()
         .pipe(
           map((docArray) => {

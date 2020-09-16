@@ -4,6 +4,7 @@ import { SongService } from "./../songs/song.service";
 import { Subscription } from "rxjs";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { MatSliderChange } from "@angular/material/slider";
+import { Player } from "tone";
 
 @Component({
   selector: "app-audio-player",
