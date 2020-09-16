@@ -1,3 +1,4 @@
+import { YoutubePlayerComponent } from "./youtube-player/youtube-player.component";
 import { CommentService } from "./comments/comment.service";
 import { UiHelperService } from "./uiHelper/uiHelper.service";
 import { CancelComponent } from "./uiHelper/cancel/cancel.component";
@@ -63,6 +64,7 @@ import { AudioPlayerComponent } from "./audio-player/audio-player.component";
     MainNavComponent,
     SideNavComponent,
     MySongsComponent,
+    YoutubePlayerComponent,
     CancelComponent,
     BrowseComponent,
     SongCardComponent,

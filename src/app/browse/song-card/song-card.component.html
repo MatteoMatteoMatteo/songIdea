@@ -6,14 +6,7 @@
   >
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
     <mat-card-content></mat-card-content>
-    <app-drop-button
-      [dropStates]="dropStates[i]"
-      [songsLoading]="songsLoading[i]"
-      (dropped)="dropSong(i)"
-      [buttonStyling]="buttonStyling"
-      [spinnerStyling]="spinnerStyling"
-      [buttonTitle]="buttonTitle"
-    ></app-drop-button>
+    <app-youtube-player [playerId]="'player' + i" [howMany]="allSongs.length"></app-youtube-player>
     <h2 class="h2"><span class="span">Write a Comment</span></h2>
 
     <form class="writeComment" (ngSubmit)="onAddComment(f, song.songId, song.userId)" #f="ngForm">
