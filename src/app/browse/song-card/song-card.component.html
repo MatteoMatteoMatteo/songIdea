@@ -5,12 +5,40 @@
     [value]="song.songId"
   >
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
-    <mat-card-content></mat-card-content>
-    <div [id]="song.playerId">{{ song.playerId }}</div>
-    <div style="width: 50px; height: 50px; border: solid red 2px" (click)="lol(i)"></div>
-    <h2 class="h2"><span class="span">Write a Comment</span></h2>
 
-    <form class="writeComment" (ngSubmit)="onAddComment(f, song.songId, song.userId)" #f="ngForm">
+    <div
+      [id]="song.playerId"
+      style="pointer-events: none; margin-bottom: 20px; margin-top: 20px; border-radius: 8px"
+    >
+      {{ song.playerId }}
+    </div>
+
+    <div
+      style="
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        align-content: center;
+        width: 100%;
+        margin-bottom: 20px;
+      "
+    >
+      <div>
+        <app-drop-button
+          [buttonStyling]="playPauseButton"
+          [spinnerStyling]="spinnerStyling"
+          [buttonTitle]="playStopTitle"
+          [dropStates]="dropStates[i]"
+          [songsLoading]="songsLoading[i]"
+          (dropped)="dropSong(i)"
+        ></app-drop-button>
+      </div>
+
+      <div>Favourite</div>
+    </div>
+    <h2 class="h2"><span class="span">Full Song</span></h2>
+
+    <!-- <form class="writeComment" (ngSubmit)="onAddComment(f, song.songId, song.userId)" #f="ngForm">
       <mat-form-field appearance="" color="accent">
         <mat-label>Sounds good?</mat-label>
         <textarea matInput ngModel name="content"></textarea>
@@ -25,7 +53,7 @@
       <p *ngFor="let comment of getMyComments(song.songId)" [value]="comment.id" align="start">
         {{ comment.content }}
       </p>
-    </div>
+    </div> -->
   </mat-card>
   <button (click)="onLoadMoreSongs(allSongs[allSongs.length - 1].name)" class="morePleasePhone">
     Load more songs

@@ -70,7 +70,6 @@ export class SongService {
         });
         this.allSongs[id].playerHolder.seekTo(20, true);
         this.allSongs[id].playerHolder.playVideo();
-        // this.allSongs[id].playerHolder.playVideo();
         this.manageCountdown();
         this.manageNextSongAfterCountdown(id);
         this.dropState[id] = true;

@@ -15,17 +15,20 @@ import * as fromRoot from "../../app.reducer";
   styleUrls: ["./song-card.component.scss"],
 })
 export class SongCardComponent implements OnInit, OnDestroy {
+  smallPitchButton = "smallPitchButton";
+  playPauseButton = "bigDropButton";
+  spinnerStyling = "bigSpinner";
+  playStopTitle = "DROP";
+  songsLoading: boolean[] = [];
+  dropStates: boolean[] = [];
   isLoading: boolean;
   uid: string;
   whichSongIsDropping: number;
   lastSongName: string;
   allSongs: Song[];
   allComments: Comment[] = [];
-  buttonStyling = "bigDropButton";
-  spinnerStyling = "bigSpinner";
   buttonTitle = "DROP";
-  songsLoading: boolean[] = [];
-  dropStates: boolean[] = [];
+
   songsLoadingSub: Subscription;
   dropStatesSub: Subscription;
   allCommentsSubscription: Subscription;
@@ -50,6 +53,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     if (this.whichSongIsDropping >= 0) {
       this.dropStates[this.whichSongIsDropping] = true;
     }
+
     this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
       this.dropStates = dropStates;
     });
@@ -121,8 +125,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
         width: 300,
         height: 200,
         playerVars: {
-          start: 40,
-          end: 75,
           autoplay: 0,
           modestbranding: 0,
           controls: 0,
