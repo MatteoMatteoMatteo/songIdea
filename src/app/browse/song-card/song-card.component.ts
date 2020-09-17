@@ -122,18 +122,55 @@ export class SongCardComponent implements OnInit, OnDestroy {
         height: 200,
         playerVars: {
           start: 40,
-          end: 65,
+          end: 75,
           autoplay: 0,
           modestbranding: 0,
           controls: 0,
-          disablekb: 0,
+          disablekb: 1,
           rel: 0,
-          showinfo: 0,
+          ecver: 2,
           fs: 0,
           playsinline: 0,
         },
-        events: {},
+        events: {
+          onStateChange: this.onPlayerStateChange.bind(this),
+          onError: this.onPlayerError.bind(this),
+          onReady: this.onPlayerReady.bind(this),
+        },
       });
     });
+  }
+
+  onPlayerStateChange(event) {
+    // var index = event.target.f.id;
+    // index = index.replace(/\D/g, "") - 1;
+    // if (event.target.getPlayerState() == 1) {
+    //   console.log(index);
+    //   console.log("No pause it pls");
+    // }
+    // if (event.target.getPlayerState() == 2) {
+    //   console.log("No start it pls");
+    //   this.songService.dropSong(index);
+    // }
+  }
+
+  cleanTime() {
+    return Math.round(this.player.getCurrentTime());
+  }
+
+  onPlayerReady(event) {
+    console.log(this.player);
+  }
+
+  onPlayerError(event) {
+    switch (event.data) {
+      case 2:
+        console.log("" + this.video);
+        break;
+      case 100:
+        break;
+      case 101 || 150:
+        break;
+    }
   }
 }

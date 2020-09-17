@@ -58,6 +58,44 @@ export class SongService {
       clearTimeout(this.newSongTimer);
       this.whichSongIsDropping = id;
       this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
+      if (
+        this.allSongs[id].playerHolder.getPlayerState() == 2 ||
+        this.allSongs[id].playerHolder.getPlayerState() == 5 ||
+        this.allSongs[id].playerHolder.getPlayerState() == 0
+      ) {
+        this.dropState.fill(false);
+        this.dropStateListed.next([...this.dropState]);
+        this.allSongs.forEach((song) => {
+          song.playerHolder.pauseVideo();
+        });
+        this.allSongs[id].playerHolder.seekTo(20, true);
+        this.allSongs[id].playerHolder.playVideo();
+        // this.allSongs[id].playerHolder.playVideo();
+        this.manageCountdown();
+        this.manageNextSongAfterCountdown(id);
+        this.dropState[id] = true;
+        this.dropStateListed.next([...this.dropState]);
+        this.audioPlayingListed.next(true);
+      } else {
+        clearInterval(this.countdown);
+        clearTimeout(this.newSongTimer);
+        this.countdownNumber = 30;
+        this.allSongs[id].playerHolder.pauseVideo();
+        this.dropState[id] = false;
+        this.dropStateListed.next([...this.dropState]);
+        this.audioPlayingListed.next(false);
+      }
+    } else {
+      this.dropSong(0);
+    }
+  }
+
+  dropSongOld(id: number) {
+    if (id >= 0 && id < this.allSongs.length) {
+      clearInterval(this.countdown);
+      clearTimeout(this.newSongTimer);
+      this.whichSongIsDropping = id;
+      this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
       if (this.allSongs[id].player.state === "stopped") {
         this.dropState.fill(false);
         this.dropStateListed.next([...this.dropState]);
@@ -95,7 +133,7 @@ export class SongService {
         this.audioPlayingListed.next(false);
       }
     } else {
-      this.dropSong(0);
+      this.dropSongOld(0);
     }
   }
 

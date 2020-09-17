@@ -39,6 +39,7 @@ export class YoutubePlayerComponent implements OnInit {
         disablekb: 0,
         rel: 0,
         showinfo: 0,
+        ecver: 0,
         fs: 0,
         playsinline: 0,
       },
