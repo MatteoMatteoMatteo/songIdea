@@ -1,0 +1,81 @@
+@import "../../../styles.scss";
+@import "../../start/start.component.scss";
+
+.mySongs {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  justify-content: space-between;
+  padding: 0px 100px;
+}
+
+.songCard {
+  align-content: center;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 10px 30px 10px;
+}
+
+.title {
+  padding: 15px;
+  margin-bottom: 5px;
+}
+
+.commentsCard {
+  width: 80%;
+  padding: 20px 20px 0px 20px;
+}
+
+.audioControl {
+  margin: 0px 0px 0px 5px;
+  outline: none;
+}
+
+.uploadIcon {
+  position: relative;
+  top: 2px;
+  font-size: 1.1rem;
+}
+
+.h2 {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  line-height: 0.1em;
+  margin-top: 20px;
+}
+
+.h2 .span {
+  background: $second-color;
+  padding: 0 10px;
+  font-family: "Raleway", serif;
+  font-size: 1rem;
+}
+
+.theP {
+  font-size: 1rem;
+  margin: 0px 0px 0px 0px;
+  cursor: default;
+}
+
+.section {
+  cursor: default;
+  padding: 20px;
+  box-shadow: none;
+  width: 600px;
+}
+
+@media only screen and (max-width: 500px) {
+  .mySongs {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+  }
+  .songCard {
+    margin: auto;
+    margin-bottom: 20px;
+  }
+}

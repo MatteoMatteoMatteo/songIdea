@@ -14,7 +14,8 @@
       <li *ngIf="!(isAuth$ | async)"><a class="navItem" routerLink="/signup">Signup</a></li>
       <li *ngIf="!(isAuth$ | async)"><a class="navItem" routerLink="/login">Login</a></li>
       <li *ngIf="isAuth$ | async"><a class="navItem" routerLink="/browse">Discover</a></li>
-      <li *ngIf="isAuth$ | async"><a class="navItem" routerLink="/songs">My Songs</a></li>
+      <li *ngIf="isAuth$ | async"><a class="navItem" routerLink="/songs">My Drops</a></li>
+      <li *ngIf="isAuth$ | async"><a class="navItem" routerLink="/upload">Upload</a></li>
       <li *ngIf="isAuth$ | async">
         <a class="navItem" style="cursor: pointer" (click)="handleLogout()">Logout</a>
       </li>

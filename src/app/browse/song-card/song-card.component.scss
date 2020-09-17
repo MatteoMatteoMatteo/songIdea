@@ -89,6 +89,100 @@
   background-color: $first-color;
 }
 
+.heartHolder {
+  width: 80px;
+}
+
+.heart {
+  margin-top: 23px;
+  position: relative;
+  left: 29px;
+  background-color: gray;
+  width: 20px;
+  height: 20px;
+  transform: rotate(-45deg);
+  cursor: pointer;
+}
+
+.heartHowManyHolder {
+  margin-top: 2px;
+  display: flex;
+  width: 200px;
+  align-items: center;
+  justify-content: center;
+}
+
+.heartHowMany {
+  position: relative;
+  margin-right: 10px;
+  left: 5px;
+  background-color: #a46260;
+  width: 14px;
+  height: 14px;
+  transform: rotate(-45deg);
+  cursor: pointer;
+}
+
+.heartHowMany::after {
+  background-color: #a46260;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 7px;
+}
+
+.heartHowMany::before {
+  background-color: #a46260;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  bottom: 7px;
+  left: 0px;
+}
+
+.heart::after {
+  background-color: gray;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 10px;
+}
+
+.heart::before {
+  background-color: gray;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+}
+
+.heart:hover:before,
+.heart:hover:after,
+.heart:hover {
+  animation: color 50ms forwards;
+}
+
+@keyframes color {
+  0% {
+    background-color: grey;
+  }
+
+  100% {
+    background-color: #a46260;
+  }
+}
+
 @media only screen and (max-width: 500px) {
   .allSongs {
     display: flex;

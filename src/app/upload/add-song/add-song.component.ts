@@ -1,6 +1,6 @@
+import { SongService } from "./../../songs/song.service";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { NgForm } from "@angular/forms";
-import { SongService } from "./../song.service";
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { finalize } from "rxjs/operators";
 import { Store } from "@ngrx/store";

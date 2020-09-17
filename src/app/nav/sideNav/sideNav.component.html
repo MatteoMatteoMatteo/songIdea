@@ -8,12 +8,16 @@
       ><mat-icon class="phoneIcon">account_circle</mat-icon
       ><span class="phoneNavText">Login</span></a
     >
-    <a *ngIf="isAuth$ | async" mat-list-item routerLink="/songs" (click)="closeSidenav()"
-      ><mat-icon class="phoneIcon">headset</mat-icon><span class="phoneNavText">My Songs</span></a
-    >
     <a *ngIf="isAuth$ | async" mat-list-item routerLink="/browse" (click)="closeSidenav()"
       ><mat-icon class="phoneIcon">radio</mat-icon><span class="phoneNavText">Discover</span></a
     >
+    <a *ngIf="isAuth$ | async" mat-list-item routerLink="/songs" (click)="closeSidenav()"
+      ><mat-icon class="phoneIcon">headset</mat-icon><span class="phoneNavText">My Drops</span></a
+    >
+    <a *ngIf="isAuth$ | async" mat-list-item routerLink="/upload" (click)="closeSidenav()"
+      ><mat-icon class="phoneIcon">headset</mat-icon><span class="phoneNavText">Upload</span></a
+    >
+
     <a *ngIf="isAuth$ | async" mat-list-item (click)="closeSidenav(); handleLogout()"
       ><mat-icon class="phoneIcon">exit_to_app</mat-icon><span class="phoneNavText">Logout</span></a
     >

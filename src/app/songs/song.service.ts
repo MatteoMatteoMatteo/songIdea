@@ -180,6 +180,8 @@ export class SongService {
     });
   }
 
+  heartSong(id: number) {}
+
   songToDatabase(song: Song) {
     this.db.collection("songs").add(song);
   }

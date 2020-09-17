@@ -6,6 +6,13 @@
   >
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
 
+    <h2 class="h2">
+      <span class="span">{{ song.hearts }}</span>
+    </h2>
+    <div class="heartHowManyHolder">
+      <div class="heartHowMany"></div>
+    </div>
+
     <div
       [id]="song.playerId"
       style="pointer-events: none; margin-bottom: 20px; margin-top: 20px; border-radius: 8px"
@@ -33,8 +40,10 @@
           (dropped)="dropSong(i)"
         ></app-drop-button>
       </div>
-
-      <div>Favourite</div>
+      <class class="heartHolder">
+        <div (click)="onHeartSong(i)" class="heart"></div>
+        <p style="margin-top: 10px">save drop</p></class
+      >
     </div>
     <h2 class="h2"><span class="span">Full Song</span></h2>
 

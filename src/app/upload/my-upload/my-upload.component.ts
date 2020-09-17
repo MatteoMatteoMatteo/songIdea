@@ -1,27 +1,26 @@
-import { CommentService } from "./../../comments/comment.service";
+import { SongService } from "./../../songs/song.service";
+import { Song } from "./../../songs/song.model";
+import { CommentService } from "../../comments/comment.service";
 import { MatDialog } from "@angular/material/dialog";
 import { Subscription } from "rxjs";
-import { UiHelperService } from "./../../uiHelper/uiHelper.service";
-import { CancelComponent } from "./../../uiHelper/cancel/cancel.component";
-import { SongService } from "./../song.service";
+import { UiHelperService } from "../../uiHelper/uiHelper.service";
+import { CancelComponent } from "../../uiHelper/cancel/cancel.component";
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
-import { Song } from "../song.model";
-import { Comment } from "./../../comments/comment.model";
+import { Comment } from "../../comments/comment.model";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../../app.reducer";
 
 @Component({
-  selector: "app-my-songs",
-  templateUrl: "./my-songs.component.html",
-  styleUrls: ["./my-songs.component.scss"],
+  selector: "app-my-upload",
+  templateUrl: "./my-upload.component.html",
+  styleUrls: ["./my-upload.component.scss"],
 })
-export class MySongsComponent implements OnInit, OnDestroy {
+export class MyUploadComponent implements OnInit, OnDestroy {
   isLoading: boolean;
   loadingSub: Subscription;
   mySongSubscription: Subscription;
   allCommentsSubscription: Subscription;
   mySongs: Song[] = [];
-  mySavedSongs: Song[] = [];
   allComments: Comment[] = [];
   @Output() exit = new EventEmitter();
   constructor(

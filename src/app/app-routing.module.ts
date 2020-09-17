@@ -1,4 +1,4 @@
-import { AudioPlayerComponent } from "./audio-player/audio-player.component";
+import { UploadComponent } from "./upload/upload.component";
 import { BrowseComponent } from "./browse/browse.component";
 import { AuthGuard } from "./auth/auth.guard";
 import { SongsComponent } from "./songs/songs.component";
@@ -22,6 +22,12 @@ const routes: Routes = [
     path: "browse",
     component: BrowseComponent,
     data: { animation: "3" },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "upload",
+    component: UploadComponent,
+    data: { animation: "2" },
     canActivate: [AuthGuard],
   },
 ];

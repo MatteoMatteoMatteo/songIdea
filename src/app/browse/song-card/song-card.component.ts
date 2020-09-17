@@ -81,6 +81,10 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.songService.dropSong(id);
   }
 
+  onHeartSong(id: number) {
+    this.songService.heartSong(id);
+  }
+
   getMyComments(songId: string) {
     return this.allComments.filter((comment) => comment.songId === songId);
   }

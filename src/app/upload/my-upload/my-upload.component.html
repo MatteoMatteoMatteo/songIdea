@@ -1,5 +1,5 @@
 <div class="mySongs" *ngIf="!isLoading">
-  <mat-card class="songCard" *ngFor="let song of mySavedSongs; let i = index" [value]="song.id">
+  <mat-card class="songCard" *ngFor="let song of mySongs; let i = index" [value]="song.id">
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
     <mat-card-content> </mat-card-content>
 
@@ -17,6 +17,6 @@
   </mat-card>
 </div>
 <mat-spinner style="margin: auto" color="accent" *ngIf="isLoading" diameter="80"></mat-spinner>
-<div class="section" *ngIf="!isLoading && mySavedSongs.length === 0">
-  <p class="theP">You have no drops yet that you liked!</p>
+<div class="section" *ngIf="!isLoading && mySongs.length === 0">
+  <p class="theP">You have no songs yet, upload your first one! :)</p>
 </div>

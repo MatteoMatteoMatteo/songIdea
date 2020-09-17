@@ -1,4 +1,5 @@
-import { YoutubePlayerComponent } from "./youtube-manager/youtube-player/youtube-player.component";
+import { UploadComponent } from "./upload/upload.component";
+import { AddSongComponent } from "./upload/add-song/add-song.component";
 import { CommentService } from "./comments/comment.service";
 import { UiHelperService } from "./uiHelper/uiHelper.service";
 import { CancelComponent } from "./uiHelper/cancel/cancel.component";
@@ -26,7 +27,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { SignupComponent } from "./auth/signup/signup.component";
 import { LoginComponent } from "./auth/login/login.component";
 import { SongsComponent } from "./songs/songs.component";
-import { AddSongComponent } from "./songs/add-song/add-song.component";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { StartComponent } from "./start/start.component";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -41,6 +41,7 @@ import { MainNavComponent } from "./nav/mainNav/mainNav.component";
 import { SideNavComponent } from "./nav/sideNav/sideNav.component";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MySongsComponent } from "./songs/my-songs/my-songs.component";
+import { MyUploadComponent } from "./upload/my-upload/my-upload.component";
 import { MatCardModule } from "@angular/material/card";
 import { MatSelectModule } from "@angular/material/select";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
@@ -52,7 +53,6 @@ import { CommentsComponent } from "./comments/comments.component";
 import { ScrollComponent } from "./infiniteScroll/scroll.component";
 import { DropButtonComponent } from "./drop-button/drop-button.component";
 import { AudioPlayerComponent } from "./audio-player/audio-player.component";
-import { YoutubeManagerComponent } from "./youtube-manager/youtube-manager.component";
 
 @NgModule({
   declarations: [
@@ -65,15 +65,15 @@ import { YoutubeManagerComponent } from "./youtube-manager/youtube-manager.compo
     MainNavComponent,
     SideNavComponent,
     MySongsComponent,
-    YoutubePlayerComponent,
+    MyUploadComponent,
     CancelComponent,
+    UploadComponent,
     BrowseComponent,
     SongCardComponent,
     CommentsComponent,
     ScrollComponent,
     DropButtonComponent,
     AudioPlayerComponent,
-    YoutubeManagerComponent,
   ],
   imports: [
     BrowserModule,

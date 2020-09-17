@@ -9,4 +9,5 @@ export interface Song {
   videoId: any;
   playerId: any;
   playerHolder: any;
+  hearts?: number;
 }
