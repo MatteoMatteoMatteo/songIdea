@@ -185,6 +185,10 @@ export class SongService {
 
   heartSong(id: number) {}
 
+  updateTodo2(todo: any, newValue: string): void {
+    this.af.object("/todos/" + todo.$key).update({ content: newValue, done: todo.done });
+  }
+
   songToDatabase(song: Song) {
     this.db.collection("songs").add(song);
   }
