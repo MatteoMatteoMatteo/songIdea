@@ -7,7 +7,7 @@
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
 
     <h2 class="h2">
-      <span class="span">{{ song.hearts }}</span>
+      <span class="span">{{ allComments[i].content }}</span>
     </h2>
     <div class="heartHowManyHolder">
       <div class="heartHowMany"></div>
@@ -39,7 +39,7 @@
         ></app-drop-button>
       </div>
       <class class="heartHolder">
-        <div class="heart" (click)="onHeartSong(i)"></div>
+        <div class="heart" (click)="onHeartSong(song.songId, song.hearts)"></div>
         <p style="margin-top: 10px; cursor: default">save drop</p></class
       >
     </div>

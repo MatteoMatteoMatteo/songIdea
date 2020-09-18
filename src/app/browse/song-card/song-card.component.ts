@@ -64,6 +64,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     });
     this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
       this.allSongs = songs;
+      console.log(this.allSongs);
       this.init();
     });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
@@ -80,8 +81,8 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.songService.dropSong(id);
   }
 
-  onHeartSong(id: number) {
-    this.songService.heartSong(id);
+  onHeartSong(songId: string, hearts: number) {
+    this.songService.heartSong(songId, hearts);
   }
 
   getMyComments(songId: string) {
