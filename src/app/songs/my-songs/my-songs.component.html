@@ -1,22 +1,69 @@
-<div class="mySongs" *ngIf="!isLoading">
-  <mat-card class="songCard" *ngFor="let song of mySavedSongs; let i = index" [value]="song.id">
+<div fxFlex.xs="100%" class="allSongs" *ngIf="!isLoading">
+  <mat-card
+    class="songCard animate__animated animate__fadeIn"
+    *ngFor="let song of mySavedSongs; let i = index"
+    [value]="song.songId"
+  >
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
-    <mat-card-content> </mat-card-content>
+
+    <h2 class="h2">
+      <span class="span">{{ song.hearts }}</span>
+    </h2>
+    <div class="heartHowManyHolder">
+      <div class="heartHowMany"></div>
+    </div>
+
+    <div
+      [id]="song.playerId"
+      style="pointer-events: none; margin-bottom: 20px; margin-top: 20px; border-radius: 8px"
+    >
+      {{ song.playerId }}
+    </div>
+
+    <div
+      style="
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        align-content: center;
+        width: 100%;
+        margin-bottom: 20px;
+      "
+    >
+      <div>
+        <app-drop-button
+          [buttonStyling]="playPauseButton"
+          [spinnerStyling]="spinnerStyling"
+          [buttonTitle]="playStopTitle"
+          [dropStates]="dropStates[i]"
+          [songsLoading]="songsLoading[i]"
+          (dropped)="dropSong(i)"
+        ></app-drop-button>
+      </div>
+      <class class="heartHolder">
+        <div class="heart" (click)="onHeartSong(i)"></div>
+        <p style="margin-top: 10px; cursor: default">save drop</p></class
+      >
+    </div>
+    <h2 class="h2"><span class="span">Full Song</span></h2>
+
+    <!-- <form class="writeComment" (ngSubmit)="onAddComment(f, song.songId, song.userId)" #f="ngForm">
+      <mat-form-field appearance="" color="accent">
+        <mat-label>Sounds good?</mat-label>
+        <textarea matInput ngModel name="content"></textarea>
+      </mat-form-field>
+      <mat-card-actions [ngStyle]="{ marginBottom: '0px', marginTop: '0px' }">
+        <button mat-button type="submit" [disabled]="f.invalid">Post</button>
+      </mat-card-actions>
+    </form>
 
     <h2 class="h2"><span class="span">All Comments</span></h2>
     <div class="commentsCard">
       <p *ngFor="let comment of getMyComments(song.songId)" [value]="comment.id" align="start">
         {{ comment.content }}
       </p>
-    </div>
-    <mat-card-actions>
-      <button mat-button class="deleteButton" (click)="onDelete(song.songId, song.name)">
-        Delete Song
-      </button>
-    </mat-card-actions>
+    </div> -->
   </mat-card>
-</div>
-<mat-spinner style="margin: auto" color="accent" *ngIf="isLoading" diameter="80"></mat-spinner>
-<div class="section" *ngIf="!isLoading && mySavedSongs.length === 0">
-  <p class="theP">You have no drops yet that you liked!</p>
+
+  <mat-spinner diameter="80" color="accent" style="margin: auto" *ngIf="isLoading"></mat-spinner>
 </div>

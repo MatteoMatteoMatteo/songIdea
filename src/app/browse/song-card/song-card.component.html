@@ -16,9 +16,7 @@
     <div
       [id]="song.playerId"
       style="pointer-events: none; margin-bottom: 20px; margin-top: 20px; border-radius: 8px"
-    >
-      {{ song.playerId }}
-    </div>
+    ></div>
 
     <div
       style="
@@ -41,8 +39,8 @@
         ></app-drop-button>
       </div>
       <class class="heartHolder">
-        <div (click)="onHeartSong(i)" class="heart"></div>
-        <p style="margin-top: 10px">save drop</p></class
+        <div class="heart" (click)="onHeartSong(i)"></div>
+        <p style="margin-top: 10px; cursor: default">save drop</p></class
       >
     </div>
     <h2 class="h2"><span class="span">Full Song</span></h2>

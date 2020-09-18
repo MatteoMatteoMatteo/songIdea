@@ -39,7 +39,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
   public video: any;
   private player: any;
   public reframed: Boolean = false;
-  youtube: any;
 
   constructor(
     private commentService: CommentService,
@@ -106,6 +105,9 @@ export class SongCardComponent implements OnInit, OnDestroy {
   }
 
   init() {
+    if (window["YT"]) {
+      window["YT"] = null;
+    }
     var tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName("script")[0];
@@ -113,17 +115,10 @@ export class SongCardComponent implements OnInit, OnDestroy {
     window["onYouTubeIframeAPIReady"] = () => this.startVideo();
   }
 
-  lol(id: number) {
-    this.allSongs.forEach((song) => {
-      song.playerHolder.pauseVideo();
-    });
-    this.allSongs[id].playerHolder.playVideo();
-  }
-
   startVideo() {
-    console.log(this.allSongs);
     this.reframed = false;
     this.allSongs.forEach((song) => {
+      console.log("ho");
       song.playerHolder = new window["YT"].Player(song.playerId, {
         videoId: song.videoId,
         width: 300,

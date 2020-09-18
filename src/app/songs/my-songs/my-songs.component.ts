@@ -16,9 +16,15 @@ import * as fromRoot from "../../app.reducer";
   styleUrls: ["./my-songs.component.scss"],
 })
 export class MySongsComponent implements OnInit, OnDestroy {
+  smallPitchButton = "smallPitchButton";
+  playPauseButton = "bigDropButton";
+  spinnerStyling = "bigSpinner";
+  playStopTitle = "DROP";
+  songsLoading: boolean[] = [];
+  dropStates: boolean[] = [];
   isLoading: boolean;
   loadingSub: Subscription;
-  mySongSubscription: Subscription;
+  mySavedSongsSubscription: Subscription;
   allCommentsSubscription: Subscription;
   mySongs: Song[] = [];
   mySavedSongs: Song[] = [];
@@ -36,14 +42,15 @@ export class MySongsComponent implements OnInit, OnDestroy {
     this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
-    this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
-      this.mySongs = songs;
+    this.mySavedSongsSubscription = this.songService.mySavedSongsListed.subscribe((songs) => {
+      this.mySavedSongs = songs;
+      this.init();
     });
     this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
       this.allComments = comments;
     });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
-      this.songService.fetchMySongs(uid);
+      this.songService.fetchMySavedSongs(uid);
     });
     this.commentService.fetchAllComments();
   }
@@ -66,8 +73,36 @@ export class MySongsComponent implements OnInit, OnDestroy {
     });
   }
 
+  init() {
+    var tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    window["onYouTubeIframeAPIReady"] = () => this.startVideo();
+  }
+
+  startVideo() {
+    this.mySavedSongs.forEach((song) => {
+      song.playerHolder = new window["YT"].Player(song.playerId, {
+        videoId: song.videoId,
+        width: 300,
+        height: 200,
+        playerVars: {
+          autoplay: 0,
+          modestbranding: 0,
+          controls: 0,
+          disablekb: 1,
+          rel: 0,
+          ecver: 2,
+          fs: 0,
+          playsinline: 0,
+        },
+      });
+    });
+  }
+
   ngOnDestroy() {
-    this.mySongSubscription.unsubscribe();
+    this.mySavedSongsSubscription.unsubscribe();
     this.loadingSub.unsubscribe();
     this.allCommentsSubscription.unsubscribe();
   }

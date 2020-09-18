@@ -13,10 +13,12 @@ export class SongService {
   whichSongIsDropping: number;
   newSongTimer: any;
   private mySongs: Song[] = [];
+  private mySavedSongs: Song[] = [];
   public allSongs: Song[] = [];
   private songLoading: boolean[] = [];
   private dropState: boolean[] = [];
   mySongsListed = new Subject<Song[]>();
+  mySavedSongsListed = new Subject<Song[]>();
   allSongsListed = new Subject<Song[]>();
   songLoadingListed = new Subject<boolean[]>();
   dropStateListed = new Subject<boolean[]>();
@@ -27,6 +29,7 @@ export class SongService {
   private firebaseSub: Subscription;
   private moreSongsSub: Subscription;
   private mySongsSub: Subscription;
+  private mySavedSongsSub: Subscription;
 
   countdownNumber: number;
   countdown: any;
@@ -196,40 +199,36 @@ export class SongService {
 
   fetchAllSongs() {
     this.destroyAudioPlayer.next(false);
-    if (this.allSongs.length === 0) {
-      this.db.collection("songs", (ref) => ref.orderBy("name"));
-      this.uiHelperService.allSongsLoadingStateChanged.next(true);
-      this.firebaseSub = this.db
-        .collection("songs", (ref) => ref.orderBy("name").limit(2))
-        .snapshotChanges()
-        .pipe(
-          map((docArray) => {
-            return docArray.map((doc) => {
-              return {
-                songId: doc.payload.doc.id,
-                player: new Tone.Player({
-                  url: "",
-                  autostart: false,
-                  fadeOut: 0.3,
-                }).chain(this.reverb, this.autoFilter, Tone.Destination),
-                ...(doc.payload.doc.data() as Song),
-              };
-            });
-          })
-        )
-        .subscribe(
-          (songs: Song[]) => {
-            this.allSongs = songs;
-            this.allSongsListed.next([...this.allSongs]);
-            this.uiHelperService.allSongsLoadingStateChanged.next(false);
-          },
-          (error) => {
-            this.uiHelperService.allSongsLoadingStateChanged.next(false);
-          }
-        );
-    } else {
-      this.allSongsListed.next([...this.allSongs]);
-    }
+    this.db.collection("songs", (ref) => ref.orderBy("name"));
+    this.uiHelperService.allSongsLoadingStateChanged.next(true);
+    this.firebaseSub = this.db
+      .collection("songs", (ref) => ref.orderBy("name").limit(2))
+      .snapshotChanges()
+      .pipe(
+        map((docArray) => {
+          return docArray.map((doc) => {
+            return {
+              songId: doc.payload.doc.id,
+              player: new Tone.Player({
+                url: "",
+                autostart: false,
+                fadeOut: 0.3,
+              }).chain(this.reverb, this.autoFilter, Tone.Destination),
+              ...(doc.payload.doc.data() as Song),
+            };
+          });
+        })
+      )
+      .subscribe(
+        (songs: Song[]) => {
+          this.allSongs = songs;
+          this.allSongsListed.next([...this.allSongs]);
+          this.uiHelperService.allSongsLoadingStateChanged.next(false);
+        },
+        (error) => {
+          this.uiHelperService.allSongsLoadingStateChanged.next(false);
+        }
+      );
   }
   fetchMoreSongs(lastSongName: string) {
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
@@ -288,6 +287,37 @@ export class SongService {
         (songs: Song[]) => {
           this.mySongs = songs;
           this.mySongsListed.next([...this.mySongs]);
+          this.uiHelperService.loadingStateChanged.next(false);
+        },
+        (error) => {
+          this.uiHelperService.loadingStateChanged.next(false);
+        }
+      );
+  }
+
+  fetchMySavedSongs(uid: string) {
+    this.uiHelperService.loadingStateChanged.next(true);
+    this.mySavedSongsSub = this.db
+      .collection("songs", (ref) => ref.where("heartedBy", "array-contains", uid))
+      .snapshotChanges()
+      .pipe(
+        map((docs) => {
+          return docs.map((doc) => {
+            return {
+              songId: doc.payload.doc.id,
+              player: new Tone.Player({
+                url: "",
+                autostart: false,
+              }).connect(this.autoFilter),
+              ...(doc.payload.doc.data() as Song),
+            };
+          });
+        })
+      )
+      .subscribe(
+        (songs: Song[]) => {
+          this.mySavedSongs = songs;
+          this.mySavedSongsListed.next([...this.mySavedSongs]);
           this.uiHelperService.loadingStateChanged.next(false);
         },
         (error) => {
