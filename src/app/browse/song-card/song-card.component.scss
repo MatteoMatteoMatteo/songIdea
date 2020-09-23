@@ -97,11 +97,68 @@
   margin-top: 23px;
   position: relative;
   left: 29px;
+  background-color: #a46260;
+  width: 20px;
+  height: 20px;
+  transform: rotate(-45deg);
+  cursor: pointer;
+  animation: heart1 500ms ease;
+  animation-fill-mode: forwards;
+}
+
+.heart::after {
+  background-color: #a46260;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 10px;
+}
+
+.heart::before {
+  background-color: #a46260;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+}
+
+.noHeart {
+  margin-top: 23px;
+  position: relative;
+  left: 29px;
   background-color: rgb(216, 216, 216);
   width: 20px;
   height: 20px;
   transform: rotate(-45deg);
   cursor: pointer;
+}
+
+.noHeart::after {
+  background-color: rgb(216, 216, 216);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 10px;
+}
+
+.noHeart::before {
+  background-color: rgb(216, 216, 216);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
 }
 
 .heartHowManyHolder {
@@ -145,32 +202,21 @@
   left: 0px;
 }
 
-.heart::after {
-  background-color: rgb(216, 216, 216);
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  content: "";
-  position: absolute;
-  top: 0px;
-  left: 10px;
-}
+@keyframes heart1 {
+  0% {
+    -webkit-transform: translateX(0px) rotate(0deg);
+    transform: translateX(0px) rotate(-45deg);
+  }
 
-.heart::before {
-  background-color: rgb(216, 216, 216);
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  content: "";
-  position: absolute;
-  bottom: 10px;
-  left: 0px;
-}
+  50% {
+    -webkit-transform: translateX(0px) rotate(0deg);
+    transform: translateX(3px) rotate(+30deg);
+  }
 
-.heart:hover:before,
-.heart:hover:after,
-.heart:hover {
-  animation: color 50ms forwards;
+  100% {
+    -webkit-transform: translateX(0px) rotate(0deg);
+    transform: translateX(0px) rotate(-45deg);
+  }
 }
 
 @keyframes color {

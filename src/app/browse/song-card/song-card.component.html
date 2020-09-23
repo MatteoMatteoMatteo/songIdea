@@ -7,14 +7,14 @@
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
 
     <h2 class="h2">
-      <span class="span">{{ allComments[i].content }}</span>
+      <span class="span">{{ song.hearts }}</span>
     </h2>
     <div class="heartHowManyHolder">
       <div class="heartHowMany"></div>
     </div>
 
     <div
-      [id]="song.playerId"
+      [id]="song.videoId"
       style="pointer-events: none; margin-bottom: 20px; margin-top: 20px; border-radius: 8px"
     ></div>
 
@@ -39,8 +39,14 @@
         ></app-drop-button>
       </div>
       <class class="heartHolder">
-        <div class="heart" (click)="onHeartSong(song.songId, song.hearts)"></div>
-        <p style="margin-top: 10px; cursor: default">save drop</p></class
+        <div
+          [ngClass]="song.isHearted ? 'heart' : 'noHeart'"
+          (click)="onHeartSong(song.heartDocId, song.hearts, song.videoId, i)"
+        ></div>
+        <p *ngIf="song.isHearted == false" style="margin-top: 10px; cursor: default">save drop</p>
+        <p *ngIf="song.isHearted == true" style="margin-top: 10px; cursor: default">
+          saved!
+        </p></class
       >
     </div>
     <h2 class="h2"><span class="span">Full Song</span></h2>

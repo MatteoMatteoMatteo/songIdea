@@ -2,7 +2,6 @@ import { SongService } from "./../../songs/song.service";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { NgForm } from "@angular/forms";
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
-import { finalize } from "rxjs/operators";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../../app.reducer";
 
@@ -13,6 +12,7 @@ import * as fromRoot from "../../app.reducer";
 })
 export class AddSongComponent implements OnInit {
   isLoading = false;
+  videoId: string;
   songName: string;
   songGenre: string;
   file: any;
@@ -54,28 +54,17 @@ export class AddSongComponent implements OnInit {
     this.genres.sort();
   }
 
-  onUpload(form: NgForm) {
-    this.isLoading = true;
-    this.songName = form.value.songName;
-    this.songGenre = form.value.genre;
-    const fileRef = this.storage.ref(this.filePath);
-    this.storage
-      .upload(this.filePath, this.file)
-      .snapshotChanges()
-      .pipe(
-        finalize(() => {
-          fileRef.getDownloadURL().subscribe((url) => {
-            this.songService.uploadSong(this.songName, this.songGenre, url, this.uid);
-            this.switchWhenUploaded.emit();
-            this.isLoading = false;
-          });
-        })
-      )
-      .subscribe();
+  getVideoIdFromURL(url: string) {
+    var n = url.indexOf("=");
+    var videoId = url.substring(n + 1);
+    return videoId;
   }
 
-  uploadFile(event: any) {
-    this.file = event.target.files[0];
-    this.filePath = `${localStorage.getItem("userId")}-${this.file.name}`;
+  onUpload(form: NgForm) {
+    this.isLoading = true;
+    this.videoId = this.getVideoIdFromURL(form.value.youtubeUrl);
+    this.songName = form.value.songName;
+    this.songGenre = form.value.genre;
+    this.songService.uploadSong(this.songName, this.songGenre, this.videoId, this.uid);
   }
 }

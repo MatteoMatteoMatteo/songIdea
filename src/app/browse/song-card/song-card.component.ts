@@ -21,19 +21,22 @@ export class SongCardComponent implements OnInit, OnDestroy {
   playStopTitle = "DROP";
   songsLoading: boolean[] = [];
   dropStates: boolean[] = [];
+  hearted: boolean;
   isLoading: boolean;
   uid: string;
   whichSongIsDropping: number;
   lastSongName: string;
-  allSongs: Song[];
+  allSongs: Song[] = [];
+  allHearts: Song[] = [];
   allComments: Comment[] = [];
   buttonTitle = "DROP";
-
   songsLoadingSub: Subscription;
   dropStatesSub: Subscription;
   allCommentsSubscription: Subscription;
   allSongsSubscription: Subscription;
+  allHeartsSubscription: Subscription;
   loadingSub: Subscription;
+  wasItHeartedSub: Subscription;
 
   public YT: any;
   public video: any;
@@ -52,7 +55,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
     if (this.whichSongIsDropping >= 0) {
       this.dropStates[this.whichSongIsDropping] = true;
     }
-
     this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
       this.dropStates = dropStates;
     });
@@ -64,11 +66,14 @@ export class SongCardComponent implements OnInit, OnDestroy {
     });
     this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
       this.allSongs = songs;
-      console.log(this.allSongs);
+      this.songService.fetchHearts(this.uid);
       this.init();
     });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
       this.uid = uid;
+    });
+    this.allHeartsSubscription = this.songService.allHeartsListed.subscribe((songs) => {
+      this.allSongs = songs;
     });
     this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
       this.isLoading = isLoading;
@@ -81,8 +86,8 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.songService.dropSong(id);
   }
 
-  onHeartSong(songId: string, hearts: number) {
-    this.songService.heartSong(songId, hearts);
+  onHeartSong(heartDocId: string, hearts: number, videoId: string, index: number) {
+    this.songService.heartSong(heartDocId, hearts, this.uid, videoId, index);
   }
 
   getMyComments(songId: string) {
@@ -103,6 +108,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.dropStatesSub.unsubscribe();
     this.allSongsSubscription.unsubscribe();
     this.loadingSub.unsubscribe();
+    this.allHeartsSubscription.unsubscribe();
   }
 
   init() {
@@ -119,8 +125,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
   startVideo() {
     this.reframed = false;
     this.allSongs.forEach((song) => {
-      console.log("ho");
-      song.playerHolder = new window["YT"].Player(song.playerId, {
+      song.playerHolder = new window["YT"].Player(song.videoId, {
         videoId: song.videoId,
         width: 300,
         height: 200,
@@ -160,14 +165,11 @@ export class SongCardComponent implements OnInit, OnDestroy {
     return Math.round(this.player.getCurrentTime());
   }
 
-  onPlayerReady(event) {
-    console.log(this.player);
-  }
+  onPlayerReady(event) {}
 
   onPlayerError(event) {
     switch (event.data) {
       case 2:
-        console.log("" + this.video);
         break;
       case 100:
         break;

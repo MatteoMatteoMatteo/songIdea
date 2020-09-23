@@ -5,6 +5,11 @@
         <mat-card-title class="title">UPLOAD</mat-card-title>
         <mat-card-content>
           <mat-form-field appearance="" color="accent">
+            <mat-label>Youtube Url</mat-label>
+            <input matInput ngModel name="youtubeUrl" required />
+          </mat-form-field>
+          <br />
+          <mat-form-field appearance="" color="accent">
             <mat-label>Song Name</mat-label>
             <input matInput ngModel name="songName" required />
           </mat-form-field>
@@ -27,21 +32,8 @@
         ></mat-spinner>
 
         <mat-label [ngStyle]="{ marginBottom: '20px', marginTop: '24px' }" *ngIf="isLoading"
-          >File is uploading...</mat-label
+          >posting...</mat-label
         >
-
-        <label *ngIf="!isLoading">
-          Select a file
-          <input
-            required
-            ngModel
-            name="file"
-            type="file"
-            (change)="uploadFile($event)"
-            accept="audio/*"
-          />
-        </label>
-
         <mat-card-actions>
           <button mat-button class="uploadButton" type="submit" [disabled]="f.invalid || isLoading">
             Upload
