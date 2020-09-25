@@ -11,4 +11,5 @@ export interface Song {
   heartedBy: string[];
   isHearted?: boolean;
   url: string;
+  dropTime: number;
 }

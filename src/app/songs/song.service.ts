@@ -57,9 +57,12 @@ export class SongService {
   stopAll() {
     clearInterval(this.countdown);
     clearTimeout(this.newSongTimer);
-    this.allSongs.forEach((song) => {
-      song.player.stop();
-    });
+    if (this.allSongs) {
+      this.allSongs.forEach((song) => {
+        song.player.stop();
+      });
+    }
+
     this.allSongs = [];
     this.destroyAudioPlayer.next(true);
   }
@@ -214,7 +217,14 @@ export class SongService {
     this.reverb.wet.value = val;
   }
 
-  uploadSong(songName: string, songGenre: string, videoId: string, uid: string, url: string) {
+  uploadSong(
+    songName: string,
+    songGenre: string,
+    videoId: string,
+    uid: string,
+    url: string,
+    dropTime: number
+  ) {
     this.songToDatabase({
       name: songName,
       genre: songGenre,
@@ -224,6 +234,7 @@ export class SongService {
       heartedBy: [],
       date: new Date(),
       url: url,
+      dropTime,
     });
   }
 

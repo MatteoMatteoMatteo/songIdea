@@ -67,7 +67,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
       this.allSongs = songs;
       this.init();
-      console.log(this.allSongs);
     });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
       this.uid = uid;
