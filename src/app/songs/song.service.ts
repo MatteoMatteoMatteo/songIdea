@@ -67,7 +67,7 @@ export class SongService {
     this.destroyAudioPlayer.next(true);
   }
 
-  dropSong(id: number) {
+  dropSong(id: number, dropTime: number) {
     if (id >= 0 && id < this.allSongs.length) {
       clearInterval(this.countdown);
       clearTimeout(this.newSongTimer);
@@ -83,7 +83,7 @@ export class SongService {
         this.allSongs.forEach((song) => {
           song.playerHolder.pauseVideo();
         });
-        this.allSongs[id].playerHolder.seekTo(60, true);
+        this.allSongs[id].playerHolder.seekTo(dropTime, true);
         this.allSongs[id].playerHolder.playVideo();
         this.manageCountdown();
         this.manageNextSongAfterCountdown(id);
@@ -100,7 +100,7 @@ export class SongService {
         this.audioPlayingListed.next(false);
       }
     } else {
-      this.dropSong(0);
+      this.dropSong(0, this.allSongs[0].dropTime);
     }
   }
 
@@ -137,7 +137,7 @@ export class SongService {
         this.audioPlayingListed.next(false);
       }
     } else {
-      this.dropSong(0);
+      this.dropSong(0, 0);
     }
   }
 
@@ -199,8 +199,9 @@ export class SongService {
   }
 
   manageNextSongAfterCountdown(id: number) {
+    var nextId = id + 1;
     this.newSongTimer = setTimeout(() => {
-      this.dropSong(id + 1);
+      this.dropSong(nextId, 0);
     }, 30000);
   }
 
