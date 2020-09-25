@@ -61,7 +61,7 @@ p {
   background-color: black;
   width: 100%;
   margin-bottom: 20px;
-  border-bottom: solid 3px $first-color;
+  border-bottom: solid 0px black;
 }
 
 .mat-slider.mat-slider-horizontal .mat-slider-track-wrapper {
@@ -150,7 +150,9 @@ a {
 }
 
 .deleteButton {
-  color: red($color: #000000);
+  padding: 5px;
+  margin-top: 20px;
+  color: $heart-red;
 }
 
 button:focus {

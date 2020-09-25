@@ -5,9 +5,10 @@
     [value]="song.songId"
   >
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
+    <div style="margin-top: 15px">{{ song.genre }}</div>
 
     <h2 class="h2">
-      <span class="span">{{ song.hearts }}</span>
+      <span class="span">{{ song.hearts }} </span>
     </h2>
     <div class="heartHowManyHolder">
       <div class="heartHowMany"></div>
@@ -15,7 +16,14 @@
 
     <div
       [id]="song.videoId"
-      style="pointer-events: none; margin-bottom: 20px; margin-top: 20px; border-radius: 8px"
+      style="
+        pointer-events: none;
+        margin-bottom: 20px;
+        margin-top: 15px;
+        border-radius: 8px;
+        border: solid 5px #e6e6e6;
+        border-top-left-radius: 0px;
+      "
     ></div>
 
     <div
@@ -41,15 +49,17 @@
       <class class="heartHolder">
         <div
           [ngClass]="song.isHearted ? 'heart' : 'noHeart'"
-          (click)="onHeartSong(song.heartDocId, song.hearts, song.videoId, i)"
+          (click)="onHeartSong(song.hearts, song.heartedBy, song.songId, i)"
         ></div>
         <p *ngIf="song.isHearted == false" style="margin-top: 10px; cursor: default">save drop</p>
-        <p *ngIf="song.isHearted == true" style="margin-top: 10px; cursor: default">
-          saved!
-        </p></class
+        <p *ngIf="song.isHearted == true" style="margin-top: 10px; cursor: default">saved</p></class
       >
     </div>
-    <h2 class="h2"><span class="span">Full Song</span></h2>
+    <h2 class="h2">
+      <a class="videoLink" target="_blank" [href]="song.url"
+        ><span class="spano">Full Video</span></a
+      >
+    </h2>
 
     <!-- <form class="writeComment" (ngSubmit)="onAddComment(f, song.songId, song.userId)" #f="ngForm">
       <mat-form-field appearance="" color="accent">

@@ -34,7 +34,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
   dropStatesSub: Subscription;
   allCommentsSubscription: Subscription;
   allSongsSubscription: Subscription;
-  allHeartsSubscription: Subscription;
+  getSongsAgainSub: Subscription;
   loadingSub: Subscription;
   wasItHeartedSub: Subscription;
 
@@ -66,19 +66,22 @@ export class SongCardComponent implements OnInit, OnDestroy {
     });
     this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
       this.allSongs = songs;
-      this.songService.fetchHearts(this.uid);
       this.init();
+      console.log(this.allSongs);
     });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
       this.uid = uid;
     });
-    this.allHeartsSubscription = this.songService.allHeartsListed.subscribe((songs) => {
-      this.allSongs = songs;
+    this.wasItHeartedSub = this.songService.wasItHeartedListed.subscribe((heartObject) => {
+      var thisSong = this.allSongs[heartObject.songIndex];
+      thisSong.isHearted = heartObject.isHearted;
+      thisSong.hearts = heartObject.hearts;
+      thisSong.heartedBy = heartObject.heartedBy;
     });
     this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
-    this.songService.fetchAllSongs();
+    this.songService.fetchAllSongs(this.uid);
     this.commentService.fetchAllComments();
   }
 
@@ -86,8 +89,8 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.songService.dropSong(id);
   }
 
-  onHeartSong(heartDocId: string, hearts: number, videoId: string, index: number) {
-    this.songService.heartSong(heartDocId, hearts, this.uid, videoId, index);
+  onHeartSong(hearts: number, heartedBy: string[], songId: string, index: number) {
+    this.songService.heartSong(hearts, heartedBy, songId, this.uid, index);
   }
 
   getMyComments(songId: string) {
@@ -108,7 +111,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.dropStatesSub.unsubscribe();
     this.allSongsSubscription.unsubscribe();
     this.loadingSub.unsubscribe();
-    this.allHeartsSubscription.unsubscribe();
   }
 
   init() {
@@ -138,11 +140,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
           ecver: 2,
           fs: 0,
           playsinline: 0,
-        },
-        events: {
-          onStateChange: this.onPlayerStateChange.bind(this),
-          onError: this.onPlayerError.bind(this),
-          onReady: this.onPlayerReady.bind(this),
         },
       });
     });

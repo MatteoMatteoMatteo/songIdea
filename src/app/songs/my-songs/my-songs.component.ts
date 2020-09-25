@@ -59,20 +59,6 @@ export class MySongsComponent implements OnInit, OnDestroy {
     return this.allComments.filter((comment) => comment.songId === songId);
   }
 
-  onDelete(id: string, name: string) {
-    const dialogRef = this.dialog.open(CancelComponent, {
-      data: {
-        name: name,
-      },
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.exit.emit();
-        this.songService.deleteSong(id);
-      }
-    });
-  }
-
   init() {
     var tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";

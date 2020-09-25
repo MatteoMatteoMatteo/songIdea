@@ -64,6 +64,17 @@
   font-size: 1rem;
 }
 
+.h2 .spano {
+  background: $second-color;
+  padding: 0 10px;
+  font-family: "Raleway", serif;
+  font-size: 1rem;
+  color: black;
+}
+
+.h2 .spano:hover {
+  color: $first-color;
+}
 .morePlease {
   display: block;
   text-align: center;
@@ -97,7 +108,7 @@
   margin-top: 23px;
   position: relative;
   left: 29px;
-  background-color: #a46260;
+  background-color: $heart-red;
   width: 20px;
   height: 20px;
   transform: rotate(-45deg);
@@ -107,7 +118,7 @@
 }
 
 .heart::after {
-  background-color: #a46260;
+  background-color: $heart-red;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -118,7 +129,7 @@
 }
 
 .heart::before {
-  background-color: #a46260;
+  background-color: $heart-red;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -173,7 +184,7 @@
   position: relative;
   margin-right: 10px;
   left: 4px;
-  background-color: #a46260;
+  background-color: $heart-red;
   width: 14px;
   height: 14px;
   transform: rotate(-45deg);
@@ -181,7 +192,7 @@
 }
 
 .heartHowMany::after {
-  background-color: #a46260;
+  background-color: $heart-red;
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -192,7 +203,7 @@
 }
 
 .heartHowMany::before {
-  background-color: #a46260;
+  background-color: $heart-red;
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -225,7 +236,7 @@
   }
 
   100% {
-    background-color: #a46260;
+    background-color: $heart-red;
   }
 }
 

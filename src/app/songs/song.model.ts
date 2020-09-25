@@ -7,8 +7,8 @@ export interface Song {
   player?: any;
   videoId: any;
   playerHolder?: any;
-  hearts?: number;
-  heartedBy?: string[];
-  heartDocId?: string;
+  hearts: number;
+  heartedBy: string[];
   isHearted?: boolean;
+  url: string;
 }

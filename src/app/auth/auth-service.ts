@@ -24,7 +24,7 @@ export class AuthService {
       if (user) {
         this.store.dispatch(new AUTH.SetAuthenticated());
         this.store.dispatch(new AUTH.Uid(user.uid));
-        this.router.navigate(["/browse"]);
+        this.router.navigate(["/upload"]);
       } else {
         this.store.dispatch(new AUTH.SetUnauthenticated());
         this.router.navigate(["/login"]);

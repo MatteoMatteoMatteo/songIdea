@@ -1,22 +1,40 @@
-<div class="mySongs" *ngIf="!isLoading">
+<div fxLayout fxLayoutAlign="center" class="mySongs" *ngIf="!isLoading">
   <mat-card class="songCard" *ngFor="let song of mySongs; let i = index" [value]="song.id">
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
-    <mat-card-content> </mat-card-content>
 
-    <h2 class="h2"><span class="span">All Comments</span></h2>
-    <div class="commentsCard">
-      <p *ngFor="let comment of getMyComments(song.songId)" [value]="comment.id" align="start">
-        {{ comment.content }}
-      </p>
+    <h2 class="h2">
+      <span class="span">{{ song.hearts }}</span>
+    </h2>
+    <div class="heartHowManyHolder">
+      <div class="heartHowMany"></div>
     </div>
-    <mat-card-actions>
-      <button mat-button class="deleteButton" (click)="onDelete(song.songId, song.name)">
-        Delete Song
-      </button>
-    </mat-card-actions>
+
+    <div
+      [id]="song.videoId"
+      style="pointer-events: none; margin-bottom: 20px; margin-top: 20px; border-radius: 8px"
+    ></div>
+    <div>
+      <app-drop-button
+        [buttonStyling]="playPauseButton"
+        [spinnerStyling]="spinnerStyling"
+        [buttonTitle]="playStopTitle"
+        [dropStates]="dropStates[i]"
+        [songsLoading]="songsLoading[i]"
+        (dropped)="dropMySong(i)"
+      ></app-drop-button>
+    </div>
+
+    <button
+      mat-button
+      class="deleteButton"
+      (click)="onDelete(song.songId, song.heartDocId, song.name)"
+    >
+      Delete
+    </button>
   </mat-card>
 </div>
 <mat-spinner style="margin: auto" color="accent" *ngIf="isLoading" diameter="80"></mat-spinner>
-<div class="section" *ngIf="!isLoading && mySongs.length === 0">
-  <p class="theP">You have no songs yet, upload your first one! :)</p>
+
+<div class="noUploadsYet" *ngIf="!isLoading && mySongs.length === 0">
+  <span style="font-size: 1rem">You have no songs yet, upload your first one! :)</span>
 </div>

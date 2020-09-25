@@ -15,6 +15,7 @@ export class AddSongComponent implements OnInit {
   videoId: string;
   songName: string;
   songGenre: string;
+  url: string;
   file: any;
   filePath: any;
   uid: string;
@@ -64,7 +65,8 @@ export class AddSongComponent implements OnInit {
     this.isLoading = true;
     this.videoId = this.getVideoIdFromURL(form.value.youtubeUrl);
     this.songName = form.value.songName;
+    this.url = form.value.youtubeUrl;
     this.songGenre = form.value.genre;
-    this.songService.uploadSong(this.songName, this.songGenre, this.videoId, this.uid);
+    this.songService.uploadSong(this.songName, this.songGenre, this.videoId, this.uid, this.url);
   }
 }
