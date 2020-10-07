@@ -16,13 +16,11 @@ const routes: Routes = [
     path: "songs",
     component: SongsComponent,
     data: { animation: "2" },
-    canActivate: [AuthGuard],
   },
   {
     path: "browse",
     component: BrowseComponent,
     data: { animation: "3" },
-    canActivate: [AuthGuard],
   },
   {
     path: "upload",

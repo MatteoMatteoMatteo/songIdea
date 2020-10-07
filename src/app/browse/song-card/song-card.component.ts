@@ -1,3 +1,5 @@
+import { AuthService } from "./../../auth/auth-service";
+import { AngularFireAuth } from "@angular/fire/auth";
 import { UiHelperService } from "./../../uiHelper/uiHelper.service";
 import { SongService } from "./../../songs/song.service";
 import { Subscription } from "rxjs";
@@ -47,7 +49,8 @@ export class SongCardComponent implements OnInit, OnDestroy {
     private commentService: CommentService,
     private songService: SongService,
     private store: Store<fromRoot.State>,
-    private uiHelperService: UiHelperService
+    private uiHelperService: UiHelperService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +61,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
       this.dropStates = dropStates;
     });
+
     this.songsLoadingSub = this.songService.songLoadingListed.subscribe((songsLoading) => {
       this.songsLoading = songsLoading;
     });
@@ -89,7 +93,9 @@ export class SongCardComponent implements OnInit, OnDestroy {
   }
 
   onHeartSong(hearts: number, heartedBy: string[], songId: string, index: number) {
-    this.songService.heartSong(hearts, heartedBy, songId, this.uid, index);
+    if (this.authService.isAuth)
+      this.songService.heartSong(hearts, heartedBy, songId, this.uid, index);
+    else alert("you must sign in!");
   }
 
   getMyComments(songId: string) {

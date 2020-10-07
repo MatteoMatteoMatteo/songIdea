@@ -11,9 +11,9 @@
   ></a>
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
     <ul fxLayout fxLayoutGap="50px" class="navElements">
+      <li><a class="navItem" routerLink="/browse">Discover</a></li>
       <li *ngIf="!(isAuth$ | async)"><a class="navItem" routerLink="/signup">Signup</a></li>
       <li *ngIf="!(isAuth$ | async)"><a class="navItem" routerLink="/login">Login</a></li>
-      <li *ngIf="isAuth$ | async"><a class="navItem" routerLink="/browse">Discover</a></li>
       <li *ngIf="isAuth$ | async"><a class="navItem" routerLink="/songs">Saved Drops</a></li>
       <li *ngIf="isAuth$ | async"><a class="navItem" routerLink="/upload">Upload</a></li>
       <li *ngIf="isAuth$ | async">
