@@ -135,6 +135,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
       song.playerHolder = new window["YT"].Player(song.videoId, {
         videoId: song.videoId,
         width: 300,
+        start: 100,
         height: 200,
         playerVars: {
           autoplay: 0,
@@ -146,28 +147,28 @@ export class SongCardComponent implements OnInit, OnDestroy {
           fs: 0,
           playsinline: 0,
         },
+        events: {
+          onStateChange: this.onPlayerStateChange.bind(this),
+          onReady: this.onPlayerReady.bind(this),
+        },
       });
     });
   }
 
   onPlayerStateChange(event) {
-    // var index = event.target.f.id;
-    // index = index.replace(/\D/g, "") - 1;
-    // if (event.target.getPlayerState() == 1) {
-    //   console.log(index);
-    //   console.log("No pause it pls");
-    // }
-    // if (event.target.getPlayerState() == 2) {
-    //   console.log("No start it pls");
-    //   this.songService.dropSong(index);
-    // }
+    if (event.target.getPlayerState() == 1 && event.target.isMuted()) {
+      event.target.pauseVideo();
+    }
   }
 
   cleanTime() {
     return Math.round(this.player.getCurrentTime());
   }
 
-  onPlayerReady(event) {}
+  onPlayerReady(event) {
+    event.target.mute();
+    event.target.seekTo(50);
+  }
 
   onPlayerError(event) {
     switch (event.data) {
