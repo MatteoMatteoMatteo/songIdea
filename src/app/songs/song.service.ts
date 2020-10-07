@@ -147,7 +147,7 @@ export class SongService {
         this.myUploadedSongs.forEach((song) => {
           song.playerHolder.pauseVideo();
         });
-        this.mySavedSongs[id].playerHolder.unMute();
+        this.myUploadedSongs[id].playerHolder.unMute();
         this.myUploadedSongs[id].playerHolder.seekTo(this.myUploadedSongs[id].dropTime, true);
         this.myUploadedSongs[id].playerHolder.playVideo();
         this.manageCountdown();
@@ -229,9 +229,13 @@ export class SongService {
   manageNextSongAfterCountdown(id: number, whichSongs: string) {
     var nextId = id + 1;
     this.newSongTimer = setTimeout(() => {
-      if (whichSongs == "allSongs") this.dropSong(nextId);
-      else if ((whichSongs = "mySavedSongs")) this.dropMySavedSong(nextId);
-      else this.dropMyUploadedSong(nextId);
+      if (whichSongs == "allSongs") {
+        this.dropSong(nextId);
+      } else if (whichSongs == "mySavedSongs") {
+        this.dropMySavedSong(nextId);
+      } else if (whichSongs == "myUploadedSongs") {
+        this.dropMyUploadedSong(nextId);
+      }
     }, 30000);
   }
 

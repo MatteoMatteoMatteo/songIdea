@@ -88,7 +88,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.commentService.fetchAllComments();
   }
 
-  dropSong(id: number, dropTime: number) {
+  dropSong(id: number) {
     this.songService.dropSong(id);
   }
 
