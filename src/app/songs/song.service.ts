@@ -73,11 +73,7 @@ export class SongService {
       clearTimeout(this.newSongTimer);
       this.whichSongIsDropping = id;
       this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
-      if (
-        this.allSongs[id].playerHolder.getPlayerState() == 2 ||
-        this.allSongs[id].playerHolder.getPlayerState() == 5 ||
-        this.allSongs[id].playerHolder.getPlayerState() == 0
-      ) {
+      if (this.allSongs[id].playerHolder.getPlayerState() != 1) {
         this.dropState.fill(false);
         this.dropStateListed.next([...this.dropState]);
         this.allSongs.forEach((song) => {
@@ -111,16 +107,13 @@ export class SongService {
       clearTimeout(this.newSongTimer);
       this.whichSongIsDropping = id;
       this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
-      if (
-        this.mySavedSongs[id].playerHolder.getPlayerState() == 2 ||
-        this.mySavedSongs[id].playerHolder.getPlayerState() == 5 ||
-        this.mySavedSongs[id].playerHolder.getPlayerState() == 0
-      ) {
+      if (this.mySavedSongs[id].playerHolder.getPlayerState() != 1) {
         this.dropState.fill(false);
         this.dropStateListed.next([...this.dropState]);
         this.mySavedSongs.forEach((song) => {
           song.playerHolder.pauseVideo();
         });
+        this.mySavedSongs[id].playerHolder.unMute();
         this.mySavedSongs[id].playerHolder.seekTo(this.mySavedSongs[id].dropTime, true);
         this.mySavedSongs[id].playerHolder.playVideo();
         this.manageCountdown();
@@ -148,16 +141,13 @@ export class SongService {
       clearTimeout(this.newSongTimer);
       this.whichSongIsDropping = id;
       this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
-      if (
-        this.myUploadedSongs[id].playerHolder.getPlayerState() == 2 ||
-        this.myUploadedSongs[id].playerHolder.getPlayerState() == 5 ||
-        this.myUploadedSongs[id].playerHolder.getPlayerState() == 0
-      ) {
+      if (this.myUploadedSongs[id].playerHolder.getPlayerState() != 1) {
         this.dropState.fill(false);
         this.dropStateListed.next([...this.dropState]);
         this.myUploadedSongs.forEach((song) => {
           song.playerHolder.pauseVideo();
         });
+        this.mySavedSongs[id].playerHolder.unMute();
         this.myUploadedSongs[id].playerHolder.seekTo(this.myUploadedSongs[id].dropTime, true);
         this.myUploadedSongs[id].playerHolder.playVideo();
         this.manageCountdown();
