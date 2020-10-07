@@ -30,6 +30,11 @@ export class MySongsComponent implements OnInit, OnDestroy {
   mySavedSongs: Song[] = [];
   allComments: Comment[] = [];
   @Output() exit = new EventEmitter();
+
+  public YT: any;
+  public video: any;
+  public reframed: Boolean = false;
+
   constructor(
     private commentService: CommentService,
     private dialog: MatDialog,
@@ -44,6 +49,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
     });
     this.mySavedSongsSubscription = this.songService.mySavedSongsListed.subscribe((songs) => {
       this.mySavedSongs = songs;
+      console.log(this.mySavedSongs);
       this.init();
     });
     this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
@@ -59,7 +65,14 @@ export class MySongsComponent implements OnInit, OnDestroy {
     return this.allComments.filter((comment) => comment.songId === songId);
   }
 
+  dropMySavedSong(id: number) {
+    this.songService.dropMySavedSong(id);
+  }
+
   init() {
+    if (window["YT"]) {
+      window["YT"] = null;
+    }
     var tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName("script")[0];
@@ -68,6 +81,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
   }
 
   startVideo() {
+    this.reframed = false;
     this.mySavedSongs.forEach((song) => {
       song.playerHolder = new window["YT"].Player(song.videoId, {
         videoId: song.videoId,

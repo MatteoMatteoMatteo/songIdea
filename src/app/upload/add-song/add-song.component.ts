@@ -67,7 +67,7 @@ export class AddSongComponent implements OnInit {
     this.videoId = this.getVideoIdFromURL(form.value.youtubeUrl);
     this.songName = form.value.songName;
     this.url = form.value.youtubeUrl;
-    this.dropTime = form.value.dropTime;
+    this.dropTime = form.value.dropTime - 10;
     this.songGenre = form.value.genre;
     this.songService.uploadSong(
       this.songName,

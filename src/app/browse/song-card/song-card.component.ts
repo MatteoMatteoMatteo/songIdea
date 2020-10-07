@@ -85,7 +85,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
   }
 
   dropSong(id: number, dropTime: number) {
-    this.songService.dropSong(id, dropTime);
+    this.songService.dropSong(id);
   }
 
   onHeartSong(hearts: number, heartedBy: string[], songId: string, index: number) {

@@ -4,7 +4,7 @@
   ></mat-sidenav>
   <mat-sidenav-content class="example-boundary">
     <div class="wrapper">
-      <div [ngClass]="audioPlaying ? 'waveMeAnimation' : 'waveMe'"></div>
+      <div class="waveMe"></div>
     </div>
     <app-mainNav (toggle)="sidenav.toggle()"></app-mainNav>
     <main [@routeAnimations]="prepareRoute(outlet)" class="content">

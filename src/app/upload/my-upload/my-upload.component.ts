@@ -34,7 +34,6 @@ export class MyUploadComponent implements OnInit, OnDestroy {
 
   public YT: any;
   public video: any;
-  private player: any;
   public reframed: Boolean = false;
 
   constructor(
@@ -51,7 +50,6 @@ export class MyUploadComponent implements OnInit, OnDestroy {
     });
     this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
       this.mySongs = songs;
-      console.log(this.mySongs);
       this.init();
     });
     this.allMyHeartsSubscription = this.songService.allMyUploadHeartsListed.subscribe((songs) => {
@@ -69,7 +67,7 @@ export class MyUploadComponent implements OnInit, OnDestroy {
   }
 
   dropMySong(id: number) {
-    this.songService.dropMySong(id);
+    this.songService.dropMyUploadedSong(id);
   }
 
   getMyComments(songId: string) {

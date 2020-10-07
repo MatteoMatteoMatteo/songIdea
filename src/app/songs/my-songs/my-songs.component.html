@@ -14,7 +14,7 @@
     </div>
 
     <div
-      [id]="song.playerId"
+      [id]="song.videoId"
       style="pointer-events: none; margin-bottom: 20px; margin-top: 20px; border-radius: 8px"
     >
       {{ song.videoId }}
@@ -37,7 +37,7 @@
           [buttonTitle]="playStopTitle"
           [dropStates]="dropStates[i]"
           [songsLoading]="songsLoading[i]"
-          (dropped)="dropSong(i)"
+          (dropped)="dropMySavedSong(i)"
         ></app-drop-button>
       </div>
       <class class="heartHolder">

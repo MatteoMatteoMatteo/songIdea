@@ -16,7 +16,7 @@ export class SongService {
   uid: string;
   whichSongIsDropping: number;
   newSongTimer: any;
-  private mySongs: Song[] = [];
+  private myUploadedSongs: Song[] = [];
   private mySavedSongs: Song[] = [];
   public allSongs: Song[];
   wasItHearted: boolean;
@@ -67,7 +67,7 @@ export class SongService {
     this.destroyAudioPlayer.next(true);
   }
 
-  dropSong(id: number, dropTime: number) {
+  dropSong(id: number) {
     if (id >= 0 && id < this.allSongs.length) {
       clearInterval(this.countdown);
       clearTimeout(this.newSongTimer);
@@ -83,7 +83,7 @@ export class SongService {
         this.allSongs.forEach((song) => {
           song.playerHolder.pauseVideo();
         });
-        this.allSongs[id].playerHolder.seekTo(dropTime, true);
+        this.allSongs[id].playerHolder.seekTo(this.allSongs[id].dropTime, true);
         this.allSongs[id].playerHolder.playVideo();
         this.manageCountdown();
         this.manageNextSongAfterCountdown(id);
@@ -100,28 +100,28 @@ export class SongService {
         this.audioPlayingListed.next(false);
       }
     } else {
-      this.dropSong(0, this.allSongs[0].dropTime);
+      this.dropSong(0);
     }
   }
 
-  dropMySong(id: number) {
-    if (id >= 0 && id < this.mySongs.length) {
+  dropMySavedSong(id: number) {
+    if (id >= 0 && id < this.mySavedSongs.length) {
       clearInterval(this.countdown);
       clearTimeout(this.newSongTimer);
       this.whichSongIsDropping = id;
       this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
       if (
-        this.mySongs[id].playerHolder.getPlayerState() == 2 ||
-        this.mySongs[id].playerHolder.getPlayerState() == 5 ||
-        this.mySongs[id].playerHolder.getPlayerState() == 0
+        this.mySavedSongs[id].playerHolder.getPlayerState() == 2 ||
+        this.mySavedSongs[id].playerHolder.getPlayerState() == 5 ||
+        this.mySavedSongs[id].playerHolder.getPlayerState() == 0
       ) {
         this.dropState.fill(false);
         this.dropStateListed.next([...this.dropState]);
-        this.mySongs.forEach((song) => {
+        this.mySavedSongs.forEach((song) => {
           song.playerHolder.pauseVideo();
         });
-        this.mySongs[id].playerHolder.seekTo(20, true);
-        this.mySongs[id].playerHolder.playVideo();
+        this.mySavedSongs[id].playerHolder.seekTo(this.mySavedSongs[id].dropTime, true);
+        this.mySavedSongs[id].playerHolder.playVideo();
         this.manageCountdown();
         this.manageNextSongAfterCountdown(id);
         this.dropState[id] = true;
@@ -131,13 +131,50 @@ export class SongService {
         clearInterval(this.countdown);
         clearTimeout(this.newSongTimer);
         this.countdownNumber = 30;
-        this.mySongs[id].playerHolder.pauseVideo();
+        this.mySavedSongs[id].playerHolder.pauseVideo();
         this.dropState[id] = false;
         this.dropStateListed.next([...this.dropState]);
         this.audioPlayingListed.next(false);
       }
     } else {
-      this.dropSong(0, 0);
+      this.dropMySavedSong(0);
+    }
+  }
+
+  dropMyUploadedSong(id: number) {
+    if (id >= 0 && id < this.myUploadedSongs.length) {
+      clearInterval(this.countdown);
+      clearTimeout(this.newSongTimer);
+      this.whichSongIsDropping = id;
+      this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
+      if (
+        this.myUploadedSongs[id].playerHolder.getPlayerState() == 2 ||
+        this.myUploadedSongs[id].playerHolder.getPlayerState() == 5 ||
+        this.myUploadedSongs[id].playerHolder.getPlayerState() == 0
+      ) {
+        this.dropState.fill(false);
+        this.dropStateListed.next([...this.dropState]);
+        this.myUploadedSongs.forEach((song) => {
+          song.playerHolder.pauseVideo();
+        });
+        this.myUploadedSongs[id].playerHolder.seekTo(this.myUploadedSongs[id].dropTime, true);
+        this.myUploadedSongs[id].playerHolder.playVideo();
+        this.manageCountdown();
+        this.manageNextSongAfterCountdown(id);
+        this.dropState[id] = true;
+        this.dropStateListed.next([...this.dropState]);
+        this.audioPlayingListed.next(true);
+      } else {
+        clearInterval(this.countdown);
+        clearTimeout(this.newSongTimer);
+        this.countdownNumber = 30;
+        this.myUploadedSongs[id].playerHolder.pauseVideo();
+        this.dropState[id] = false;
+        this.dropStateListed.next([...this.dropState]);
+        this.audioPlayingListed.next(false);
+      }
+    } else {
+      this.dropMyUploadedSong(0);
     }
   }
 
@@ -199,9 +236,10 @@ export class SongService {
   }
 
   manageNextSongAfterCountdown(id: number) {
+    var allSongs = this.allSongs;
     var nextId = id + 1;
     this.newSongTimer = setTimeout(() => {
-      this.dropSong(nextId, 0);
+      this.dropSong(nextId);
     }, 30000);
   }
 
@@ -231,7 +269,7 @@ export class SongService {
       genre: songGenre,
       videoId: videoId,
       userId: uid,
-      hearts: 0,
+      hearts: 11,
       heartedBy: [],
       date: new Date(),
       url: url,
@@ -292,12 +330,10 @@ export class SongService {
         el.isHearted = false;
       }
     });
-    console.log(this.allSongs);
     return this.allSongs;
   }
 
   deleteSong(songId: string, heartDocId: string) {
-    console.log(songId + ", " + heartDocId);
     this.db.doc("songs/" + songId).delete();
     this.db.doc("hearts/" + heartDocId).delete();
   }
@@ -464,8 +500,8 @@ export class SongService {
       )
       .subscribe(
         (songs: Song[]) => {
-          this.mySongs = songs;
-          this.mySongsListed.next([...this.mySongs]);
+          this.myUploadedSongs = songs;
+          this.mySongsListed.next([...this.myUploadedSongs]);
           this.uiHelperService.loadingStateChanged.next(false);
         },
         (error) => {

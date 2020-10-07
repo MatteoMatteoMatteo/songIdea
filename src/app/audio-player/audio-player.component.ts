@@ -62,7 +62,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   }
 
   dropSong(id: number) {
-    this.songService.dropSong(id, this.allSongs[id].dropTime);
+    this.songService.dropSong(id);
   }
 
   fxToggle() {

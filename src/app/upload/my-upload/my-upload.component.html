@@ -20,7 +20,7 @@
         [buttonTitle]="playStopTitle"
         [dropStates]="dropStates[i]"
         [songsLoading]="songsLoading[i]"
-        (dropped)="dropMySong(i)"
+        (dropped)="dropMySong(i, song.dropTime)"
       ></app-drop-button>
     </div>
 
