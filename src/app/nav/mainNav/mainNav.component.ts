@@ -25,5 +25,6 @@ export class MainNavComponent implements OnInit {
 
   toggleSidenav() {
     this.toggle.emit();
+    console.log(this.isAuth$);
   }
 }

@@ -65,6 +65,7 @@ export class AuthService {
 
   logout() {
     this.isAuth = false;
+    this.router.navigate(["/"]);
     this.songService.stopAll();
     this.songService.cancelSub();
     this.angularFireAuth.signOut();
