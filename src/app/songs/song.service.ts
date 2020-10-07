@@ -240,16 +240,16 @@ export class SongService {
   }
 
   changePitch(id: number, value: any) {
-    this.allSongs[id].player.playbackRate = value;
+    this.allSongs[id].playerHolder.setPlaybackRate(value);
   }
-  changeVolume(id: number, val: any) {
-    this.allSongs[id].player.volume.value = val;
+  changeVolume(id: number, value: any) {
+    this.allSongs[id].playerHolder.setVolume(value);
   }
-  changeFx1(id: number, val: any) {
-    this.autoFilter.baseFrequency = val;
+  changeFx1(id: number, value: any) {
+    this.autoFilter.baseFrequency = value;
   }
-  changeFx2(id: number, val: any) {
-    this.reverb.wet.value = val;
+  changeFx2(id: number, value: any) {
+    this.reverb.wet.value = value;
   }
 
   uploadSong(
