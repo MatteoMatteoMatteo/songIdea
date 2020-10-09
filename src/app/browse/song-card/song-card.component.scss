@@ -1,15 +1,18 @@
 @import "../../../utilities//variables.scss";
 
 .allSongs {
+  max-width: 350px;
+  min-width: 320px;
   display: flex;
   margin: auto;
   flex-wrap: wrap;
   justify-content: space-around;
   padding: 0px 100px;
+  border: solid transparent 5px;
 }
 
 .songCard {
-  width: 350px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

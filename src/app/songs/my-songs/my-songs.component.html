@@ -1,4 +1,4 @@
-<div fxFlex.xs="100%" class="allSongs" *ngIf="!isLoading">
+<div class="allSongs" *ngIf="!isLoading">
   <mat-card
     class="songCard animate__animated animate__fadeIn"
     *ngFor="let song of mySavedSongs; let i = index"
@@ -15,7 +15,14 @@
 
     <div
       [id]="song.videoId"
-      style="pointer-events: none; margin-bottom: 20px; margin-top: 20px; border-radius: 8px"
+      style="
+        pointer-events: none;
+        margin-bottom: 20px;
+        margin-top: 15px;
+        border-radius: 8px;
+        border: solid 5px #e6e6e6;
+        border-top-left-radius: 0px;
+      "
     >
       {{ song.videoId }}
     </div>
