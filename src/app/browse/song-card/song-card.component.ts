@@ -95,7 +95,12 @@ export class SongCardComponent implements OnInit, OnDestroy {
   onHeartSong(hearts: number, heartedBy: string[], songId: string, index: number) {
     if (this.authService.isAuth)
       this.songService.heartSong(hearts, heartedBy, songId, this.uid, index);
-    else alert("you must sign in!");
+    else
+      this.uiHelperService.showSnackbar(
+        "Login or Signup to save your favourite drops",
+        "ok",
+        10000
+      );
   }
 
   getMyComments(songId: string) {

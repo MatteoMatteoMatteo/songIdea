@@ -131,6 +131,15 @@ mat-card-label {
   font-weight: 400;
 }
 
+snack-bar-container.mat-snack-bar-container {
+  width: 800px;
+  color: white;
+}
+span.mat-button-wrapper {
+  color: white;
+  border-bottom: white solid 2px;
+  padding: 10px;
+}
 h1 {
   text-align: center;
   margin: 100px 100px 100px 100px;
