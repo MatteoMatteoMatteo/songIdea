@@ -25,9 +25,13 @@ export class AppComponent implements OnInit, OnDestroy {
       if (document.visibilityState == "visible") {
         console.log("tab is activate");
       } else {
-        this.authService.logout();
+        if (this.detectMobile()) this.songService.stopAllVideo();
       }
     });
+  }
+
+  detectMobile() {
+    return window.innerWidth <= 800 && window.innerHeight <= 600;
   }
 
   prepareRoute(outlet: RouterOutlet) {

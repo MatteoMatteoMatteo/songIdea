@@ -66,6 +66,24 @@ export class SongService {
     this.destroyAudioPlayer.next(true);
   }
 
+  stopAllVideo() {
+    if (this.allSongs) {
+      this.allSongs.forEach((song) => {
+        song.playerHolder.pauseVideo();
+      });
+    }
+    if (this.mySavedSongs) {
+      this.mySavedSongs.forEach((song) => {
+        song.playerHolder.pauseVideo();
+      });
+    }
+    if (this.myUploadedSongs) {
+      this.myUploadedSongs.forEach((song) => {
+        song.playerHolder.pauseVideo();
+      });
+    }
+  }
+
   dropSong(id: number) {
     if (id >= 0 && id < this.allSongs.length) {
       clearInterval(this.countdown);
