@@ -31,7 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   detectMobile() {
-    return window.innerWidth <= 800 && window.innerHeight <= 600;
+    return window.innerWidth <= 800;
   }
 
   prepareRoute(outlet: RouterOutlet) {
