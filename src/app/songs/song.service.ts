@@ -62,7 +62,6 @@ export class SongService {
         song.player.stop();
       });
     }
-
     this.allSongs = [];
     this.destroyAudioPlayer.next(true);
   }
@@ -338,7 +337,7 @@ export class SongService {
     this.uid = uid;
     this.destroyAudioPlayer.next(false);
     this.db.collection("songs", (ref) => ref.orderBy("name"));
-    this.uiHelperService.allSongsLoadingStateChanged.next(true);
+    // this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.firebaseSub = this.db
       .collection("songs", (ref) => ref.orderBy("hearts", "desc").limit(this.howManySongsFetched))
       .snapshotChanges()
@@ -346,6 +345,7 @@ export class SongService {
         map((docArray) => {
           return docArray.map((doc) => {
             return {
+              isLoading: true,
               songId: doc.payload.doc.id,
               player: new Tone.Player({
                 url: "",
@@ -364,10 +364,10 @@ export class SongService {
             this.allSongs = songs;
             this.allSongsListed.next([...this.checkIfHearted(this.uid)]);
           }
-          this.uiHelperService.allSongsLoadingStateChanged.next(false);
+          // this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },
         (error) => {
-          this.uiHelperService.allSongsLoadingStateChanged.next(false);
+          // this.uiHelperService.allSongsLoadingStateChanged.next(false);
         }
       );
   }
