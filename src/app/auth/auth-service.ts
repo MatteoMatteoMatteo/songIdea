@@ -45,7 +45,7 @@ export class AuthService {
       })
       .catch((error) => {
         this.store.dispatch(new UI.StopLoading());
-        this.uiHelperService.showSnackbar(error.message, null, 4000);
+        this.uiHelperService.showSnackbar(error.message, "ok", 4000);
       });
   }
 
@@ -59,7 +59,7 @@ export class AuthService {
       })
       .catch((error) => {
         this.store.dispatch(new UI.StopLoading());
-        this.uiHelperService.showSnackbar(error.message, null, 4000);
+        this.uiHelperService.showSnackbar(error.message, "ok", 4000);
       });
   }
 
