@@ -1,3 +1,4 @@
+import { SongService } from "./../songs/song.service";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -6,7 +7,9 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./browse.component.scss"],
 })
 export class BrowseComponent implements OnInit {
-  constructor() {}
+  constructor(private songService: SongService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.songService.stopAllVideo();
+  }
 }

@@ -1,3 +1,4 @@
+import { SongService } from "./song.service";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatTabGroup } from "@angular/material/tabs";
 
@@ -10,7 +11,7 @@ export class SongsComponent implements OnInit {
   @ViewChild("switchTab", { static: false }) switchTab: MatTabGroup;
   songOn = false;
 
-  constructor() {}
+  constructor(private songService: SongService) {}
 
   onSwitchTab() {
     const tabGroup = this.switchTab;
@@ -20,5 +21,7 @@ export class SongsComponent implements OnInit {
     tabGroup.selectedIndex = (tabGroup.selectedIndex - 1) % tabCount;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.songService.stopAllVideo();
+  }
 }
