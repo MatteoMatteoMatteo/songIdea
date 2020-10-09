@@ -20,6 +20,14 @@ export class AppComponent implements OnInit, OnDestroy {
     this.audioPlayingSub = this.songService.audioPlayingListed.subscribe((bool) => {
       this.audioPlaying = bool;
     });
+
+    document.addEventListener("visibilitychange", (event) => {
+      if (document.visibilityState == "visible") {
+        console.log("tab is activate");
+      } else {
+        this.authService.logout();
+      }
+    });
   }
 
   prepareRoute(outlet: RouterOutlet) {
