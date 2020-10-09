@@ -11,11 +11,12 @@ import { searchArray } from "./../../utilities/searchFunction.js";
 
 @Injectable()
 export class SongService {
-  howManySongsFetched: number = 6;
+  howManySongsFetched: number = 3;
   heartOperation = false;
   uid: string;
   whichSongIsDropping: number;
   newSongTimer: any;
+  private moreAllSongs: Song[] = [];
   private myUploadedSongs: Song[] = [];
   private mySavedSongs: Song[] = [];
   public allSongs: Song[];
@@ -457,11 +458,11 @@ export class SongService {
   //     );
   // }
 
-  fetchMoreSongs(lastSongName: string) {
+  fetchMoreSongs(hearts: number) {
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.moreSongsSub = this.db
       .collection("songs", (ref) =>
-        ref.limit(this.howManySongsFetched).orderBy("hearts", "desc").startAfter(lastSongName)
+        ref.limit(this.howManySongsFetched).orderBy("hearts", "desc").startAfter(hearts)
       )
       .snapshotChanges()
       .pipe(
@@ -469,6 +470,7 @@ export class SongService {
           return docArray.map((doc) => {
             return {
               songId: doc.payload.doc.id,
+              playerHolder: null,
               player: new Tone.Player({
                 url: "",
                 autostart: false,
@@ -484,7 +486,8 @@ export class SongService {
           songs.forEach((el) => {
             this.allSongs.push(el);
           });
-          this.allSongsListed.next([...this.allSongs]);
+          this.moreAllSongs = songs;
+          this.allSongsListed.next([...this.checkIfHearted(this.uid)]);
           this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },
         (error) => {

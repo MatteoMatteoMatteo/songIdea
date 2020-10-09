@@ -69,7 +69,8 @@ export class SongCardComponent implements OnInit, OnDestroy {
       this.allComments = comments;
     });
     this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
-      this.allSongs = songs;
+      this.allSongs = this.songService.allSongs;
+      console.log(this.allSongs);
       this.init();
     });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
@@ -107,8 +108,9 @@ export class SongCardComponent implements OnInit, OnDestroy {
     return this.allComments.filter((comment) => comment.songId === songId);
   }
 
-  onLoadMoreSongs(name: string) {
-    this.songService.fetchMoreSongs(name);
+  onLoadMoreSongs(hearts: number) {
+    console.log(name);
+    this.songService.fetchMoreSongs(hearts);
   }
 
   onAddComment(form: NgForm, songId: string, uid: string) {
@@ -137,26 +139,30 @@ export class SongCardComponent implements OnInit, OnDestroy {
   startVideo() {
     this.reframed = false;
     this.allSongs.forEach((song) => {
-      song.playerHolder = new window["YT"].Player(song.videoId, {
-        videoId: song.videoId,
-        width: 300,
-        start: 100,
-        height: 200,
-        playerVars: {
-          autoplay: 0,
-          modestbranding: 0,
-          controls: 0,
-          disablekb: 1,
-          rel: 0,
-          ecver: 2,
-          fs: 0,
-          playsinline: 0,
-        },
-        events: {
-          onStateChange: this.onPlayerStateChange.bind(this),
-          onReady: this.onPlayerReady.bind(this),
-        },
-      });
+      console.log(song.playerHolder);
+      if (song.playerHolder == null) {
+        song.playerHolder = new window["YT"].Player(song.videoId, {
+          videoId: song.videoId,
+          width: 300,
+          start: 100,
+          height: 200,
+          playerVars: {
+            autoplay: 0,
+            modestbranding: 0,
+            controls: 0,
+            disablekb: 1,
+            rel: 0,
+            ecver: 2,
+            fs: 0,
+            playsinline: 0,
+          },
+          events: {
+            onStateChange: this.onPlayerStateChange.bind(this),
+            onReady: this.onPlayerReady.bind(this),
+          },
+        });
+      }
+      console.log(song.playerHolder);
     });
   }
 

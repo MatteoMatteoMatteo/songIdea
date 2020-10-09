@@ -3,7 +3,7 @@
 .allSongs {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
   border: solid transparent 5px;
 }
 
@@ -15,7 +15,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin: 0px 10px 30px 10px;
+  margin: 0px 25px 30px 25px;
   padding-bottom: 32px;
 }
 
