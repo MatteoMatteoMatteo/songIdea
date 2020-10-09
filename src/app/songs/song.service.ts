@@ -67,6 +67,8 @@ export class SongService {
   }
 
   stopAllVideo() {
+    clearInterval(this.countdown);
+    clearTimeout(this.newSongTimer);
     if (this.allSongs) {
       this.allSongs.forEach((song) => {
         song.playerHolder.pauseVideo();
