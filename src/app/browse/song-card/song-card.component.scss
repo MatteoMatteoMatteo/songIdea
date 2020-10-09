@@ -1,18 +1,16 @@
 @import "../../../utilities//variables.scss";
 
 .allSongs {
-  max-width: 350px;
-  min-width: 320px;
   display: flex;
-  margin: auto;
   flex-wrap: wrap;
   justify-content: space-around;
-  padding: 0px 100px;
   border: solid transparent 5px;
 }
 
 .songCard {
-  width: 100%;
+  padding: 10px;
+  min-width: 300px;
+  max-width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -245,18 +243,18 @@
 }
 
 @media only screen and (max-width: 500px) {
-  .allSongs {
-    display: flex;
-    align-self: center;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 0px;
-  }
+  // .allSongs {
+  //   display: flex;
+  //   align-self: center;
+  //   flex-direction: column;
+  //   justify-content: space-between;
+  //   padding: 0px;
+  // }
 
-  .songCard {
-    margin: auto;
-    margin-bottom: 20px;
-  }
+  // .songCard {
+  //   margin: auto;
+  //   margin-bottom: 20px;
+  // }
 
   .morePlease {
     display: none;

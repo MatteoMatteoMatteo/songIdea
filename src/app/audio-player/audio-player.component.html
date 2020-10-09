@@ -1,62 +1,63 @@
-<div *ngIf="!isLoading && !destroyMe" class="audioPlayer">
-  <div class="dragable">
-    <div
-      style="
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: stretch;
-      "
-    >
-      <div style="display: flex">
-        <div class="songTitle">{{ allSongs[whichSongIsDropping].name }}</div>
-        <div class="countdown">{{ countdown }}</div>
+<div class="pc">
+  <div *ngIf="!isLoading && !destroyMe" class="audioPlayer">
+    <div class="dragable">
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: stretch;
+        "
+      >
+        <div style="display: flex">
+          <div class="songTitle">{{ allSongs[whichSongIsDropping].name }}</div>
+          <div class="countdown">{{ countdown }}</div>
+        </div>
+        <div (click)="fxToggle()" class="Fx">FX</div>
       </div>
-      <div (click)="fxToggle()" class="Fx">FX</div>
+      <div class="audioPlayerButtonHolder">
+        <app-drop-button
+          [buttonStyling]="playPauseButton"
+          [spinnerStyling]="spinnerStyling"
+          [buttonTitle]="playStopTitle"
+          [dropStates]="dropStates[whichSongIsDropping]"
+          [songsLoading]="songsLoading[whichSongIsDropping]"
+          (dropped)="dropSong(whichSongIsDropping)"
+        ></app-drop-button>
+        <app-drop-button
+          [buttonStyling]="buttonStyling"
+          [spinnerStyling]="spinnerStyling"
+          [buttonTitle]="nextTitle"
+          (dropped)="dropSong(whichSongIsDropping + 1)"
+        ></app-drop-button>
+        <app-drop-button
+          [buttonStyling]="buttonStyling"
+          [spinnerStyling]="spinnerStyling"
+          [buttonTitle]="previousTitle"
+          (dropped)="dropSong(whichSongIsDropping - 1)"
+        ></app-drop-button>
+      </div>
     </div>
-    <div class="audioPlayerButtonHolder">
-      <app-drop-button
-        [buttonStyling]="playPauseButton"
-        [spinnerStyling]="spinnerStyling"
-        [buttonTitle]="playStopTitle"
-        [dropStates]="dropStates[whichSongIsDropping]"
-        [songsLoading]="songsLoading[whichSongIsDropping]"
-        (dropped)="dropSong(whichSongIsDropping)"
-      ></app-drop-button>
-      <app-drop-button
-        [buttonStyling]="buttonStyling"
-        [spinnerStyling]="spinnerStyling"
-        [buttonTitle]="nextTitle"
-        (dropped)="dropSong(whichSongIsDropping + 1)"
-      ></app-drop-button>
-      <app-drop-button
-        [buttonStyling]="buttonStyling"
-        [spinnerStyling]="spinnerStyling"
-        [buttonTitle]="previousTitle"
-        (dropped)="dropSong(whichSongIsDropping - 1)"
-      ></app-drop-button>
-    </div>
-  </div>
-  <div class="notDragable">
-    <mat-slider
-      vertical
-      class="pitchSlider"
-      (input)="onVolumeChange(whichSongIsDropping, $event)"
-      min="0"
-      max="100"
-      step="1"
-      value="100"
-    ></mat-slider>
-    <mat-slider
-      vertical
-      class="pitchSlider"
-      (input)="onPitchChange(whichSongIsDropping, $event)"
-      min="0.25"
-      max="2"
-      step="0.25"
-      value="1"
-    ></mat-slider>
-    <!-- <mat-slider
+    <div class="notDragable">
+      <mat-slider
+        vertical
+        class="pitchSlider"
+        (input)="onVolumeChange(whichSongIsDropping, $event)"
+        min="0"
+        max="100"
+        step="1"
+        value="100"
+      ></mat-slider>
+      <mat-slider
+        vertical
+        class="pitchSlider"
+        (input)="onPitchChange(whichSongIsDropping, $event)"
+        min="0.25"
+        max="2"
+        step="0.25"
+        value="1"
+      ></mat-slider>
+      <!-- <mat-slider
       vertical
       class="pitchSlider"
       (input)="onFx1Change(whichSongIsDropping, $event)"
@@ -74,44 +75,31 @@
       step="0.01"
       value="0"
     ></mat-slider> -->
+    </div>
   </div>
-  <div *ngIf="fxToggler" class="notDragablePhone">
-    <div>
-      <mat-slider
-        class="pitchSlider"
-        (input)="onVolumeChange(whichSongIsDropping, $event)"
-        min="-30"
-        max="1"
-        step="1"
-        value="1"
-      ></mat-slider>
-      <mat-slider
-        class="pitchSlider"
-        (input)="onPitchChange(whichSongIsDropping, $event)"
-        min="0.8"
-        max="1"
-        step="0.01"
-        value="1"
-      ></mat-slider>
-    </div>
-    <div>
-      <!-- <mat-slider
-        class="pitchSlider"
-        (input)="onFx1Change(whichSongIsDropping, $event)"
-        min="100"
-        max="10000"
-        step="1"
-        value="10000"
-      ></mat-slider>
-      <mat-slider
-        invert
-        class="pitchSlider"
-        (input)="onFx2Change(whichSongIsDropping, $event)"
-        min="0"
-        max="1"
-        step="0.01"
-        value="0"
-      ></mat-slider> -->
-    </div>
+</div>
+
+<div *ngIf="!isLoading && !destroyMe" class="phone">
+  <div class="audioPlayerPhone">
+    <app-drop-button
+      [buttonStyling]="phoneButtonStyling"
+      [spinnerStyling]="spinnerStyling"
+      [buttonTitle]="playStopTitlePhone"
+      [dropStates]="dropStates[whichSongIsDropping]"
+      [songsLoading]="songsLoading[whichSongIsDropping]"
+      (dropped)="dropSong(whichSongIsDropping)"
+    ></app-drop-button>
+    <app-drop-button
+      [buttonStyling]="phoneButtonStyling"
+      [spinnerStyling]="spinnerStyling"
+      [buttonTitle]="nextTitle"
+      (dropped)="dropSong(whichSongIsDropping + 1)"
+    ></app-drop-button>
+    <app-drop-button
+      [buttonStyling]="phoneButtonStyling"
+      [spinnerStyling]="spinnerStyling"
+      [buttonTitle]="previousTitle"
+      (dropped)="dropSong(whichSongIsDropping - 1)"
+    ></app-drop-button>
   </div>
 </div>

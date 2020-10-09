@@ -74,6 +74,22 @@
   margin-right: 20px;
 }
 
+.phoneButtonStyling {
+  border: none;
+  background-color: $first-color;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: lighter;
+  transition: 300ms ease;
+  cursor: pointer;
+  outline: none;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
 .dropped {
   background-color: black;
 }

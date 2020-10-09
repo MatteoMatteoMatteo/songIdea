@@ -12,11 +12,13 @@ import { Player } from "tone";
   styleUrls: ["./audio-player.component.scss"],
 })
 export class AudioPlayerComponent implements OnInit, OnDestroy {
+  phoneButtonStyling = "phoneButtonStyling";
   buttonStyling = "smallDropButton";
   smallPitchButton = "smallPitchButton";
   playPauseButton = "playPauseButton";
   spinnerStyling = "smallSpinner";
   playStopTitle = "PLAY | STOP";
+  playStopTitlePhone = "DROP";
   nextTitle = "NEXT";
   previousTitle = "BACK";
   songsLoading: boolean[] = [];

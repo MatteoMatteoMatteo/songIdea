@@ -20,10 +20,7 @@
 }
 
 .pc {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: stretch;
+  display: block;
 }
 
 .dragable {
@@ -87,88 +84,30 @@
   width: 70px;
 }
 
-.notDragablePhone {
-  display: none;
-}
-
 @media only screen and (max-width: 660px) {
-  .audioPlayer {
-    max-width: 100%;
-    margin: auto;
-    left: 0;
-    flex-direction: column;
-    border-radius: 20px;
-  }
-  .Fx {
-    display: block;
-    font-weight: bolder;
-    padding: 25px 10px;
-    background-color: $third-color;
-    color: black;
-    font-size: 1rem;
-    transition: 300ms;
-    width: 100%;
-  }
-
-  .Fx:active {
-    transition: 0s;
-    background-color: white;
-  }
-  .dragable {
-    border-radius: 0px;
-    max-width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 0px;
-    align-items: stretch;
-  }
-  .countdown {
-    font-size: 1.5rem;
-    background-color: white;
-    padding: 0px;
-  }
-
-  .songTitle {
-    overflow: hidden;
-    font-size: 0.8rem;
-    word-wrap: break-word;
-    hyphens: auto;
-    width: 130px;
-    padding: 10px 10px 10px 10px;
-    flex-grow: 1;
-  }
-  .audioPlayerButtonHolder {
-    border-left: solid black 5px;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    margin: 0px;
-  }
-
-  .notDragable {
+  .pc {
     display: none;
-  }
-
-  .notDragablePhone {
-    padding: 0px;
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    border: solid black 5px;
-    background-color: white;
-    border-radius: none;
   }
 
   .phone {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: stretch;
+    display: block;
   }
 
-  .pc {
-    display: none;
+  .audioPlayerPhone {
+    width: 100%;
+    background-color: $third-color;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    align-self: center;
+    z-index: 100;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
   }
 }
