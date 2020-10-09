@@ -52,7 +52,8 @@
   outline: none;
 }
 .smallDropButton:active,
-.smallPitchButton:active {
+.smallPitchButton:active,
+.phoneButtonStyling:active {
   background-color: black;
   transition: 0s;
 }
@@ -80,8 +81,9 @@
   color: white;
   padding: 10px;
   text-align: center;
+  border-radius: 5px;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: lighter;
   transition: 300ms ease;
   cursor: pointer;

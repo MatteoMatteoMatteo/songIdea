@@ -91,12 +91,12 @@
 
   .phone {
     display: block;
+    margin-top: 20px;
   }
 
   .audioPlayerPhone {
     width: 100%;
     background-color: $third-color;
-    border-radius: 5px;
     display: flex;
     flex-direction: row;
     justify-content: center;
