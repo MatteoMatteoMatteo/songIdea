@@ -11,6 +11,7 @@ import { searchArray } from "./../../utilities/searchFunction.js";
 
 @Injectable()
 export class SongService {
+  wasYoutubeTriggered = false;
   howManySongsFetched: number = 3;
   heartOperation = false;
   uid: string;
@@ -27,6 +28,7 @@ export class SongService {
   mySavedSongsListed = new Subject<Song[]>();
   allSongsListed = new Subject<Song[]>();
   moreSongsListed = new Subject<Song[]>();
+  wasYoutubeTriggeredListed = new Subject<boolean>();
   sendSongsAgainListed = new Subject<Song[]>();
   allMyUploadHeartsListed = new Subject<Song[]>();
   songLoadingListed = new Subject<boolean[]>();

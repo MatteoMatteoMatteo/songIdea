@@ -17,6 +17,7 @@ import * as fromRoot from "../../app.reducer";
   styleUrls: ["./song-card.component.scss"],
 })
 export class SongCardComponent implements OnInit, OnDestroy {
+  wasYoutubeTriggered = false;
   smallPitchButton = "smallPitchButton";
   playPauseButton = "bigDropButton";
   spinnerStyling = "bigSpinner";
@@ -55,6 +56,10 @@ export class SongCardComponent implements OnInit, OnDestroy {
     }
     this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
       this.dropStates = dropStates;
+    });
+
+    this.songService.wasYoutubeTriggeredListed.subscribe((bool) => {
+      this.wasYoutubeTriggered = bool;
     });
 
     this.songsLoadingSub = this.songService.songLoadingListed.subscribe((songsLoading) => {
@@ -164,8 +169,20 @@ export class SongCardComponent implements OnInit, OnDestroy {
     });
   }
 
+  eventFire(el, etype) {
+    if (el.fireEvent) {
+      el.fireEvent("on" + etype);
+    } else {
+      var evObj = document.createEvent("Events");
+      evObj.initEvent(etype, true, false);
+      el.dispatchEvent(evObj);
+    }
+  }
+
   onPlayerStateChange(event) {
-    if (event.target.getPlayerState() == 1) {
+    if (event.target.getPlayerState() == 1 && !this.wasYoutubeTriggered) {
+      this.songService.wasYoutubeTriggeredListed.next(true);
+      this.eventFire(document.getElementById("drop"), "click");
     }
   }
 

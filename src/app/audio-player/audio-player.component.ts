@@ -36,10 +36,14 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   isLoading = false;
   whichSongIsDropping = 0;
   countdown = 30;
+  wasYoutubeTriggered = false;
 
   constructor(private songService: SongService, private uiHelperService: UiHelperService) {}
 
   ngOnInit(): void {
+    this.songService.wasYoutubeTriggeredListed.subscribe((bool) => {
+      this.wasYoutubeTriggered = bool;
+    });
     this.whichSongIsDroppingSub = this.songService.whichSongIsDroppingListed.subscribe((songId) => {
       this.whichSongIsDropping = songId;
     });

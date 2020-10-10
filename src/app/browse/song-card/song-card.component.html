@@ -1,4 +1,4 @@
-<div class="allSongs">
+<div class="allSongs" id="allSongs">
   <mat-card
     *ngFor="let song of allSongs; let i = index"
     [value]="song.songId"
@@ -42,7 +42,7 @@
         margin-bottom: 20px;
       "
     >
-      <div>
+      <div *ngIf="wasYoutubeTriggered" class="animate__animated animate__swing">
         <app-drop-button
           [buttonStyling]="playPauseButton"
           [spinnerStyling]="spinnerStyling"

@@ -1,5 +1,17 @@
 <div class="pc">
   <div *ngIf="!isLoading && !destroyMe" class="audioPlayer">
+    <div
+      *ngIf="!wasYoutubeTriggered"
+      style="
+        background-color: rgba(255, 255, 255, 0.555);
+        z-index: 1100;
+        width: 100%;
+        position: fixed;
+        height: 100%;
+        border-top-left-radius: 14px;
+        border-bottom-left-radius: 14px;
+      "
+    ></div>
     <div class="dragable">
       <div
         style="
