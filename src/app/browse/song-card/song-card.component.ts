@@ -1,5 +1,4 @@
 import { AuthService } from "./../../auth/auth-service";
-import { AngularFireAuth } from "@angular/fire/auth";
 import { UiHelperService } from "./../../uiHelper/uiHelper.service";
 import { SongService } from "./../../songs/song.service";
 import { Subscription } from "rxjs";

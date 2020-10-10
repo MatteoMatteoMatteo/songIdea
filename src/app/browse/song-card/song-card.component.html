@@ -78,13 +78,15 @@
       </p>
     </div> -->
   </mat-card>
-  <div style="display: flex; justify-content: space-around">
-    <button (click)="onPrevPage(allSongs[0].hearts)" class="morePlease">Previous Page</button>
-    <button (click)="onNextPage(allSongs[allSongs.length - 1].hearts)" class="morePlease">
-      Next Page
-    </button>
-  </div>
 </div>
+
+<div style="display: flex; justify-content: center; margin-bottom: 230px; margin-top: 20px">
+  <button (click)="onPrevPage(allSongs[0].hearts)" class="morePlease">Previous Page</button>
+  <button (click)="onNextPage(allSongs[allSongs.length - 1].hearts)" class="morePlease">
+    Next Page
+  </button>
+</div>
+
 <!-- <div style="display: flex">
   <button (click)="onLoadMoreSongs(allSongs[allSongs.length - 1].hearts)" class="morePleasePhone">
     Next Page

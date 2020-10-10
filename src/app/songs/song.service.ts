@@ -11,7 +11,7 @@ import { searchArray } from "./../../utilities/searchFunction.js";
 
 @Injectable()
 export class SongService {
-  howManySongsFetched: number = 3;
+  howManySongsFetched: number = 6;
   heartOperation = false;
   uid: string;
   whichSongIsDropping: number;
@@ -462,7 +462,7 @@ export class SongService {
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.moreSongsSub = this.db
       .collection("songs", (ref) =>
-        ref.orderBy("hearts", "desc").limit(this.howManySongsFetched).startAfter(hearts)
+        ref.orderBy("hearts", "desc").startAfter(hearts).limit(this.howManySongsFetched)
       )
       .snapshotChanges()
       .pipe(
