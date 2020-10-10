@@ -103,6 +103,7 @@ export class SongService {
         this.allSongs.forEach((song) => {
           song.playerHolder.pauseVideo();
         });
+        this.allSongs[id].playerHolder.unMute();
         this.allSongs[id].playerHolder.seekTo(this.allSongs[id].dropTime, true);
         this.allSongs[id].playerHolder.playVideo();
 

@@ -183,11 +183,12 @@ export class SongCardComponent implements OnInit, OnDestroy {
     if (event.target.getPlayerState() == 1 && !this.wasYoutubeTriggered) {
       this.songService.wasYoutubeTriggeredListed.next(true);
       this.eventFire(document.getElementById("drop"), "click");
+      event.target.pauseVideo();
     }
   }
 
   onPlayerReady(event) {
-    event.target.seekTo(130);
+    event.target.mute();
   }
 
   onPlayerError(event) {

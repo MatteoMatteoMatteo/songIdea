@@ -14,15 +14,7 @@
       <div class="heartHowMany"></div>
     </div>
 
-    <div
-      style="
-        margin-bottom: 20px;
-        margin-top: 15px;
-        border-radius: 8px;
-        border: solid 5px #e6e6e6;
-        border-top-left-radius: 0px;
-      "
-    >
+    <div class="frame" [ngStyle]="{ 'pointer-events': wasYoutubeTriggered ? 'none' : 'auto' }">
       <iframe
         [id]="song.videoId"
         width="300"
