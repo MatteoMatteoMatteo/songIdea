@@ -8,11 +8,12 @@ import { AngularFirestore } from "@angular/fire/firestore";
 import { map } from "rxjs/operators";
 import * as Tone from "tone";
 import { searchArray } from "./../../utilities/searchFunction.js";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Injectable()
 export class SongService {
   wasYoutubeTriggered = false;
-  howManySongsFetched: number = 3;
+  howManySongsFetched: number = 1;
   heartOperation = false;
   uid: string;
   whichSongIsDropping: number;
@@ -56,7 +57,11 @@ export class SongService {
     decay: 5,
   });
 
-  constructor(private db: AngularFirestore, private uiHelperService: UiHelperService) {}
+  constructor(
+    private db: AngularFirestore,
+    private uiHelperService: UiHelperService,
+    private sanitizer: DomSanitizer
+  ) {}
 
   stopAll() {
     clearInterval(this.countdown);
@@ -374,7 +379,7 @@ export class SongService {
               isLoading: true,
               songId: doc.payload.doc.id,
               player: new Tone.Player({
-                url: "",
+                url: undefined,
                 autostart: false,
                 fadeOut: 0.3,
               }).chain(this.reverb, this.autoFilter, Tone.Destination),
@@ -388,6 +393,9 @@ export class SongService {
         (songs: Song[]) => {
           if (!this.heartOperation) {
             this.allSongs = songs;
+            this.allSongs.forEach((song) => {
+              song.url = this.sanitizer.bypassSecurityTrustResourceUrl(song.url);
+            });
             this.allSongsListed.next([...this.checkIfHearted(this.uid)]);
           }
           // this.uiHelperService.allSongsLoadingStateChanged.next(false);
@@ -492,6 +500,9 @@ export class SongService {
             this.allSongs.push(el);
           });
           this.moreAllSongs = songs;
+          this.moreAllSongs.forEach((song) => {
+            song.url = this.sanitizer.bypassSecurityTrustResourceUrl(song.url);
+          });
           this.moreSongsListed.next([...this.moreAllSongs]);
           this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },

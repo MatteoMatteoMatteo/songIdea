@@ -10,6 +10,6 @@ export interface Song {
   hearts: number;
   heartedBy: string[];
   isHearted?: boolean;
-  url: string;
+  url: any;
   dropTime: number;
 }

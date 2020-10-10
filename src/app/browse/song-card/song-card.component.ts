@@ -164,7 +164,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
             onReady: this.onPlayerReady.bind(this),
           },
         });
-        console.log(song.playerHolder);
+        console.log(song.url);
       }
     });
   }
