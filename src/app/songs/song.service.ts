@@ -11,7 +11,7 @@ import { searchArray } from "./../../utilities/searchFunction.js";
 
 @Injectable()
 export class SongService {
-  howManySongsFetched: number = 6;
+  howManySongsFetched: number = 2;
   heartOperation = false;
   uid: string;
   whichSongIsDropping: number;
@@ -360,7 +360,7 @@ export class SongService {
     this.db.collection("songs", (ref) => ref.orderBy("name"));
     // this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.firebaseSub = this.db
-      .collection("songs", (ref) => ref.orderBy("hearts", "desc").limit(this.howManySongsFetched))
+      .collection("songs", (ref) => ref.limit(this.howManySongsFetched).orderBy("hearts", "desc"))
       .snapshotChanges()
       .pipe(
         map((docArray) => {
@@ -462,7 +462,12 @@ export class SongService {
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.moreSongsSub = this.db
       .collection("songs", (ref) =>
-        ref.orderBy("hearts", "desc").startAfter(hearts).limit(this.howManySongsFetched)
+        ref
+          .limit(this.howManySongsFetched)
+          .orderBy("hearts")
+          .orderBy("name", "asc")
+          .where("hearts", ">=", 15)
+          .startAfter(15, "After Life")
       )
       .snapshotChanges()
       .pipe(
