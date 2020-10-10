@@ -14,7 +14,7 @@
       <div class="heartHowMany"></div>
     </div>
 
-    <div class="frame" [ngStyle]="{ 'pointer-events': wasYoutubeTriggered ? 'none' : 'auto' }">
+    <div class="frame">
       <iframe
         [id]="song.videoId"
         width="300"
@@ -34,7 +34,7 @@
         margin-bottom: 20px;
       "
     >
-      <div *ngIf="wasYoutubeTriggered" class="animate__animated animate__swing">
+      <div class="animate__animated animate__swing">
         <app-drop-button
           [buttonStyling]="playPauseButton"
           [spinnerStyling]="spinnerStyling"

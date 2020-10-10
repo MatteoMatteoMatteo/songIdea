@@ -97,11 +97,11 @@ export class SongService {
 
   dropSong(id: number) {
     if (id >= 0 && id < this.allSongs.length) {
+      console.log(this.allSongs);
       clearInterval(this.countdown);
       clearTimeout(this.newSongTimer);
       this.whichSongIsDropping = id;
       this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
-      console.log(this.allSongs[id].playerHolder.getPlayerState());
       if (this.allSongs[id].playerHolder.getPlayerState() != 1) {
         this.dropState.fill(false);
         this.dropStateListed.next([...this.dropState]);
@@ -348,15 +348,15 @@ export class SongService {
     }
   }
 
-  checkIfHearted(uid: string) {
-    this.allSongs.forEach((el) => {
+  checkIfHearted(uid: string, array: Array<Song>) {
+    array.forEach((el) => {
       if (el.heartedBy.includes(uid)) {
         el.isHearted = true;
       } else {
         el.isHearted = false;
       }
     });
-    return this.allSongs;
+    return array;
   }
 
   deleteSong(songId: string, heartDocId: string) {
@@ -396,7 +396,7 @@ export class SongService {
             this.allSongs.forEach((song) => {
               song.url = this.sanitizer.bypassSecurityTrustResourceUrl(song.url);
             });
-            this.allSongsListed.next([...this.checkIfHearted(this.uid)]);
+            this.allSongsListed.next([...this.checkIfHearted(this.uid, this.allSongs)]);
           }
           // this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },
@@ -496,15 +496,17 @@ export class SongService {
       )
       .subscribe(
         (songs: Song[]) => {
-          songs.forEach((el) => {
-            this.allSongs.push(el);
-          });
-          this.moreAllSongs = songs;
-          this.moreAllSongs.forEach((song) => {
-            song.url = this.sanitizer.bypassSecurityTrustResourceUrl(song.url);
-          });
-          this.moreSongsListed.next([...this.moreAllSongs]);
-          this.uiHelperService.allSongsLoadingStateChanged.next(false);
+          if (!this.heartOperation) {
+            songs.forEach((el) => {
+              this.allSongs.push(el);
+            });
+            this.moreAllSongs = songs;
+            this.moreAllSongs.forEach((song) => {
+              song.url = this.sanitizer.bypassSecurityTrustResourceUrl(song.url);
+            });
+            this.moreSongsListed.next([...this.checkIfHearted(this.uid, this.moreAllSongs)]);
+            this.uiHelperService.allSongsLoadingStateChanged.next(false);
+          }
         },
         (error) => {
           this.uiHelperService.allSongsLoadingStateChanged.next(false);

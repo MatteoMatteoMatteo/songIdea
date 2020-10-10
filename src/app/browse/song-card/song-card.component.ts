@@ -77,7 +77,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.songService.moreSongsListed.subscribe((songs) => {
       songs.forEach((song) => {
         this.allSongs.push(song);
-        console.log(this.allSongs);
       });
       this.init();
     });
@@ -146,6 +145,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
 
   startVideo() {
     this.allSongs.forEach((song) => {
+      console.log(song);
       if (song.playerHolder == null) {
         song.playerHolder = new window["YT"].Player(song.videoId, {
           playerVars: {
@@ -164,7 +164,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
             onReady: this.onPlayerReady.bind(this),
           },
         });
-        console.log(song.url);
       }
     });
   }
@@ -187,9 +186,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  onPlayerReady(event) {
-    event.target.mute();
-  }
+  onPlayerReady(event) {}
 
   onPlayerError(event) {
     switch (event.data) {

@@ -23,7 +23,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     document.addEventListener("visibilitychange", (event) => {
       if (document.visibilityState == "visible") {
-        console.log("tab is activate");
       } else {
         if (this.detectMobile()) this.songService.stopAllVideo();
       }
