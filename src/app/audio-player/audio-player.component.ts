@@ -19,7 +19,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   spinnerStyling = "smallSpinner";
   playStopTitle = "PLAY | STOP";
   playStopTitlePhone = "DROP";
-  nextTitle = "NEXT";
+  nextTitle = "SKIP";
   previousTitle = "BACK";
   songsLoading: boolean[] = [];
   dropStates: boolean[] = [];

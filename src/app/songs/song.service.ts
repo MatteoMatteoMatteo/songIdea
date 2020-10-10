@@ -458,11 +458,11 @@ export class SongService {
   //     );
   // }
 
-  fetchMoreSongs(hearts: number) {
+  nextPage(hearts: number) {
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.moreSongsSub = this.db
       .collection("songs", (ref) =>
-        ref.limit(this.howManySongsFetched).orderBy("hearts", "desc").startAfter(hearts)
+        ref.orderBy("hearts", "desc").limit(this.howManySongsFetched).startAfter(hearts)
       )
       .snapshotChanges()
       .pipe(
@@ -483,10 +483,42 @@ export class SongService {
       )
       .subscribe(
         (songs: Song[]) => {
-          songs.forEach((el) => {
-            this.allSongs.push(el);
+          this.allSongs = songs;
+          this.allSongsListed.next([...this.checkIfHearted(this.uid)]);
+          this.uiHelperService.allSongsLoadingStateChanged.next(false);
+        },
+        (error) => {
+          this.uiHelperService.allSongsLoadingStateChanged.next(false);
+        }
+      );
+  }
+
+  prevPage(hearts: number) {
+    this.uiHelperService.allSongsLoadingStateChanged.next(true);
+    this.moreSongsSub = this.db
+      .collection("songs", (ref) =>
+        ref.limitToLast(this.howManySongsFetched).orderBy("hearts", "desc").endBefore(hearts)
+      )
+      .snapshotChanges()
+      .pipe(
+        map((docArray) => {
+          return docArray.map((doc) => {
+            return {
+              songId: doc.payload.doc.id,
+              playerHolder: null,
+              player: new Tone.Player({
+                url: "",
+                autostart: false,
+                fadeOut: 0.3,
+              }).chain(this.reverb, this.autoFilter, Tone.Destination),
+              ...(doc.payload.doc.data() as Song),
+            };
           });
-          this.moreAllSongs = songs;
+        })
+      )
+      .subscribe(
+        (songs: Song[]) => {
+          this.allSongs = songs;
           this.allSongsListed.next([...this.checkIfHearted(this.uid)]);
           this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },
