@@ -26,6 +26,7 @@ export class SongService {
   mySongsListed = new Subject<Song[]>();
   mySavedSongsListed = new Subject<Song[]>();
   allSongsListed = new Subject<Song[]>();
+  moreSongsListed = new Subject<Song[]>();
   sendSongsAgainListed = new Subject<Song[]>();
   allMyUploadHeartsListed = new Subject<Song[]>();
   songLoadingListed = new Subject<boolean[]>();
@@ -93,15 +94,16 @@ export class SongService {
       clearTimeout(this.newSongTimer);
       this.whichSongIsDropping = id;
       this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
+      console.log(this.allSongs[id].playerHolder.getPlayerState());
       if (this.allSongs[id].playerHolder.getPlayerState() != 1) {
         this.dropState.fill(false);
         this.dropStateListed.next([...this.dropState]);
         this.allSongs.forEach((song) => {
           song.playerHolder.pauseVideo();
         });
-        this.allSongs[id].playerHolder.unMute();
         this.allSongs[id].playerHolder.seekTo(this.allSongs[id].dropTime, true);
         this.allSongs[id].playerHolder.playVideo();
+
         this.manageCountdown();
         this.manageNextSongAfterCountdown(id, "allSongs");
         this.dropState[id] = true;
@@ -487,7 +489,7 @@ export class SongService {
             this.allSongs.push(el);
           });
           this.moreAllSongs = songs;
-          this.allSongsListed.next([...this.checkIfHearted(this.uid)]);
+          this.moreSongsListed.next([...this.moreAllSongs]);
           this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },
         (error) => {

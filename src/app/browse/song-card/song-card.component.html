@@ -15,16 +15,22 @@
     </div>
 
     <div
-      [id]="song.videoId"
       style="
-        pointer-events: none;
         margin-bottom: 20px;
         margin-top: 15px;
         border-radius: 8px;
         border: solid 5px #e6e6e6;
         border-top-left-radius: 0px;
       "
-    ></div>
+    >
+      <iframe
+        [id]="song.videoId"
+        width="300"
+        height="200"
+        src="https://www.youtube.com/embed/Zokn4WDPcHE?enablejsapi=1"
+        style="border: solid 4px #37474f"
+      ></iframe>
+    </div>
 
     <div
       style="

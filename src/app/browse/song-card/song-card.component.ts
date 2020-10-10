@@ -40,11 +40,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
   loadingSub: Subscription;
   wasItHeartedSub: Subscription;
 
-  public YT: any;
-  public video: any;
-  private player: any;
-  public reframed: Boolean = false;
-
   constructor(
     private commentService: CommentService,
     private songService: SongService,
@@ -69,8 +64,16 @@ export class SongCardComponent implements OnInit, OnDestroy {
       this.allComments = comments;
     });
     this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
-      this.allSongs = this.songService.allSongs;
-      console.log(this.allSongs);
+      songs.forEach((song) => {
+        this.allSongs.push(song);
+      });
+      this.init();
+    });
+    this.songService.moreSongsListed.subscribe((songs) => {
+      songs.forEach((song) => {
+        this.allSongs.push(song);
+        console.log(this.allSongs);
+      });
       this.init();
     });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
@@ -109,7 +112,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
   }
 
   onLoadMoreSongs(hearts: number) {
-    console.log(name);
     this.songService.fetchMoreSongs(hearts);
   }
 
@@ -126,10 +128,11 @@ export class SongCardComponent implements OnInit, OnDestroy {
   }
 
   init() {
-    if (window["YT"]) {
-      window["YT"] = null;
-    }
+    // if (window["YT"]) {
+    //   window["YT"] = null;
+    // }
     var tag = document.createElement("script");
+    tag.id = "iframe-demo";
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName("script")[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -137,17 +140,12 @@ export class SongCardComponent implements OnInit, OnDestroy {
   }
 
   startVideo() {
-    this.reframed = false;
     this.allSongs.forEach((song) => {
-      console.log(song.playerHolder);
       if (song.playerHolder == null) {
         song.playerHolder = new window["YT"].Player(song.videoId, {
-          videoId: song.videoId,
-          width: 300,
-          start: 100,
-          height: 200,
           playerVars: {
             autoplay: 0,
+            enablejsapi: 1,
             modestbranding: 0,
             controls: 0,
             disablekb: 1,
@@ -161,24 +159,18 @@ export class SongCardComponent implements OnInit, OnDestroy {
             onReady: this.onPlayerReady.bind(this),
           },
         });
+        console.log(song.playerHolder);
       }
-      console.log(song.playerHolder);
     });
   }
 
   onPlayerStateChange(event) {
-    if (event.target.getPlayerState() == 1 && event.target.isMuted()) {
-      event.target.pauseVideo();
+    if (event.target.getPlayerState() == 1) {
     }
   }
 
-  cleanTime() {
-    return Math.round(this.player.getCurrentTime());
-  }
-
   onPlayerReady(event) {
-    event.target.mute();
-    event.target.seekTo(50);
+    event.target.seekTo(130);
   }
 
   onPlayerError(event) {
