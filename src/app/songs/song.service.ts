@@ -7,11 +7,52 @@ import { Song } from "./song.model";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { map } from "rxjs/operators";
 import * as Tone from "tone";
-import { searchArray } from "./../../utilities/searchFunction.js";
 
 @Injectable()
 export class SongService {
-  howManySongsFetched: number = 2;
+  howManySongsFetched: number = 6;
+  item = [
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("name", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("videId", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("dropTime", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("genre", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("hearts", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("url", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("userId", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("name", "asc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("videId", "asc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("dropTime", "asc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("genre", "asc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("hearts", "asc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) => ref.orderBy("url", "asc").limit(this.howManySongsFetched)),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("userId", "asc").limit(this.howManySongsFetched)
+    ),
+  ];
   heartOperation = false;
   uid: string;
   whichSongIsDropping: number;
@@ -355,12 +396,11 @@ export class SongService {
   }
 
   fetchAllSongs(uid: string) {
+    var item = this.item[Math.floor(Math.random() * this.item.length)];
     this.uid = uid;
     this.destroyAudioPlayer.next(false);
-    this.db.collection("songs", (ref) => ref.orderBy("name"));
     // this.uiHelperService.allSongsLoadingStateChanged.next(true);
-    this.firebaseSub = this.db
-      .collection("songs", (ref) => ref.limit(this.howManySongsFetched).orderBy("hearts", "desc"))
+    this.firebaseSub = item
       .snapshotChanges()
       .pipe(
         map((docArray) => {
@@ -458,17 +498,20 @@ export class SongService {
   //     );
   // }
 
-  nextPage(hearts: number) {
+  makeid(length) {
+    var result = "";
+    var characters = "abcdefghijklmnopqrstuvwxyz";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
+  nextPage(hearts: number, name: string) {
+    var item = this.item[Math.floor(Math.random() * this.item.length)];
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
-    this.moreSongsSub = this.db
-      .collection("songs", (ref) =>
-        ref
-          .limit(this.howManySongsFetched)
-          .orderBy("hearts")
-          .orderBy("name", "asc")
-          .where("hearts", ">=", 15)
-          .startAfter(15, "After Life")
-      )
+    this.moreSongsSub = item
       .snapshotChanges()
       .pipe(
         map((docArray) => {

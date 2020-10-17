@@ -107,9 +107,9 @@ export class SongCardComponent implements OnInit, OnDestroy {
     return this.allComments.filter((comment) => comment.songId === songId);
   }
 
-  onNextPage(hearts: number) {
+  onNextPage(hearts: number, name: string) {
     console.log(name);
-    this.songService.nextPage(hearts);
+    this.songService.nextPage(hearts, name);
   }
 
   onPrevPage(hearts: number) {

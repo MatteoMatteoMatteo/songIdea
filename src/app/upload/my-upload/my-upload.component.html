@@ -2,28 +2,6 @@
   <mat-card class="songCard" *ngFor="let song of mySongs; let i = index" [value]="song.id">
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
 
-    <h2 class="h2">
-      <span class="span">{{ song.hearts }}</span>
-    </h2>
-    <div class="heartHowManyHolder">
-      <div class="heartHowMany"></div>
-    </div>
-
-    <div
-      [id]="song.videoId"
-      style="pointer-events: none; margin-bottom: 20px; margin-top: 20px; border-radius: 8px"
-    ></div>
-    <div>
-      <app-drop-button
-        [buttonStyling]="playPauseButton"
-        [spinnerStyling]="spinnerStyling"
-        [buttonTitle]="playStopTitle"
-        [dropStates]="dropStates[i]"
-        [songsLoading]="songsLoading[i]"
-        (dropped)="dropMySong(i)"
-      ></app-drop-button>
-    </div>
-
     <button
       mat-button
       class="deleteButton"
@@ -33,8 +11,11 @@
     </button>
   </mat-card>
 </div>
+
 <mat-spinner style="margin: auto" color="accent" *ngIf="isLoading" diameter="80"></mat-spinner>
 
 <div class="noUploadsYet" *ngIf="!isLoading && mySongs.length === 0">
   <span style="font-size: 1rem">You have no songs yet, upload your first one! :)</span>
 </div>
+
+<app-footer></app-footer>

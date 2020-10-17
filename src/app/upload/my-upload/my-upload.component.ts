@@ -50,7 +50,6 @@ export class MyUploadComponent implements OnInit, OnDestroy {
     });
     this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
       this.mySongs = songs;
-      this.init();
     });
     this.allMyHeartsSubscription = this.songService.allMyUploadHeartsListed.subscribe((songs) => {
       this.mySongs = songs;
@@ -86,54 +85,6 @@ export class MyUploadComponent implements OnInit, OnDestroy {
         this.songService.deleteSong(songId, heartDocId);
       }
     });
-  }
-
-  init() {
-    if (window["YT"]) {
-      window["YT"] = null;
-    }
-    var tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName("script")[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    window["onYouTubeIframeAPIReady"] = () => this.startVideo();
-  }
-
-  startVideo() {
-    this.reframed = false;
-    this.mySongs.forEach((song) => {
-      song.playerHolder = new window["YT"].Player(song.videoId, {
-        videoId: song.videoId,
-        width: 300,
-        start: 100,
-        height: 200,
-        playerVars: {
-          autoplay: 0,
-          modestbranding: 0,
-          controls: 0,
-          disablekb: 1,
-          rel: 0,
-          ecver: 2,
-          fs: 0,
-          playsinline: 0,
-        },
-        events: {
-          onStateChange: this.onPlayerStateChange.bind(this),
-          onReady: this.onPlayerReady.bind(this),
-        },
-      });
-    });
-  }
-
-  onPlayerStateChange(event) {
-    if (event.target.getPlayerState() == 1 && event.target.isMuted()) {
-      event.target.pauseVideo();
-    }
-  }
-
-  onPlayerReady(event) {
-    event.target.mute();
-    event.target.seekTo(50);
   }
 
   ngOnDestroy() {

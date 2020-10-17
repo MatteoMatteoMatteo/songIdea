@@ -53,6 +53,7 @@ import { CommentsComponent } from "./comments/comments.component";
 import { ScrollComponent } from "./infiniteScroll/scroll.component";
 import { DropButtonComponent } from "./drop-button/drop-button.component";
 import { AudioPlayerComponent } from "./audio-player/audio-player.component";
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { AudioPlayerComponent } from "./audio-player/audio-player.component";
     ScrollComponent,
     DropButtonComponent,
     AudioPlayerComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
