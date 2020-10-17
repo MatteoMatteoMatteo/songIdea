@@ -399,7 +399,6 @@ export class SongService {
     var item = this.item[Math.floor(Math.random() * this.item.length)];
     this.uid = uid;
     this.destroyAudioPlayer.next(false);
-    // this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.firebaseSub = item
       .snapshotChanges()
       .pipe(
