@@ -59,9 +59,10 @@
   color: white;
   cursor: default;
   padding: 20px;
-  border-radius: 20px;
+  border-radius: 7px;
   box-shadow: none;
-  width: 600px;
+  width: fit-content;
+  border: solid white 2px;
   background-color: black;
   margin: auto;
 }

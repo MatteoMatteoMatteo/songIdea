@@ -111,7 +111,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
   }
 
   onNextPage(hearts: number, name: string) {
-    this.songService.nextPage(hearts, name);
+    this.songService.loadMoreDrops(hearts, name);
   }
 
   onPrevPage(hearts: number) {

@@ -119,9 +119,6 @@ export class SongService {
       this.allSongs = [];
     }
     if (this.mySavedSongs) {
-      this.mySavedSongs.forEach((song) => {
-        song.playerHolder.pauseVideo();
-      });
       this.mySavedSongs = [];
     }
     if (this.myUploadedSongs) {
@@ -342,7 +339,14 @@ export class SongService {
     this.db.collection("songs").add(song);
   }
 
-  heartSong(hearts: number, heartedBy: string[], songId: string, uid: string, i: number) {
+  heartSong(
+    hearts: number,
+    heartedBy: string[],
+    songId: string,
+    uid: string,
+    i: number,
+    mySavedSongsRemoval?: boolean
+  ) {
     this.heartOperation = true;
     var heartObject: any;
     var newHeartsPlus = hearts + 1;
@@ -395,6 +399,18 @@ export class SongService {
     return this.allSongs;
   }
 
+  checkIfHeartedMySavedSong(songs: Song[], uid: string) {
+    songs.forEach((el) => {
+      if (el.heartedBy.includes(uid)) {
+        el.isHearted = true;
+      } else {
+        el.isHearted = false;
+      }
+    });
+    this.mySavedSongs = [...songs];
+    return this.mySavedSongs;
+  }
+
   deleteSong(songId: string, heartDocId: string) {
     this.db.doc("songs/" + songId).delete();
     this.db.doc("hearts/" + heartDocId).delete();
@@ -437,71 +453,6 @@ export class SongService {
       );
   }
 
-  // fetchHearts(uid: string) {
-  //   this.uid = uid;
-  //   this.uiHelperService.allSongsLoadingStateChanged.next(true);
-  //   this.heartsSub = this.db
-  //     .collection("hearts", (ref) => ref.orderBy("name").limit(this.howManySongsFetched))
-  //     .snapshotChanges()
-  //     .pipe(
-  //       map((docArray) => {
-  //         return docArray.map((doc) => {
-  //           return {
-  //             heartDocId: doc.payload.doc.id,
-  //             ...(doc.payload.doc.data() as Heart),
-  //           };
-  //         });
-  //       })
-  //     )
-  //     .subscribe(
-  //       (hearts: Heart[]) => {
-  //         this.allHearts = hearts;
-  //         if (typeof this.wasItHearted == "undefined") {
-  //           this.wasItHearted = [];
-  //           this.checkIfHearted(this.uid);
-  //         }
-  //         this.uiHelperService.allSongsLoadingStateChanged.next(false);
-  //       },
-  //       (error) => {
-  //         this.uiHelperService.allSongsLoadingStateChanged.next(false);
-  //       }
-  //     );
-  // }
-
-  // fetchMyUploadHearts(uid: string) {
-  //   this.uid = uid;
-  //   this.uiHelperService.allSongsLoadingStateChanged.next(true);
-  //   this.heartsSub = this.db
-  //     .collection("hearts", (ref) =>
-  //       ref.orderBy("name").where("userId", "==", uid).limit(this.howManySongsFetched)
-  //     )
-  //     .snapshotChanges()
-  //     .pipe(
-  //       map((docArray) => {
-  //         return docArray.map((doc) => {
-  //           return {
-  //             heartDocId: doc.payload.doc.id,
-  //             ...(doc.payload.doc.data() as Heart),
-  //           };
-  //         });
-  //       })
-  //     )
-  //     .subscribe(
-  //       (hearts: Heart[]) => {
-  //         this.myUploadHearts = hearts;
-  //         for (var i = 0; i < this.mySongs.length; i++) {
-  //           this.mySongs[i].heartDocId = this.myUploadHearts[i].heartDocId;
-  //           this.mySongs[i].hearts = this.myUploadHearts[i].hearts;
-  //         }
-  //         this.allMyUploadHeartsListed.next([...this.mySongs]);
-  //         this.uiHelperService.allSongsLoadingStateChanged.next(false);
-  //       },
-  //       (error) => {
-  //         this.uiHelperService.allSongsLoadingStateChanged.next(false);
-  //       }
-  //     );
-  // }
-
   makeid(length) {
     var result = "";
     var characters = "abcdefghijklmnopqrstuvwxyz";
@@ -512,7 +463,7 @@ export class SongService {
     return result;
   }
 
-  nextPage(hearts: number, name: string) {
+  loadMoreDrops(hearts: number, name: string) {
     this.stopAllVideo();
     var item = this.item[Math.floor(Math.random() * this.item.length)];
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
@@ -615,7 +566,7 @@ export class SongService {
   }
 
   fetchMySavedSongs(uid: string) {
-    this.uiHelperService.loadingStateChanged.next(true);
+    this.uiHelperService.mySavedSongsLoadingStateChanged.next(true);
     this.mySavedSongsSub = this.db
       .collection("songs", (ref) =>
         ref.where("heartedBy", "array-contains", uid).orderBy("hearts", "desc")
@@ -637,12 +588,13 @@ export class SongService {
       )
       .subscribe(
         (songs: Song[]) => {
-          this.mySavedSongs = songs;
-          this.mySavedSongsListed.next([...this.mySavedSongs]);
-          this.uiHelperService.loadingStateChanged.next(false);
+          if (!this.heartOperation) {
+            this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
+          }
+          this.uiHelperService.mySavedSongsLoadingStateChanged.next(false);
         },
         (error) => {
-          this.uiHelperService.loadingStateChanged.next(false);
+          this.uiHelperService.mySavedSongsLoadingStateChanged.next(false);
         }
       );
   }

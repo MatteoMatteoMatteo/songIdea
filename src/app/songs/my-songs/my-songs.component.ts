@@ -1,3 +1,4 @@
+import { AuthService } from "./../../auth/auth-service";
 import { CommentService } from "./../../comments/comment.service";
 import { MatDialog } from "@angular/material/dialog";
 import { Subscription } from "rxjs";
@@ -16,20 +17,25 @@ import * as fromRoot from "../../app.reducer";
   styleUrls: ["./my-songs.component.scss"],
 })
 export class MySongsComponent implements OnInit, OnDestroy {
+  uid: string;
   smallPitchButton = "smallPitchButton";
   playPauseButton = "bigDropButton";
   spinnerStyling = "bigSpinner";
   playStopTitle = "DROP";
   songsLoading: boolean[] = [];
   dropStates: boolean[] = [];
-  isLoading: boolean;
+  isLoading = true;
   loadingSub: Subscription;
   mySavedSongsSubscription: Subscription;
   allCommentsSubscription: Subscription;
+  dropStatesSub: Subscription;
+  wasItHeartedSub: Subscription;
   mySongs: Song[] = [];
   mySavedSongs: Song[] = [];
   allComments: Comment[] = [];
   @Output() exit = new EventEmitter();
+
+  whichSongIsDropping: number;
 
   public YT: any;
   public video: any;
@@ -40,24 +46,54 @@ export class MySongsComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private songService: SongService,
     private uiHelperService: UiHelperService,
-    private store: Store<fromRoot.State>
+    private store: Store<fromRoot.State>,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
-      this.isLoading = isLoading;
+    this.uid = window.localStorage.getItem("uid");
+    this.whichSongIsDropping = this.songService.whichSongIsDropping;
+    if (this.whichSongIsDropping >= 0) {
+      this.dropStates[this.whichSongIsDropping] = true;
+    }
+
+    this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
+      this.dropStates = dropStates;
     });
+    this.loadingSub = this.uiHelperService.mySavedSongsLoadingStateChanged.subscribe(
+      (isLoading) => {
+        this.isLoading = isLoading;
+      }
+    );
     this.mySavedSongsSubscription = this.songService.mySavedSongsListed.subscribe((songs) => {
       this.mySavedSongs = songs;
       this.init();
     });
+
+    this.wasItHeartedSub = this.songService.wasItHeartedListed.subscribe((heartObject) => {
+      var thisSong = this.mySavedSongs[heartObject.songIndex];
+      thisSong.isHearted = heartObject.isHearted;
+      thisSong.hearts = heartObject.hearts;
+      thisSong.heartedBy = heartObject.heartedBy;
+    });
+
     this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
       this.allComments = comments;
     });
-    this.store.select(fromRoot.getUid).subscribe((uid) => {
-      this.songService.fetchMySavedSongs(uid);
-    });
+
+    this.songService.fetchMySavedSongs(this.uid);
     this.commentService.fetchAllComments();
+  }
+
+  onHeartSong(hearts: number, heartedBy: string[], songId: string, index: number) {
+    if (this.authService.isAuth)
+      this.songService.heartSong(hearts, heartedBy, songId, this.uid, index, true);
+    else
+      this.uiHelperService.showSnackbar(
+        "Login or Signup to save your favourite drops",
+        "ok",
+        10000
+      );
   }
 
   getMyComments(songId: string) {
@@ -117,8 +153,10 @@ export class MySongsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.mySavedSongsSubscription.unsubscribe();
-    this.loadingSub.unsubscribe();
-    this.allCommentsSubscription.unsubscribe();
+    if (this.mySavedSongsSubscription) this.mySavedSongsSubscription.unsubscribe();
+    if (this.loadingSub) this.loadingSub.unsubscribe();
+    if (this.allCommentsSubscription) this.allCommentsSubscription.unsubscribe();
+    if (this.wasItHeartedSub) this.wasItHeartedSub.unsubscribe();
+    if (this.dropStatesSub) this.dropStatesSub.unsubscribe();
   }
 }

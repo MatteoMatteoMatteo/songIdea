@@ -9,7 +9,5 @@ import { Component, OnInit } from "@angular/core";
 export class BrowseComponent implements OnInit {
   constructor(private songService: SongService) {}
 
-  ngOnInit(): void {
-    this.songService.stopAllVideo();
-  }
+  ngOnInit(): void {}
 }

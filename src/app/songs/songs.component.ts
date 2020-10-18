@@ -21,7 +21,5 @@ export class SongsComponent implements OnInit {
     tabGroup.selectedIndex = (tabGroup.selectedIndex - 1) % tabCount;
   }
 
-  ngOnInit(): void {
-    this.songService.stopAllVideo();
-  }
+  ngOnInit(): void {}
 }
