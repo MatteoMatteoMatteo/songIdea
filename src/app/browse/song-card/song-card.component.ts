@@ -1,3 +1,4 @@
+import { getAuthState } from "./../../app.reducer";
 import { AuthService } from "./../../auth/auth-service";
 import { UiHelperService } from "./../../uiHelper/uiHelper.service";
 import { SongService } from "./../../songs/song.service";
@@ -23,7 +24,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
   songsLoading: boolean[] = [];
   dropStates: boolean[] = [];
   hearted: boolean;
-  isLoading: boolean;
+  isLoading = true;
   uid: string;
   whichSongIsDropping: number;
   lastSongName: string;
@@ -38,6 +39,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
   getSongsAgainSub: Subscription;
   loadingSub: Subscription;
   wasItHeartedSub: Subscription;
+  uidIsSet = false;
 
   public YT: any;
   public video: any;
@@ -53,6 +55,9 @@ export class SongCardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    // this.store.select(fromRoot.getUid).subscribe((uid) => {
+    //   this.uid = uid;
+    // });
     this.whichSongIsDropping = this.songService.whichSongIsDropping;
     if (this.whichSongIsDropping >= 0) {
       this.dropStates[this.whichSongIsDropping] = true;
@@ -68,12 +73,9 @@ export class SongCardComponent implements OnInit, OnDestroy {
       this.allComments = comments;
     });
     this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
-      this.allSongs = this.songService.allSongs;
+      this.allSongs = songs;
       console.log(this.allSongs);
       this.init();
-    });
-    this.store.select(fromRoot.getUid).subscribe((uid) => {
-      this.uid = uid;
     });
     this.wasItHeartedSub = this.songService.wasItHeartedListed.subscribe((heartObject) => {
       var thisSong = this.allSongs[heartObject.songIndex];
@@ -81,10 +83,10 @@ export class SongCardComponent implements OnInit, OnDestroy {
       thisSong.hearts = heartObject.hearts;
       thisSong.heartedBy = heartObject.heartedBy;
     });
-    this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
+    this.loadingSub = this.uiHelperService.allSongsLoadingStateChanged.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
-    this.songService.fetchAllSongs(this.uid);
+    this.songService.fetchAllSongs(this.authService.uid);
     this.commentService.fetchAllComments();
   }
 
@@ -108,12 +110,10 @@ export class SongCardComponent implements OnInit, OnDestroy {
   }
 
   onNextPage(hearts: number, name: string) {
-    console.log(name);
     this.songService.nextPage(hearts, name);
   }
 
   onPrevPage(hearts: number) {
-    console.log(name);
     this.songService.prevPage(hearts);
   }
 
@@ -143,7 +143,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
   startVideo() {
     this.reframed = false;
     this.allSongs.forEach((song) => {
-      console.log(song.playerHolder);
       if (song.playerHolder == null) {
         song.playerHolder = new window["YT"].Player(song.videoId, {
           videoId: song.videoId,
@@ -166,7 +165,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
           },
         });
       }
-      console.log(song.playerHolder);
     });
   }
 

@@ -379,14 +379,15 @@ export class SongService {
     }
   }
 
-  checkIfHearted(uid: string) {
-    this.allSongs.forEach((el) => {
+  checkIfHearted(songs: Song[], uid: string) {
+    songs.forEach((el) => {
       if (el.heartedBy.includes(uid)) {
         el.isHearted = true;
       } else {
         el.isHearted = false;
       }
     });
+    this.allSongs = [...songs];
     return this.allSongs;
   }
 
@@ -396,6 +397,8 @@ export class SongService {
   }
 
   fetchAllSongs(uid: string) {
+    console.log(uid);
+    this.uiHelperService.allSongsLoadingStateChanged.next(true);
     var item = this.item[Math.floor(Math.random() * this.item.length)];
     this.uid = uid;
     this.destroyAudioPlayer.next(false);
@@ -421,10 +424,9 @@ export class SongService {
       .subscribe(
         (songs: Song[]) => {
           if (!this.heartOperation) {
-            this.allSongs = songs;
-            this.allSongsListed.next([...this.checkIfHearted(this.uid)]);
+            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
           }
-          // this.uiHelperService.allSongsLoadingStateChanged.next(false);
+          this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },
         (error) => {
           // this.uiHelperService.allSongsLoadingStateChanged.next(false);
@@ -530,8 +532,9 @@ export class SongService {
       )
       .subscribe(
         (songs: Song[]) => {
-          this.allSongs = songs;
-          this.allSongsListed.next([...this.checkIfHearted(this.uid)]);
+          if (!this.heartOperation) {
+            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
+          }
           this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },
         (error) => {
@@ -565,8 +568,7 @@ export class SongService {
       )
       .subscribe(
         (songs: Song[]) => {
-          this.allSongs = songs;
-          this.allSongsListed.next([...this.checkIfHearted(this.uid)]);
+          this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
           this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },
         (error) => {

@@ -12,6 +12,7 @@ import * as AUTH from "./auth.actions";
 @Injectable()
 export class AuthService {
   public isAuth: boolean;
+  public uid: string;
 
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -25,6 +26,7 @@ export class AuthService {
     this.angularFireAuth.authState.subscribe((user) => {
       if (user) {
         this.isAuth = true;
+        this.uid = user.uid;
         this.store.dispatch(new AUTH.SetAuthenticated());
         this.store.dispatch(new AUTH.Uid(user.uid));
         this.router.navigate(["/browse"]);

@@ -1,4 +1,4 @@
-<div class="allSongs">
+<div class="allSongs" *ngIf="!isLoading">
   <mat-card
     *ngFor="let song of allSongs; let i = index"
     [value]="song.songId"
@@ -80,7 +80,10 @@
   </mat-card>
 </div>
 
-<div style="display: flex; justify-content: center; margin-bottom: 230px; margin-top: 20px">
+<div
+  style="display: flex; justify-content: center; margin-bottom: 230px; margin-top: 20px"
+  *ngIf="!isLoading"
+>
   <!-- <button (click)="onPrevPage(allSongs[0].hearts)" class="morePlease">Previous Page</button> -->
   <button
     (click)="onNextPage(allSongs[allSongs.length - 1].hearts, allSongs[allSongs.length - 1].name)"
