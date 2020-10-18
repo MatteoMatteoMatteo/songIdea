@@ -122,7 +122,7 @@
 }
 
 .heart::after {
-  border-right: solid 3px white;
+  border-right: solid 3px $third-color;
   background-color: $heart-red;
   width: 20px;
   height: 20px;
@@ -134,7 +134,7 @@
 }
 
 .heart::before {
-  border-top: solid 3px white;
+  border-top: solid 3px $third-color;
   background-color: $heart-red;
   width: 20px;
   height: 20px;

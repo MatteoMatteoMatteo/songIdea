@@ -38,7 +38,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
 
   @Input() audioArray: Song[];
   @Input() whichAudioArray: string;
-  @Input() isLoading: boolean;
+  @Input() isLoading: boolean = true;
 
   constructor(private songService: SongService, private uiHelperService: UiHelperService) {}
 
@@ -99,5 +99,6 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     if (this.loadingSub) this.loadingSub.unsubscribe();
     if (this.destroyMeSub) this.destroyMeSub.unsubscribe();
     if (this.startCountdownSub) this.startCountdownSub.unsubscribe();
+    this.songService.stopAllVideo();
   }
 }

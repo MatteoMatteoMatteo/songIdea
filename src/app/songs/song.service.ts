@@ -111,20 +111,13 @@ export class SongService {
   stopAllVideo() {
     clearInterval(this.countdown);
     clearTimeout(this.newSongTimer);
-    this.countdown = 30;
     if (this.allSongs) {
-      this.allSongs.forEach((song) => {
-        song.playerHolder.pauseVideo();
-      });
       this.allSongs = [];
     }
     if (this.mySavedSongs) {
       this.mySavedSongs = [];
     }
     if (this.myUploadedSongs) {
-      this.myUploadedSongs.forEach((song) => {
-        song.playerHolder.pauseVideo();
-      });
       this.myUploadedSongs = [];
     }
   }
@@ -405,6 +398,7 @@ export class SongService {
       }
     });
     this.allSongs = [...songs];
+    this.uiHelperService.allSongsLoadingStateChanged.next(false);
     return this.allSongs;
   }
 
@@ -417,6 +411,7 @@ export class SongService {
       }
     });
     this.mySavedSongs = [...songs];
+    this.uiHelperService.mySavedSongsLoadingStateChanged.next(false);
     return this.mySavedSongs;
   }
 
@@ -452,12 +447,13 @@ export class SongService {
       .subscribe(
         (songs: Song[]) => {
           if (!this.heartOperation) {
-            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
+            setTimeout(() => {
+              this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
+            }, 2000);
           }
-          this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },
         (error) => {
-          // this.uiHelperService.allSongsLoadingStateChanged.next(false);
+          this.uiHelperService.allSongsLoadingStateChanged.next(true);
         }
       );
   }
@@ -497,12 +493,13 @@ export class SongService {
       .subscribe(
         (songs: Song[]) => {
           if (!this.heartOperation) {
-            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
+            setTimeout(() => {
+              this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
+            }, 2000);
           }
-          this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },
         (error) => {
-          this.uiHelperService.allSongsLoadingStateChanged.next(false);
+          this.uiHelperService.allSongsLoadingStateChanged.next(true);
         }
       );
   }
@@ -576,7 +573,7 @@ export class SongService {
           this.uiHelperService.allSongsLoadingStateChanged.next(false);
         },
         (error) => {
-          this.uiHelperService.allSongsLoadingStateChanged.next(false);
+          this.uiHelperService.allSongsLoadingStateChanged.next(true);
         }
       );
   }
@@ -605,11 +602,13 @@ export class SongService {
       .subscribe(
         (songs: Song[]) => {
           this.myUploadedSongs = songs;
-          this.mySongsListed.next([...this.myUploadedSongs]);
-          this.uiHelperService.loadingStateChanged.next(false);
+          setTimeout(() => {
+            this.mySongsListed.next([...this.myUploadedSongs]);
+            this.uiHelperService.loadingStateChanged.next(false);
+          }, 2000);
         },
         (error) => {
-          this.uiHelperService.loadingStateChanged.next(false);
+          this.uiHelperService.loadingStateChanged.next(true);
         }
       );
   }
@@ -641,12 +640,13 @@ export class SongService {
       .subscribe(
         (songs: Song[]) => {
           if (!this.heartOperation) {
-            this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
+            setTimeout(() => {
+              this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
+            }, 2000);
           }
-          this.uiHelperService.mySavedSongsLoadingStateChanged.next(false);
         },
         (error) => {
-          this.uiHelperService.mySavedSongsLoadingStateChanged.next(false);
+          this.uiHelperService.mySavedSongsLoadingStateChanged.next(true);
         }
       );
   }

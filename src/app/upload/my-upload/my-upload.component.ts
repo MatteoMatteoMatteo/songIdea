@@ -23,7 +23,7 @@ export class MyUploadComponent implements OnInit, OnDestroy {
   songsLoading: boolean[] = [];
   dropStates: boolean[] = [];
   uid: string;
-  isLoading: boolean;
+  isLoading = true;
   loadingSub: Subscription;
   mySongSubscription: Subscription;
   allCommentsSubscription: Subscription;
