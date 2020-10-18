@@ -88,9 +88,11 @@ export class MySongsComponent implements OnInit, OnDestroy {
   }
 
   onHeartSong(hearts: number, heartedBy: string[], songId: string, index: number) {
-    if (this.authService.isAuth)
+    if (this.authService.isAuth) {
+      this.mySavedSongs.splice(index, 1);
+
       this.songService.heartSong(hearts, heartedBy, songId, this.uid, index, true);
-    else
+    } else
       this.uiHelperService.showSnackbar(
         "Login or Signup to save your favourite drops",
         "ok",

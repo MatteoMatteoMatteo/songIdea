@@ -121,6 +121,5 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     if (this.loadingSubMy) this.loadingSubMy.unsubscribe();
     if (this.destroyMeSub) this.destroyMeSub.unsubscribe();
     if (this.startCountdownSub) this.startCountdownSub.unsubscribe();
-    this.songService.stopAllVideo();
   }
 }

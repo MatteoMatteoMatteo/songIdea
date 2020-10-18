@@ -60,7 +60,7 @@ export class SongService {
   private moreAllSongs: Song[] = [];
   private myUploadedSongs: Song[] = [];
   private mySavedSongs: Song[] = [];
-  public allSongs: Song[];
+  public allSongs: Song[] = [];
   wasItHearted: boolean;
   private songLoading: boolean[] = [];
   private dropState: boolean[] = [];
@@ -421,6 +421,16 @@ export class SongService {
     this.db.doc("hearts/" + heartDocId).delete();
   }
 
+  makeid(length) {
+    var result = "";
+    var characters = "abcdefghijklmnopqrstuvwxyz";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
   fetchAllSongs(uid: string) {
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
     var item = this.item[Math.floor(Math.random() * this.item.length)];
@@ -458,18 +468,7 @@ export class SongService {
       });
   }
 
-  makeid(length) {
-    var result = "";
-    var characters = "abcdefghijklmnopqrstuvwxyz";
-    var charactersLength = characters.length;
-    for (var i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-  }
-
   loadMoreDrops(hearts: number, name: string) {
-    this.stopAllVideo();
     var item = this.item[Math.floor(Math.random() * this.item.length)];
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.moreSongsSub = item
@@ -503,14 +502,50 @@ export class SongService {
       });
   }
 
+  fetchMySavedSongs(uid: string) {
+    this.uiHelperService.mySavedSongsLoadingStateChanged.next(true);
+    this.mySavedSongsSub = this.db
+      .collection("songs", (ref) =>
+        ref
+          .orderBy("name", "asc")
+          .where("heartedBy", "array-contains", uid)
+          .limit(this.howManySongsFetched)
+      )
+      .snapshotChanges()
+      .pipe(
+        map((docs) => {
+          if (docs.length == 0) {
+            this.endOfPage = true;
+          }
+          return docs.map((doc) => {
+            return {
+              songId: doc.payload.doc.id,
+              player: new Tone.Player({
+                url: "",
+                autostart: false,
+              }).connect(this.autoFilter),
+              ...(doc.payload.doc.data() as Song),
+            };
+          });
+        })
+      )
+      .subscribe((songs: Song[]) => {
+        if (!this.heartOperation) {
+          setTimeout(() => {
+            this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
+          }, 500);
+        }
+        this.endOfPage = false;
+      });
+  }
+
   nextPage(hearts: number, name: string, uid: string) {
-    this.stopAllVideo();
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.moreSongsSub = this.db
       .collection("songs", (ref) =>
         ref
-          .where("heartedBy", "array-contains", uid)
           .orderBy("name", "asc")
+          .where("heartedBy", "array-contains", uid)
           .startAfter(name)
           .limit(this.howManySongsFetched)
       )
@@ -542,6 +577,8 @@ export class SongService {
       .subscribe((songs: Song[]) => {
         if (!this.heartOperation && !this.endOfPage) {
           this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
+        } else if (!this.heartOperation && this.endOfPage) {
+          this.uiHelperService.allSongsLoadingStateChanged.next(false);
         } else {
           this.uiHelperService.allSongsLoadingStateChanged.next(false);
         }
@@ -550,11 +587,13 @@ export class SongService {
   }
 
   prevPage(hearts: number, name: string, uid: string) {
-    this.stopAllVideo();
-    this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.moreSongsSub = this.db
       .collection("songs", (ref) =>
-        ref.orderBy("name", "asc").where("heartedBy", "array-contains", uid).endBefore(name)
+        ref
+          .orderBy("name", "asc")
+          .where("heartedBy", "array-contains", uid)
+          .endBefore(name)
+          .limitToLast(this.howManySongsFetched)
       )
       .snapshotChanges()
       .pipe(
@@ -562,6 +601,8 @@ export class SongService {
           if (docArray.length == 0) {
             this.endOfPage = true;
             this.uiHelperService.showSnackbar("There is no previous page yet!", "got it", 2000);
+          } else {
+            this.uiHelperService.allSongsLoadingStateChanged.next(true);
           }
           return docArray.map((doc) => {
             return {
@@ -580,45 +621,10 @@ export class SongService {
       .subscribe((songs: Song[]) => {
         if (!this.heartOperation && !this.endOfPage) {
           this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
+        } else if (!this.heartOperation && this.endOfPage) {
+          this.uiHelperService.allSongsLoadingStateChanged.next(false);
         } else {
           this.uiHelperService.allSongsLoadingStateChanged.next(false);
-        }
-        this.endOfPage = false;
-      });
-  }
-
-  fetchMySavedSongs(uid: string) {
-    this.uiHelperService.mySavedSongsLoadingStateChanged.next(true);
-    this.mySavedSongsSub = this.db
-      .collection("songs", (ref) =>
-        ref
-          .orderBy("name", "asc")
-          .where("heartedBy", "array-contains", uid)
-          .limit(this.howManySongsFetched)
-      )
-      .snapshotChanges()
-      .pipe(
-        map((docs) => {
-          if (docs.length == 0) {
-            this.endOfPage = true;
-          }
-          return docs.map((doc) => {
-            return {
-              songId: doc.payload.doc.id,
-              player: new Tone.Player({
-                url: "",
-                autostart: false,
-              }).connect(this.autoFilter),
-              ...(doc.payload.doc.data() as Song),
-            };
-          });
-        })
-      )
-      .subscribe((songs: Song[]) => {
-        if (!this.heartOperation && !this.endOfPage) {
-          setTimeout(() => {
-            this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
-          }, 500);
         }
         this.endOfPage = false;
       });

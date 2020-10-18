@@ -71,7 +71,6 @@ export class AuthService {
     localStorage.removeItem("uid");
     this.isAuth = false;
     this.router.navigate(["/"]);
-    this.songService.stopAllVideo();
     this.songService.cancelSub();
     this.angularFireAuth.signOut();
   }
