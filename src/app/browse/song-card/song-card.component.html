@@ -52,7 +52,12 @@
           (click)="onHeartSong(song.hearts, song.heartedBy, song.songId, i)"
         ></div>
         <p *ngIf="song.isHearted == false" style="margin-top: 10px; cursor: default">Save Drop</p>
-        <p *ngIf="song.isHearted == true" style="margin-top: 10px; cursor: default">Saved</p></class
+        <p
+          *ngIf="song.isHearted == true"
+          style="margin-top: 10px; cursor: default; letter-spacing: 1.3px"
+        >
+          Saved
+        </p></class
       >
     </div>
     <h2 class="h2">

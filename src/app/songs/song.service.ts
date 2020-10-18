@@ -15,43 +15,43 @@ export class SongService {
     this.db.collection("songs", (ref) =>
       ref.orderBy("name", "desc").limit(this.howManySongsFetched)
     ),
-    this.db.collection("songs", (ref) =>
-      ref.orderBy("videId", "desc").limit(this.howManySongsFetched)
-    ),
-    this.db.collection("songs", (ref) =>
-      ref.orderBy("dropTime", "desc").limit(this.howManySongsFetched)
-    ),
-    this.db.collection("songs", (ref) =>
-      ref.orderBy("genre", "desc").limit(this.howManySongsFetched)
-    ),
-    this.db.collection("songs", (ref) =>
-      ref.orderBy("hearts", "desc").limit(this.howManySongsFetched)
-    ),
-    this.db.collection("songs", (ref) =>
-      ref.orderBy("url", "desc").limit(this.howManySongsFetched)
-    ),
-    this.db.collection("songs", (ref) =>
-      ref.orderBy("userId", "desc").limit(this.howManySongsFetched)
-    ),
-    this.db.collection("songs", (ref) =>
-      ref.orderBy("name", "asc").limit(this.howManySongsFetched)
-    ),
-    this.db.collection("songs", (ref) =>
-      ref.orderBy("videId", "asc").limit(this.howManySongsFetched)
-    ),
-    this.db.collection("songs", (ref) =>
-      ref.orderBy("dropTime", "asc").limit(this.howManySongsFetched)
-    ),
-    this.db.collection("songs", (ref) =>
-      ref.orderBy("genre", "asc").limit(this.howManySongsFetched)
-    ),
-    this.db.collection("songs", (ref) =>
-      ref.orderBy("hearts", "asc").limit(this.howManySongsFetched)
-    ),
-    this.db.collection("songs", (ref) => ref.orderBy("url", "asc").limit(this.howManySongsFetched)),
-    this.db.collection("songs", (ref) =>
-      ref.orderBy("userId", "asc").limit(this.howManySongsFetched)
-    ),
+    // this.db.collection("songs", (ref) =>
+    //   ref.orderBy("videId", "desc").limit(this.howManySongsFetched)
+    // ),
+    // this.db.collection("songs", (ref) =>
+    //   ref.orderBy("dropTime", "desc").limit(this.howManySongsFetched)
+    // ),
+    // this.db.collection("songs", (ref) =>
+    //   ref.orderBy("genre", "desc").limit(this.howManySongsFetched)
+    // ),
+    // this.db.collection("songs", (ref) =>
+    //   ref.orderBy("hearts", "desc").limit(this.howManySongsFetched)
+    // ),
+    // this.db.collection("songs", (ref) =>
+    //   ref.orderBy("url", "desc").limit(this.howManySongsFetched)
+    // ),
+    // this.db.collection("songs", (ref) =>
+    //   ref.orderBy("userId", "desc").limit(this.howManySongsFetched)
+    // ),
+    // this.db.collection("songs", (ref) =>
+    //   ref.orderBy("name", "asc").limit(this.howManySongsFetched)
+    // ),
+    // this.db.collection("songs", (ref) =>
+    //   ref.orderBy("videId", "asc").limit(this.howManySongsFetched)
+    // ),
+    // this.db.collection("songs", (ref) =>
+    //   ref.orderBy("dropTime", "asc").limit(this.howManySongsFetched)
+    // ),
+    // this.db.collection("songs", (ref) =>
+    //   ref.orderBy("genre", "asc").limit(this.howManySongsFetched)
+    // ),
+    // this.db.collection("songs", (ref) =>
+    //   ref.orderBy("hearts", "asc").limit(this.howManySongsFetched)
+    // ),
+    // this.db.collection("songs", (ref) => ref.orderBy("url", "asc").limit(this.howManySongsFetched)),
+    // this.db.collection("songs", (ref) =>
+    //   ref.orderBy("userId", "asc").limit(this.howManySongsFetched)
+    // ),
   ];
   heartOperation = false;
   uid: string;
