@@ -87,7 +87,12 @@
 >
   <button class="morePlease">Previous Page</button>
   <button
-    (click)="onNextPage(allSongs[allSongs.length - 1].hearts, allSongs[allSongs.length - 1].name)"
+    (click)="
+      onNextPage(
+        mySavedSongs[mySavedSongs.length - 1].hearts,
+        mySavedSongs[mySavedSongs.length - 1].name
+      )
+    "
     class="morePlease"
   >
     Next Page

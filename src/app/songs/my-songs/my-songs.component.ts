@@ -102,6 +102,14 @@ export class MySongsComponent implements OnInit, OnDestroy {
     return this.allComments.filter((comment) => comment.songId === songId);
   }
 
+  onNextPage(hearts: number, name: string) {
+    this.songService.nextPage(hearts, name);
+  }
+
+  onPrevPage(hearts: number) {
+    this.songService.prevPage(hearts);
+  }
+
   dropMySavedSong(id: number) {
     this.songService.dropMySavedSong(id);
   }

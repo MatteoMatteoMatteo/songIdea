@@ -15,43 +15,43 @@ export class SongService {
     this.db.collection("songs", (ref) =>
       ref.orderBy("name", "desc").limit(this.howManySongsFetched)
     ),
-    // this.db.collection("songs", (ref) =>
-    //   ref.orderBy("videId", "desc").limit(this.howManySongsFetched)
-    // ),
-    // this.db.collection("songs", (ref) =>
-    //   ref.orderBy("dropTime", "desc").limit(this.howManySongsFetched)
-    // ),
-    // this.db.collection("songs", (ref) =>
-    //   ref.orderBy("genre", "desc").limit(this.howManySongsFetched)
-    // ),
-    // this.db.collection("songs", (ref) =>
-    //   ref.orderBy("hearts", "desc").limit(this.howManySongsFetched)
-    // ),
-    // this.db.collection("songs", (ref) =>
-    //   ref.orderBy("url", "desc").limit(this.howManySongsFetched)
-    // ),
-    // this.db.collection("songs", (ref) =>
-    //   ref.orderBy("userId", "desc").limit(this.howManySongsFetched)
-    // ),
-    // this.db.collection("songs", (ref) =>
-    //   ref.orderBy("name", "asc").limit(this.howManySongsFetched)
-    // ),
-    // this.db.collection("songs", (ref) =>
-    //   ref.orderBy("videId", "asc").limit(this.howManySongsFetched)
-    // ),
-    // this.db.collection("songs", (ref) =>
-    //   ref.orderBy("dropTime", "asc").limit(this.howManySongsFetched)
-    // ),
-    // this.db.collection("songs", (ref) =>
-    //   ref.orderBy("genre", "asc").limit(this.howManySongsFetched)
-    // ),
-    // this.db.collection("songs", (ref) =>
-    //   ref.orderBy("hearts", "asc").limit(this.howManySongsFetched)
-    // ),
-    // this.db.collection("songs", (ref) => ref.orderBy("url", "asc").limit(this.howManySongsFetched)),
-    // this.db.collection("songs", (ref) =>
-    //   ref.orderBy("userId", "asc").limit(this.howManySongsFetched)
-    // ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("videId", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("dropTime", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("genre", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("hearts", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("url", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("userId", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("name", "asc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("videId", "asc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("dropTime", "asc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("genre", "asc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("hearts", "asc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) => ref.orderBy("url", "asc").limit(this.howManySongsFetched)),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("userId", "asc").limit(this.howManySongsFetched)
+    ),
   ];
   heartOperation = false;
   uid: string;
@@ -541,6 +541,46 @@ export class SongService {
       );
   }
 
+  nextPage(hearts: number, name: string) {
+    this.uiHelperService.allSongsLoadingStateChanged.next(true);
+    this.moreSongsSub = this.db
+      .collection("songs", (ref) =>
+        ref
+          .limitToLast(this.howManySongsFetched)
+          .orderBy("name", "asc")
+          .startAfter(name)
+          .limit(this.howManySongsFetched)
+      )
+      .snapshotChanges()
+      .pipe(
+        map((docArray) => {
+          return docArray.map((doc) => {
+            return {
+              songId: doc.payload.doc.id,
+              playerHolder: null,
+              player: new Tone.Player({
+                url: "",
+                autostart: false,
+                fadeOut: 0.3,
+              }).chain(this.reverb, this.autoFilter, Tone.Destination),
+              ...(doc.payload.doc.data() as Song),
+            };
+          });
+        })
+      )
+      .subscribe(
+        (songs: Song[]) => {
+          if (!this.heartOperation) {
+            this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
+          }
+          this.uiHelperService.allSongsLoadingStateChanged.next(false);
+        },
+        (error) => {
+          this.uiHelperService.allSongsLoadingStateChanged.next(false);
+        }
+      );
+  }
+
   fetchMyUploads(uid: string) {
     this.uiHelperService.loadingStateChanged.next(true);
     this.mySongsSub = this.db
@@ -578,7 +618,10 @@ export class SongService {
     this.uiHelperService.mySavedSongsLoadingStateChanged.next(true);
     this.mySavedSongsSub = this.db
       .collection("songs", (ref) =>
-        ref.where("heartedBy", "array-contains", uid).orderBy("hearts", "desc")
+        ref
+          .where("heartedBy", "array-contains", uid)
+          .orderBy("name", "asc")
+          .limit(this.howManySongsFetched)
       )
       .snapshotChanges()
       .pipe(
