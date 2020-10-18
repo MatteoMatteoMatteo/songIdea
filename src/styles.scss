@@ -167,6 +167,11 @@ span.mat-button-raised {
   font-family: "Raleway", serif;
 }
 
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: $second-color !important;
+}
+
 .all {
   background-image: url("../src/assets/image/bed.jpeg") !important;
   background-position: center center;

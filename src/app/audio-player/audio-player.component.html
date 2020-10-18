@@ -1,8 +1,5 @@
-<div class="pc">
-  <div
-    *ngIf="!isLoading && !destroyMe"
-    class="audioPlayer animate__delay-1s animate__animated animate__fadeIn"
-  >
+<div class="pc" *ngIf="!isLoading">
+  <div *ngIf="!isLoading" class="audioPlayer animate__animated animate__fadeIn">
     <div class="dragable">
       <div
         style="
@@ -82,7 +79,7 @@
   </div>
 </div>
 
-<div *ngIf="!isLoading && !destroyMe" class="phone">
+<div *ngIf="!isLoading" class="phone">
   <div class="audioPlayerPhone">
     <app-drop-button
       [buttonStyling]="phoneButtonStyling"

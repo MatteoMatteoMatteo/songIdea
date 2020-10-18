@@ -91,13 +91,15 @@
 >
   <!-- <button (click)="onPrevPage(allSongs[0].hearts)" class="morePlease">Previous Page</button> -->
   <button
-    (click)="onNextPage(allSongs[allSongs.length - 1].hearts, allSongs[allSongs.length - 1].name)"
+    (click)="
+      onLoadMoreDrops(allSongs[allSongs.length - 1].hearts, allSongs[allSongs.length - 1].name)
+    "
     class="morePlease"
   >
     More Drops!
   </button>
 </div>
-<mat-spinner diameter="80" color="accent" style="margin: auto" *ngIf="isLoading"></mat-spinner>
+<mat-spinner diameter="57" color="accent" style="margin: auto" *ngIf="isLoading"></mat-spinner>
 <app-footer></app-footer>
 
 <!-- <div style="display: flex">
@@ -109,8 +111,4 @@
   </button>
 </div> -->
 
-<app-audio-player
-  [audioArray]="allSongs"
-  [whichAudioArray]="whichAudioArray"
-  [isLoading]="isLoading"
-></app-audio-player>
+<app-audio-player [audioArray]="allSongs" [whichAudioArray]="whichAudioArray"></app-audio-player>

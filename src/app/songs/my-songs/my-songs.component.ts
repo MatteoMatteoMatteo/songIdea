@@ -103,11 +103,11 @@ export class MySongsComponent implements OnInit, OnDestroy {
   }
 
   onNextPage(hearts: number, name: string) {
-    this.songService.nextPage(hearts, name);
+    this.songService.nextPage(hearts, name, this.uid);
   }
 
-  onPrevPage(hearts: number) {
-    this.songService.prevPage(hearts);
+  onPrevPage(hearts: number, name: string) {
+    this.songService.prevPage(hearts, name, this.uid);
   }
 
   dropMySavedSong(id: number) {

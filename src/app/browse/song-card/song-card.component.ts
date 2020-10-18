@@ -112,12 +112,8 @@ export class SongCardComponent implements OnInit, OnDestroy {
     return this.allComments.filter((comment) => comment.songId === songId);
   }
 
-  onNextPage(hearts: number, name: string) {
+  onLoadMoreDrops(hearts: number, name: string) {
     this.songService.loadMoreDrops(hearts, name);
-  }
-
-  onPrevPage(hearts: number) {
-    this.songService.prevPage(hearts);
   }
 
   onAddComment(form: NgForm, songId: string, uid: string) {

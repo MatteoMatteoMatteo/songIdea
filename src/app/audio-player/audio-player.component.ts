@@ -28,7 +28,8 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   dropStatesSub: Subscription;
   allSongSubscription: Subscription;
   whichSongIsDroppingSub: Subscription;
-  loadingSub: Subscription;
+  loadingSubAll: Subscription;
+  loadingSubMy: Subscription;
   startCountdownSub: Subscription;
   destroyMeSub: Subscription;
   fxToggler = false;
@@ -36,9 +37,10 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   whichSongIsDropping = 0;
   countdown = 30;
 
-  @Input() audioArray: Song[];
+  @Input() audioArray: Song[] = [];
   @Input() whichAudioArray: string;
-  @Input() isLoading: boolean = true;
+
+  isLoading = true;
 
   constructor(private songService: SongService, private uiHelperService: UiHelperService) {}
 
@@ -63,10 +65,29 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.songsLoadingSub = this.songService.songLoadingListed.subscribe((songsLoading) => {
       this.songsLoading = songsLoading;
     });
+    this.loadingSubAll = this.uiHelperService.allSongsLoadingStateChanged.subscribe((isLoading) => {
+      if (isLoading == false) {
+        setTimeout(() => {
+          this.isLoading = isLoading;
+        }, 2000);
+      } else {
+        this.isLoading = isLoading;
+      }
+    });
+    this.loadingSubMy = this.uiHelperService.mySavedSongsLoadingStateChanged.subscribe(
+      (isLoading) => {
+        if (isLoading == false) {
+          setTimeout(() => {
+            this.isLoading = isLoading;
+          }, 2000);
+        } else {
+          this.isLoading = isLoading;
+        }
+      }
+    );
   }
 
   dropSong(id: number) {
-    console.log(this.whichAudioArray);
     if (this.whichAudioArray === "allSongs") {
       this.songService.dropSong(id);
     } else if (this.whichAudioArray === "mySavedSongs") {
@@ -96,7 +117,8 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     if (this.whichSongIsDroppingSub) this.whichSongIsDroppingSub.unsubscribe();
     if (this.dropStatesSub) this.dropStatesSub.unsubscribe();
     if (this.songsLoadingSub) this.songsLoadingSub.unsubscribe();
-    if (this.loadingSub) this.loadingSub.unsubscribe();
+    if (this.loadingSubAll) this.loadingSubAll.unsubscribe();
+    if (this.loadingSubMy) this.loadingSubMy.unsubscribe();
     if (this.destroyMeSub) this.destroyMeSub.unsubscribe();
     if (this.startCountdownSub) this.startCountdownSub.unsubscribe();
     this.songService.stopAllVideo();
