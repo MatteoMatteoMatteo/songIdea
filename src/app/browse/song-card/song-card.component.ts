@@ -58,6 +58,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     // this.store.select(fromRoot.getUid).subscribe((uid) => {
     //   this.uid = uid;
     // });
+    this.uid = localStorage.getItem("uid");
     this.whichSongIsDropping = this.songService.whichSongIsDropping;
     if (this.whichSongIsDropping >= 0) {
       this.dropStates[this.whichSongIsDropping] = true;
@@ -86,7 +87,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.loadingSub = this.uiHelperService.allSongsLoadingStateChanged.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
-    this.songService.fetchAllSongs(this.authService.uid);
+    this.songService.fetchAllSongs(this.uid);
     this.commentService.fetchAllComments();
   }
 

@@ -12,7 +12,7 @@ import * as AUTH from "./auth.actions";
 @Injectable()
 export class AuthService {
   public isAuth: boolean;
-  public uid: string;
+  public uid = "asdasd";
 
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -43,6 +43,7 @@ export class AuthService {
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
         let res = result;
+        localStorage.setItem("uid", result.user.uid);
         this.store.dispatch(new UI.StopLoading());
       })
       .catch((error) => {
@@ -57,6 +58,7 @@ export class AuthService {
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
         let res = result;
+        localStorage.setItem("uid", result.user.uid);
         this.store.dispatch(new UI.StopLoading());
       })
       .catch((error) => {
@@ -66,9 +68,10 @@ export class AuthService {
   }
 
   logout() {
+    localStorage.removeItem("uid");
     this.isAuth = false;
     this.router.navigate(["/"]);
-    this.songService.stopAll();
+    this.songService.stopAllVideo();
     this.songService.cancelSub();
     this.angularFireAuth.signOut();
   }

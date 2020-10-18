@@ -51,6 +51,8 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     });
     this.allSongSubscription = this.songService.allSongsListed.subscribe((songs) => {
       this.allSongs = songs;
+      this.countdown = 30;
+      this.whichSongIsDropping = 0;
     });
     this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
       this.dropStates = dropStates;

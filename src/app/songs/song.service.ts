@@ -111,20 +111,24 @@ export class SongService {
   stopAllVideo() {
     clearInterval(this.countdown);
     clearTimeout(this.newSongTimer);
+    this.countdown = 30;
     if (this.allSongs) {
       this.allSongs.forEach((song) => {
         song.playerHolder.pauseVideo();
       });
+      this.allSongs = [];
     }
     if (this.mySavedSongs) {
       this.mySavedSongs.forEach((song) => {
         song.playerHolder.pauseVideo();
       });
+      this.mySavedSongs = [];
     }
     if (this.myUploadedSongs) {
       this.myUploadedSongs.forEach((song) => {
         song.playerHolder.pauseVideo();
       });
+      this.myUploadedSongs = [];
     }
   }
 
@@ -397,7 +401,6 @@ export class SongService {
   }
 
   fetchAllSongs(uid: string) {
-    console.log(uid);
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
     var item = this.item[Math.floor(Math.random() * this.item.length)];
     this.uid = uid;
@@ -510,6 +513,7 @@ export class SongService {
   }
 
   nextPage(hearts: number, name: string) {
+    this.stopAllVideo();
     var item = this.item[Math.floor(Math.random() * this.item.length)];
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.moreSongsSub = item
