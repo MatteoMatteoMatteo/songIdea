@@ -2,7 +2,7 @@ import { UiHelperService } from "./../uiHelper/uiHelper.service";
 import { Song } from "./../songs/song.model";
 import { SongService } from "./../songs/song.service";
 import { Subscription } from "rxjs";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { MatSliderChange } from "@angular/material/slider";
 import { Player } from "tone";
 
@@ -33,9 +33,12 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   destroyMeSub: Subscription;
   fxToggler = false;
   destroyMe = false;
-  isLoading = true;
   whichSongIsDropping = 0;
   countdown = 30;
+
+  @Input() audioArray: Song[];
+  @Input() whichAudioArray: string;
+  @Input() isLoading: boolean;
 
   constructor(private songService: SongService, private uiHelperService: UiHelperService) {}
 
@@ -50,7 +53,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
       this.countdown = number;
     });
     this.allSongSubscription = this.songService.allSongsListed.subscribe((songs) => {
-      this.allSongs = songs;
+      // this.allSongs = songs;
       this.countdown = 30;
       this.whichSongIsDropping = 0;
     });
@@ -60,13 +63,15 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.songsLoadingSub = this.songService.songLoadingListed.subscribe((songsLoading) => {
       this.songsLoading = songsLoading;
     });
-    this.loadingSub = this.uiHelperService.allSongsLoadingStateChanged.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
   }
 
   dropSong(id: number) {
-    this.songService.dropSong(id);
+    console.log(this.whichAudioArray);
+    if (this.whichAudioArray === "allSongs") {
+      this.songService.dropSong(id);
+    } else if (this.whichAudioArray === "mySavedSongs") {
+      this.songService.dropMySavedSong(id);
+    }
   }
 
   fxToggle() {
@@ -74,10 +79,10 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   }
 
   onPitchChange(id: number, event: MatSliderChange) {
-    this.songService.changePitch(id, event.value);
+    this.songService.changePitch(id, event.value, this.whichAudioArray);
   }
   onVolumeChange(id: number, event: MatSliderChange) {
-    this.songService.changeVolume(id, event.value);
+    this.songService.changeVolume(id, event.value, this.whichAudioArray);
   }
   onFx1Change(id: number, event: MatSliderChange) {
     this.songService.changeFx1(id, event.value);
@@ -87,12 +92,12 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.allSongSubscription.unsubscribe();
-    this.whichSongIsDroppingSub.unsubscribe();
-    this.dropStatesSub.unsubscribe();
-    this.songsLoadingSub.unsubscribe();
-    this.loadingSub.unsubscribe();
-    this.destroyMeSub.unsubscribe();
-    this.startCountdownSub.unsubscribe();
+    if (this.allSongSubscription) this.allSongSubscription.unsubscribe();
+    if (this.whichSongIsDroppingSub) this.whichSongIsDroppingSub.unsubscribe();
+    if (this.dropStatesSub) this.dropStatesSub.unsubscribe();
+    if (this.songsLoadingSub) this.songsLoadingSub.unsubscribe();
+    if (this.loadingSub) this.loadingSub.unsubscribe();
+    if (this.destroyMeSub) this.destroyMeSub.unsubscribe();
+    if (this.startCountdownSub) this.startCountdownSub.unsubscribe();
   }
 }

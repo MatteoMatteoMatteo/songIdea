@@ -109,4 +109,9 @@
   </button>
 </div> -->
 
+<app-audio-player
+  [audioArray]="allSongs"
+  [whichAudioArray]="whichAudioArray"
+  [isLoading]="isLoading"
+></app-audio-player>
 <mat-spinner diameter="80" color="accent" style="margin: auto" *ngIf="isLoading"></mat-spinner>

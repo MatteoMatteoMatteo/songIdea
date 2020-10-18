@@ -100,4 +100,10 @@
 
 <mat-spinner diameter="80" color="accent" style="margin: auto" *ngIf="isLoading"></mat-spinner>
 
+<app-audio-player
+  [audioArray]="mySavedSongs"
+  [whichAudioArray]="whichAudioArray"
+  [isLoading]="isLoading"
+></app-audio-player>
+
 <app-footer></app-footer>

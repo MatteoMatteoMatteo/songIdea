@@ -29,7 +29,7 @@ export class AuthService {
         this.uid = user.uid;
         this.store.dispatch(new AUTH.SetAuthenticated());
         this.store.dispatch(new AUTH.Uid(user.uid));
-        this.router.navigate(["/songs"]);
+        this.router.navigate(["/browse"]);
       } else {
         this.store.dispatch(new AUTH.SetUnauthenticated());
         this.router.navigate(["/browse"]);

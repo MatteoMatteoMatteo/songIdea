@@ -35,6 +35,8 @@ export class MySongsComponent implements OnInit, OnDestroy {
   allComments: Comment[] = [];
   @Output() exit = new EventEmitter();
 
+  whichAudioArray: string = "mySavedSongs";
+
   whichSongIsDropping: number;
 
   public YT: any;

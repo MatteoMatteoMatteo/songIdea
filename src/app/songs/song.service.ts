@@ -301,11 +301,20 @@ export class SongService {
     }, 30000);
   }
 
-  changePitch(id: number, value: any) {
-    this.allSongs[id].playerHolder.setPlaybackRate(value);
+  changePitch(id: number, value: any, whichSongs: string) {
+    console.log(whichSongs);
+    if (whichSongs === "allSongs") {
+      this.allSongs[id].playerHolder.setPlaybackRate(value);
+    } else if (whichSongs === "mySavedSongs") {
+      this.mySavedSongs[id].playerHolder.setPlaybackRate(value);
+    }
   }
-  changeVolume(id: number, value: any) {
-    this.allSongs[id].playerHolder.setVolume(value);
+  changeVolume(id: number, value: any, whichSongs: string) {
+    if (whichSongs === "allSongs") {
+      this.allSongs[id].playerHolder.setVolume(value);
+    } else if (whichSongs === "mySavedSongs") {
+      this.mySavedSongs[id].playerHolder.setVolume(value);
+    }
   }
   changeFx1(id: number, value: any) {
     this.autoFilter.baseFrequency = value;

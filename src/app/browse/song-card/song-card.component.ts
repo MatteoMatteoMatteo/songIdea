@@ -41,6 +41,8 @@ export class SongCardComponent implements OnInit, OnDestroy {
   wasItHeartedSub: Subscription;
   uidIsSet = false;
 
+  whichAudioArray: string = "allSongs";
+
   public YT: any;
   public video: any;
   private player: any;
