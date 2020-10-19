@@ -14,6 +14,8 @@ export class UiHelperService {
   horizontalPosition: MatSnackBarHorizontalPosition = "center";
   verticalPosition: MatSnackBarVerticalPosition = "top";
 
+  uploadSongListed = new Subject<boolean>();
+
   constructor(private snackbar: MatSnackBar) {}
 
   showSnackbar(message: string, action: any, duration: any) {

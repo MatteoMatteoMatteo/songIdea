@@ -363,7 +363,7 @@ export class SongService {
       .add(song)
       .then(() => {
         setTimeout(() => {
-          this.uiHelperService.loadingStateChanged.next(false);
+          this.uiHelperService.uploadSongListed.next(false);
         }, 850);
       });
   }

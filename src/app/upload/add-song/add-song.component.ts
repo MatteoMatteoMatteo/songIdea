@@ -40,6 +40,7 @@ export class AddSongComponent implements OnInit {
     "Reggae",
     "Dance",
     "Rock",
+    "Funk",
     "Pop",
     "Synth Wave",
     "Alternative",
@@ -54,11 +55,9 @@ export class AddSongComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((state) => {
+    this.loadingSub = this.uiHelperService.uploadSongListed.subscribe((state) => {
       this.isLoading = state;
-      if (state) {
-        this.switchWhenUploaded;
-      }
+      if (state == false) this.switchWhenUploaded.emit();
     });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
       this.uid = uid;
