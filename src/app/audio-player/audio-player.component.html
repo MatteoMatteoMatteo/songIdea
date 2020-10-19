@@ -80,7 +80,7 @@
 </div>
 
 <div *ngIf="!isLoading" class="phone">
-  <div class="audioPlayerPhone">
+  <div class="audioPlayerPhone animate__animated animate__fadeIn">
     <app-drop-button
       [buttonStyling]="phoneButtonStyling"
       [spinnerStyling]="spinnerStyling"
@@ -89,6 +89,7 @@
       [songsLoading]="songsLoading[whichSongIsDropping]"
       (dropped)="dropSong(whichSongIsDropping)"
     ></app-drop-button>
+    <div class="countdownPhone">{{ countdown }}</div>
     <app-drop-button
       [buttonStyling]="phoneButtonStyling"
       [spinnerStyling]="spinnerStyling"

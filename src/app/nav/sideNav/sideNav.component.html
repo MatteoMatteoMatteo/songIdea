@@ -12,8 +12,7 @@
       ><span class="phoneNavText">Login</span></a
     >
     <a *ngIf="isAuth$ | async" mat-list-item routerLink="/songs" (click)="closeSidenav()"
-      ><mat-icon class="phoneIcon">headset</mat-icon
-      ><span class="phoneNavText">Saved Drops</span></a
+      ><mat-icon class="phoneIcon">headset</mat-icon><span class="phoneNavText">My Drops</span></a
     >
     <a *ngIf="isAuth$ | async" mat-list-item routerLink="/upload" (click)="closeSidenav()"
       ><mat-icon class="phoneIcon">headset</mat-icon><span class="phoneNavText">Upload</span></a

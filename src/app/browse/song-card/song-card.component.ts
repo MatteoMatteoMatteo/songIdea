@@ -61,10 +61,10 @@ export class SongCardComponent implements OnInit, OnDestroy {
     //   this.uid = uid;
     // });
     this.uid = localStorage.getItem("uid");
-    this.whichSongIsDropping = this.songService.whichSongIsDropping;
-    if (this.whichSongIsDropping >= 0) {
-      this.dropStates[this.whichSongIsDropping] = true;
-    }
+    // this.whichSongIsDropping = this.songService.whichSongIsDropping;
+    // if (this.whichSongIsDropping >= 0) {
+    //   this.dropStates[this.whichSongIsDropping] = true;
+    // }
     this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
       this.dropStates = dropStates;
     });
@@ -77,7 +77,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
     });
     this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
       this.allSongs = songs;
-      console.log(this.allSongs);
       this.init();
     });
     this.wasItHeartedSub = this.songService.wasItHeartedListed.subscribe((heartObject) => {
@@ -126,6 +125,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.dropStatesSub.unsubscribe();
     this.allSongsSubscription.unsubscribe();
     this.loadingSub.unsubscribe();
+    this.songService.hideAudioPlayer = true;
   }
 
   init() {

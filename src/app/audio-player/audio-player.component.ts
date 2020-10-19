@@ -31,6 +31,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   loadingSubAll: Subscription;
   loadingSubMy: Subscription;
   startCountdownSub: Subscription;
+  isAudioPlayerHiddenSub: Subscription;
   destroyMeSub: Subscription;
   fxToggler = false;
   destroyMe = false;
@@ -65,26 +66,9 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     this.songsLoadingSub = this.songService.songLoadingListed.subscribe((songsLoading) => {
       this.songsLoading = songsLoading;
     });
-    this.loadingSubAll = this.uiHelperService.allSongsLoadingStateChanged.subscribe((isLoading) => {
-      if (isLoading == false) {
-        setTimeout(() => {
-          this.isLoading = isLoading;
-        }, 2000);
-      } else {
-        this.isLoading = isLoading;
-      }
+    this.isAudioPlayerHiddenSub = this.songService.hideAudioPlayerListed.subscribe((isItHidden) => {
+      this.isLoading = isItHidden;
     });
-    this.loadingSubMy = this.uiHelperService.mySavedSongsLoadingStateChanged.subscribe(
-      (isLoading) => {
-        if (isLoading == false) {
-          setTimeout(() => {
-            this.isLoading = isLoading;
-          }, 2000);
-        } else {
-          this.isLoading = isLoading;
-        }
-      }
-    );
   }
 
   dropSong(id: number) {

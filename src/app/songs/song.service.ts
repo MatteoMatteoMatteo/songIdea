@@ -76,6 +76,10 @@ export class SongService {
   whichSongIsDroppingListed = new Subject<number>();
   destroyAudioPlayer = new Subject<boolean>();
   audioPlayingListed = new Subject<boolean>();
+
+  hideAudioPlayer = true;
+  hideAudioPlayerListed = new Subject<boolean>();
+
   private firebaseSub: Subscription;
   private moreSongsSub: Subscription;
   private mySongsSub: Subscription;
@@ -110,6 +114,12 @@ export class SongService {
     this.destroyAudioPlayer.next(true);
   }
 
+  clearAllTimers() {
+    clearInterval(this.countdown);
+    clearTimeout(this.newSongTimer);
+    this.countdown = 30;
+  }
+
   stopAllVideo() {
     clearInterval(this.countdown);
     clearTimeout(this.newSongTimer);
@@ -126,6 +136,10 @@ export class SongService {
 
   dropSong(id: number) {
     if (id >= 0 && id < this.allSongs.length) {
+      if (this.hideAudioPlayer) {
+        this.hideAudioPlayerListed.next(false);
+        this.hideAudioPlayer = false;
+      }
       clearInterval(this.countdown);
       clearTimeout(this.newSongTimer);
       this.whichSongIsDropping = id;
@@ -160,6 +174,10 @@ export class SongService {
 
   dropMySavedSong(id: number) {
     if (id >= 0 && id < this.mySavedSongs.length) {
+      if (this.hideAudioPlayer) {
+        this.hideAudioPlayerListed.next(false);
+        this.hideAudioPlayer = false;
+      }
       clearInterval(this.countdown);
       clearTimeout(this.newSongTimer);
       this.whichSongIsDropping = id;
@@ -432,6 +450,8 @@ export class SongService {
   }
 
   fetchAllSongs(uid: string) {
+    this.hideAudioPlayerListed.next(true);
+    this.clearAllTimers();
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
     var item = this.item[Math.floor(Math.random() * this.item.length)];
     this.uid = uid;
@@ -469,6 +489,7 @@ export class SongService {
   }
 
   loadMoreDrops(hearts: number, name: string) {
+    this.clearAllTimers();
     var item = this.item[Math.floor(Math.random() * this.item.length)];
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.moreSongsSub = item
@@ -503,6 +524,8 @@ export class SongService {
   }
 
   fetchMySavedSongs(uid: string) {
+    this.hideAudioPlayerListed.next(true);
+    this.clearAllTimers();
     this.uiHelperService.mySavedSongsLoadingStateChanged.next(true);
     this.mySavedSongsSub = this.db
       .collection("songs", (ref) =>
@@ -540,6 +563,7 @@ export class SongService {
   }
 
   nextPage(hearts: number, name: string, uid: string) {
+    this.clearAllTimers();
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.moreSongsSub = this.db
       .collection("songs", (ref) =>
@@ -555,7 +579,7 @@ export class SongService {
           if (docArray.length == 0) {
             this.endOfPage = true;
             this.uiHelperService.showSnackbar(
-              "You listened to all your saved songs",
+              "You have listened to all your saved songs!",
               "got it",
               2000
             );
@@ -587,6 +611,7 @@ export class SongService {
   }
 
   prevPage(hearts: number, name: string, uid: string) {
+    this.clearAllTimers();
     this.moreSongsSub = this.db
       .collection("songs", (ref) =>
         ref
@@ -600,7 +625,11 @@ export class SongService {
         map((docArray) => {
           if (docArray.length == 0) {
             this.endOfPage = true;
-            this.uiHelperService.showSnackbar("There is no previous page yet!", "got it", 2000);
+            this.uiHelperService.showSnackbar(
+              "You must see the next page before you can go back!",
+              "got it",
+              2000
+            );
           } else {
             this.uiHelperService.allSongsLoadingStateChanged.next(true);
           }
@@ -631,6 +660,7 @@ export class SongService {
   }
 
   fetchMyUploads(uid: string) {
+    this.clearAllTimers();
     this.uiHelperService.loadingStateChanged.next(true);
     this.mySongsSub = this.db
       .collection("songs", (ref) => ref.orderBy("hearts", "desc").where("userId", "==", uid))
@@ -655,14 +685,11 @@ export class SongService {
         })
       )
       .subscribe((songs: Song[]) => {
-        if (!this.endOfPage) {
-          setTimeout(() => {
-            this.myUploadedSongs = songs;
-            this.mySongsListed.next([...this.myUploadedSongs]);
-            this.uiHelperService.loadingStateChanged.next(false);
-          }, 500);
-        }
-        this.endOfPage = false;
+        setTimeout(() => {
+          this.myUploadedSongs = songs;
+          this.mySongsListed.next([...this.myUploadedSongs]);
+          this.uiHelperService.loadingStateChanged.next(false);
+        }, 500);
       });
   }
 
