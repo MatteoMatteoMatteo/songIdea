@@ -54,6 +54,7 @@ import { ScrollComponent } from "./infiniteScroll/scroll.component";
 import { DropButtonComponent } from "./drop-button/drop-button.component";
 import { AudioPlayerComponent } from "./audio-player/audio-player.component";
 import { FooterComponent } from './footer/footer.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { FooterComponent } from './footer/footer.component';
     DropButtonComponent,
     AudioPlayerComponent,
     FooterComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

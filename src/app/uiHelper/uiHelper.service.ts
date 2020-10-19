@@ -15,6 +15,7 @@ export class UiHelperService {
   verticalPosition: MatSnackBarVerticalPosition = "top";
 
   uploadSongListed = new Subject<boolean>();
+  sendAuthDataListed = new Subject<boolean>();
 
   constructor(private snackbar: MatSnackBar) {}
 

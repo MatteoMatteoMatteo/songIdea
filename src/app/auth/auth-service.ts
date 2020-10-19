@@ -8,11 +8,14 @@ import { Store } from "@ngrx/store";
 import * as fromRoot from "./../app.reducer";
 import * as UI from "./../uiHelper/ui.actions";
 import * as AUTH from "./auth.actions";
+import { Subject } from "rxjs";
 
 @Injectable()
 export class AuthService {
   public isAuth: boolean;
-  public uid = "asdasd";
+  public email: string;
+
+  authDataListed: Subject<string>;
 
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -26,7 +29,7 @@ export class AuthService {
     this.angularFireAuth.authState.subscribe((user) => {
       if (user) {
         this.isAuth = true;
-        this.uid = user.uid;
+        localStorage.setItem("email", user.email);
         this.store.dispatch(new AUTH.SetAuthenticated());
         this.store.dispatch(new AUTH.Uid(user.uid));
         this.router.navigate(["/browse"]);
@@ -73,5 +76,9 @@ export class AuthService {
     this.router.navigate(["/"]);
     this.songService.cancelSub();
     this.angularFireAuth.signOut();
+  }
+
+  deleteAccount() {
+    console.log(this.angularFireAuth.authState);
   }
 }

@@ -1,3 +1,4 @@
+import { ProfileComponent } from "./profile/profile.component";
 import { UploadComponent } from "./upload/upload.component";
 import { BrowseComponent } from "./browse/browse.component";
 import { AuthGuard } from "./auth/auth.guard";
@@ -13,7 +14,7 @@ const routes: Routes = [
   { path: "signup", component: SignupComponent },
   { path: "login", component: LoginComponent },
   {
-    path: "songs",
+    path: "mySongs",
     component: SongsComponent,
     data: { animation: "2" },
   },
@@ -25,6 +26,12 @@ const routes: Routes = [
   {
     path: "upload",
     component: UploadComponent,
+    data: { animation: "2" },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: "profile",
+    component: ProfileComponent,
     data: { animation: "2" },
     canActivate: [AuthGuard],
   },

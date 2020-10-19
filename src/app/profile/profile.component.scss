@@ -1,0 +1,21 @@
+@import "../../utilities/variables.scss";
+@import "../browse/song-card/song-card.component.scss";
+@import "../upload/my-upload/my-upload.component.scss";
+
+.profileHolder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+.profile {
+  border-radius: 11px;
+  margin-top: 20px;
+  width: 350px;
+  min-width: 300px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 20px;
+  background: $second-color;
+}
