@@ -1,3 +1,5 @@
+import { CancelComponent } from "./../uiHelper/cancel/cancel.component";
+import { MatDialog } from "@angular/material/dialog";
 import { UiHelperService } from "./../uiHelper/uiHelper.service";
 import { AuthService } from "./../auth/auth-service";
 import { Component, OnInit, OnDestroy } from "@angular/core";
@@ -13,7 +15,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   email: string;
   isLoading = true;
   loadingSub: Subscription;
-  constructor(private authService: AuthService, private uiHelperService: UiHelperService) {}
+  constructor(
+    private dialog: MatDialog,
+    private authService: AuthService,
+    private uiHelperService: UiHelperService
+  ) {}
 
   ngOnInit(): void {
     this.email = localStorage.getItem("email");
@@ -24,7 +30,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   onDeleteAccount() {
-    this.authService.deleteAccount();
+    const dialogRef = this.dialog.open(CancelComponent, {
+      data: {
+        name: name,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // this.exit.emit();
+        this.authService.deleteAccount();
+      }
+    });
   }
 
   ngOnDestroy() {

@@ -32,7 +32,7 @@ const routes: Routes = [
   {
     path: "profile",
     component: ProfileComponent,
-    data: { animation: "2" },
+    data: { animation: "1" },
     canActivate: [AuthGuard],
   },
 ];

@@ -9,7 +9,9 @@ import * as fromRoot from "./../app.reducer";
 import * as UI from "./../uiHelper/ui.actions";
 import * as AUTH from "./auth.actions";
 import { Subject } from "rxjs";
-import { deleteUser } from "../../utilities/searchFunction";
+
+declare function require(name: string);
+var firebase = require("firebase");
 
 @Injectable()
 export class AuthService {
@@ -77,6 +79,15 @@ export class AuthService {
   }
 
   deleteAccount() {
-    deleteUser();
+    var user = firebase.auth().currentUser;
+    user
+      .delete()
+      .then(() => {
+        this.logout();
+        this.uiHelperService.showSnackbar("Account was successfully deleted!", "oh no", 2000);
+      })
+      .catch(function (error) {
+        alert(error);
+      });
   }
 }
