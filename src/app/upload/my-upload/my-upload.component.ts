@@ -25,15 +25,19 @@ export class MyUploadComponent implements OnInit, OnDestroy {
   uid: string;
   isLoading = true;
   loadingSub: Subscription;
-  mySongSubscription: Subscription;
+  myUploadedSongsSub: Subscription;
   allCommentsSubscription: Subscription;
   allMyHeartsSubscription: Subscription;
-  mySongs: Song[] = [];
+  dropStatesSub: Subscription;
+  myUploadedSongs: Song[] = [];
   allComments: Comment[] = [];
   @Output() exit = new EventEmitter();
 
+  whichAudioArray: string = "myUploadedSongs";
+
   public YT: any;
   public video: any;
+  private player: any;
   public reframed: Boolean = false;
 
   constructor(
@@ -48,15 +52,16 @@ export class MyUploadComponent implements OnInit, OnDestroy {
     this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
-    this.mySongSubscription = this.songService.mySongsListed.subscribe((songs) => {
-      this.mySongs = songs;
-    });
-    this.allMyHeartsSubscription = this.songService.allMyUploadHeartsListed.subscribe((songs) => {
-      this.mySongs = songs;
+    this.myUploadedSongsSub = this.songService.myUploadedSongsListed.subscribe((songs) => {
+      this.myUploadedSongs = songs;
+      this.init();
     });
 
     this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
       this.allComments = comments;
+    });
+    this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
+      this.dropStates = dropStates;
     });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
       this.uid = uid;
@@ -65,7 +70,7 @@ export class MyUploadComponent implements OnInit, OnDestroy {
     this.commentService.fetchAllComments();
   }
 
-  dropMySong(id: number) {
+  dropSong(id: number) {
     this.songService.dropMyUploadedSong(id);
   }
 
@@ -87,8 +92,62 @@ export class MyUploadComponent implements OnInit, OnDestroy {
     });
   }
 
+  init() {
+    if (window["YT"]) {
+      window["YT"] = null;
+    }
+    var tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    window["onYouTubeIframeAPIReady"] = () => this.startVideo();
+  }
+
+  startVideo() {
+    this.reframed = false;
+    this.myUploadedSongs.forEach((song) => {
+      if (song.playerHolder == null) {
+        song.playerHolder = new window["YT"].Player(song.videoId, {
+          videoId: song.videoId,
+          width: 300,
+          start: 100,
+          height: 200,
+          playerVars: {
+            autoplay: 0,
+            modestbranding: 0,
+            controls: 0,
+            disablekb: 1,
+            rel: 0,
+            ecver: 2,
+            fs: 0,
+            playsinline: 0,
+          },
+          events: {
+            onStateChange: this.onPlayerStateChange.bind(this),
+            onReady: this.onPlayerReady.bind(this),
+          },
+        });
+      }
+    });
+  }
+
+  onPlayerStateChange(event) {
+    if (event.target.getPlayerState() == 1 && event.target.isMuted()) {
+      event.target.pauseVideo();
+    }
+  }
+
+  cleanTime() {
+    return Math.round(this.player.getCurrentTime());
+  }
+
+  onPlayerReady(event) {
+    event.target.mute();
+    event.target.seekTo(50);
+  }
+
   ngOnDestroy() {
-    this.mySongSubscription.unsubscribe();
+    this.myUploadedSongsSub.unsubscribe();
     this.loadingSub.unsubscribe();
     this.allCommentsSubscription.unsubscribe();
   }
