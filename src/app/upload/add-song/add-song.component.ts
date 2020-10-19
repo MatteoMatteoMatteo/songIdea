@@ -1,3 +1,5 @@
+import { Subscription } from "rxjs";
+import { UiHelperService } from "./../../uiHelper/uiHelper.service";
 import { SongService } from "./../../songs/song.service";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { NgForm } from "@angular/forms";
@@ -20,6 +22,7 @@ export class AddSongComponent implements OnInit {
   file: any;
   filePath: any;
   uid: string;
+  loadingSub: Subscription;
   genres: string[] = [
     "House",
     "Electro",
@@ -46,10 +49,17 @@ export class AddSongComponent implements OnInit {
   constructor(
     private songService: SongService,
     private storage: AngularFireStorage,
-    private store: Store<fromRoot.State>
+    private store: Store<fromRoot.State>,
+    private uiHelperService: UiHelperService
   ) {}
 
   ngOnInit() {
+    this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((state) => {
+      this.isLoading = state;
+      if (state) {
+        this.switchWhenUploaded;
+      }
+    });
     this.store.select(fromRoot.getUid).subscribe((uid) => {
       this.uid = uid;
     });

@@ -34,15 +34,8 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-spinner
-          *ngIf="isLoading"
-          [ngStyle]="{ marginTop: '20px' }"
-          color="accent"
-          diameter="68"
-        ></mat-spinner>
-
         <mat-label [ngStyle]="{ marginBottom: '20px', marginTop: '24px' }" *ngIf="isLoading"
-          >posting...</mat-label
+          >Uploading..</mat-label
         >
         <mat-card-actions>
           <button mat-button class="uploadButton" type="submit" [disabled]="f.invalid || isLoading">

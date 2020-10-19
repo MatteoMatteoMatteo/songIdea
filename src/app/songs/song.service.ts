@@ -1,3 +1,4 @@
+import { UploadComponent } from "./../upload/upload.component";
 import { Heart } from "./heart.model";
 import { UiHelperService } from "./../uiHelper/uiHelper.service";
 import { Subscription } from "rxjs";
@@ -357,7 +358,14 @@ export class SongService {
   }
 
   songToDatabase(song: Song) {
-    this.db.collection("songs").add(song);
+    this.db
+      .collection("songs")
+      .add(song)
+      .then(() => {
+        setTimeout(() => {
+          this.uiHelperService.loadingStateChanged.next(false);
+        }, 850);
+      });
   }
 
   heartSong(
@@ -478,14 +486,19 @@ export class SongService {
           });
         })
       )
-      .subscribe((songs: Song[]) => {
-        if (!this.heartOperation) {
-          setTimeout(() => {
-            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
-          }, 500);
-          this.endOfPage = false;
+      .subscribe(
+        (songs: Song[]) => {
+          if (!this.heartOperation) {
+            setTimeout(() => {
+              this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
+            }, 500);
+            this.endOfPage = false;
+          }
+        },
+        (error) => {
+          console.log(error);
         }
-      });
+      );
   }
 
   loadMoreDrops(hearts: number, name: string) {

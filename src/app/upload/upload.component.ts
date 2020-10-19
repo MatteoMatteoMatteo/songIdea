@@ -13,7 +13,7 @@ export class UploadComponent implements OnInit {
 
   constructor(private songService: SongService) {}
 
-  onSwitchTab() {
+  public onSwitchTab() {
     const tabGroup = this.switchTab;
     if (!tabGroup || !(tabGroup instanceof MatTabGroup)) return;
 
