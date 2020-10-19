@@ -1,0 +1,35 @@
+@import "../../utilities/variables.scss";
+
+.elementHolder {
+  background-color: black;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.element {
+  padding: 15px 25px 15px 25px;
+  font-size: 1rem;
+  color: white;
+  font-weight: 300;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+}
+
+.elementActive {
+  padding: 15px 25px 15px 25px;
+  font-size: 1rem;
+  color: white;
+  font-weight: 300;
+  cursor: pointer;
+  border-bottom: 3px solid white;
+}
+.element:hover {
+  background-color: $first-color;
+}
+
+.elementActive:hover {
+  background-color: $first-color;
+}

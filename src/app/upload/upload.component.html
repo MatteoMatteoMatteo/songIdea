@@ -1,12 +1,8 @@
-<mat-tab-group
-  #switchTab
-  color="accent"
-  mat-align-tabs="center"
-  *ngIf="!songOn"
-  animationDuration="660ms"
->
-  <mat-tab class="label" label="My Uploads"><app-my-upload></app-my-upload> </mat-tab>
-  <mat-tab class="label" label="Upload Song"
-    ><app-add-song (switchWhenUploaded)="onSwitchTab()" (upload)="newUpload()"></app-add-song
-  ></mat-tab>
-</mat-tab-group>
+<div *ngIf="!songOn" class="elementHolder">
+  <div [ngClass]="isActive ? 'element' : 'elementActive'" (click)="handleSwitch(true)">Upload</div>
+  <div [ngClass]="!isActive ? 'element' : 'elementActive'" (click)="handleSwitch(false)">
+    My Uploads
+  </div>
+</div>
+<app-add-song *ngIf="!isActive" (switchWhenUploaded)="onSwitchTab()"></app-add-song>
+<app-my-upload *ngIf="isActive"></app-my-upload>

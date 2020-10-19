@@ -10,15 +10,20 @@ import { MatTabGroup } from "@angular/material/tabs";
 export class UploadComponent implements OnInit {
   @ViewChild("switchTab", { static: false }) switchTab: MatTabGroup;
   songOn = false;
+  isActive = false;
 
   constructor(private songService: SongService) {}
 
   public onSwitchTab() {
-    const tabGroup = this.switchTab;
-    if (!tabGroup || !(tabGroup instanceof MatTabGroup)) return;
+    this.isActive = true;
+  }
 
-    const tabCount = tabGroup._tabs.length;
-    tabGroup.selectedIndex = (tabGroup.selectedIndex - 1) % tabCount;
+  handleSwitch(value: boolean) {
+    if (value) {
+      this.isActive = false;
+    } else {
+      this.isActive = true;
+    }
   }
 
   ngOnInit(): void {}
