@@ -11,7 +11,8 @@ import * as Tone from "tone";
 
 @Injectable()
 export class SongService {
-  howManySongsFetched: number = 3;
+  howManySongsFetched: number = 6;
+  howManyUploadsFetched: number = 8;
   item = [
     this.db.collection("songs", (ref) =>
       ref.orderBy("name", "desc").limit(this.howManySongsFetched)
@@ -453,6 +454,7 @@ export class SongService {
         },
         (error) => {
           console.log(error);
+          this.uiHelperService.allSongsLoadingStateChanged.next(true);
         }
       );
   }
@@ -550,8 +552,8 @@ export class SongService {
             this.endOfPage = true;
             this.uiHelperService.showSnackbar(
               "You have listened to all your saved songs!",
-              "got it",
-              2000
+              "ok",
+              3000
             );
           }
           return docArray.map((doc) => {
@@ -595,11 +597,7 @@ export class SongService {
         map((docArray) => {
           if (docArray.length == 0) {
             this.endOfPage = true;
-            this.uiHelperService.showSnackbar(
-              "You must see the next page before you can go back!",
-              "got it",
-              2000
-            );
+            this.uiHelperService.showSnackbar("There is no previous page yet!", "ok", 3000);
           } else {
             this.uiHelperService.allSongsLoadingStateChanged.next(true);
           }
@@ -634,7 +632,9 @@ export class SongService {
     this.clearAllTimers();
     this.uiHelperService.loadingStateChanged.next(true);
     this.mySongsSub = this.db
-      .collection("songs", (ref) => ref.orderBy("name", "desc").where("userId", "==", uid).limit(9))
+      .collection("songs", (ref) =>
+        ref.orderBy("name", "desc").where("userId", "==", uid).limit(this.howManyUploadsFetched)
+      )
       .snapshotChanges()
       .pipe(
         map((docs) => {
@@ -666,17 +666,20 @@ export class SongService {
 
   myUploadsNext(uid: string, name: string) {
     this.clearAllTimers();
-    this.uiHelperService.loadingStateChanged.next(true);
     this.mySongsSub = this.db
       .collection("songs", (ref) =>
-        ref.orderBy("name", "desc").where("userId", "==", uid).startAfter(name).limit(9)
+        ref
+          .orderBy("name", "desc")
+          .where("userId", "==", uid)
+          .startAfter(name)
+          .limit(this.howManyUploadsFetched)
       )
       .snapshotChanges()
       .pipe(
         map((docs) => {
           if (docs.length == 0) {
             this.endOfPage = true;
-            this.uiHelperService.showSnackbar("That is all your uploaded drops!", "got it", 2000);
+            this.uiHelperService.showSnackbar("That's all your uploads!", "ok", 3000);
           }
           return docs.map((doc) => {
             return {
@@ -694,11 +697,11 @@ export class SongService {
       )
       .subscribe((songs: Song[]) => {
         if (!this.endOfPage) {
-          setTimeout(() => {
-            this.myUploadedSongs = songs;
-            this.myUploadedSongsListed.next([...this.myUploadedSongs]);
-            this.uiHelperService.loadingStateChanged.next(false);
-          }, 500);
+          this.myUploadedSongs = songs;
+          this.myUploadedSongsListed.next([...this.myUploadedSongs]);
+          this.uiHelperService.loadingStateChanged.next(false);
+        } else if (this.endOfPage) {
+          this.uiHelperService.loadingStateChanged.next(false);
         } else {
           this.uiHelperService.loadingStateChanged.next(false);
         }
@@ -708,21 +711,20 @@ export class SongService {
 
   myUploadsPrevious(uid: string, name: string) {
     this.clearAllTimers();
-    this.uiHelperService.loadingStateChanged.next(true);
     this.mySongsSub = this.db
       .collection("songs", (ref) =>
-        ref.orderBy("name", "desc").where("userId", "==", uid).endBefore(name).limitToLast(9)
+        ref
+          .orderBy("name", "desc")
+          .where("userId", "==", uid)
+          .endBefore(name)
+          .limitToLast(this.howManyUploadsFetched)
       )
       .snapshotChanges()
       .pipe(
         map((docs) => {
           if (docs.length == 0) {
             this.endOfPage = true;
-            this.uiHelperService.showSnackbar(
-              "You must see the next page before you can go back!",
-              "got it",
-              2000
-            );
+            this.uiHelperService.showSnackbar("There is no previous page yet!", "ok", 3000);
           }
           return docs.map((doc) => {
             return {
@@ -740,11 +742,11 @@ export class SongService {
       )
       .subscribe((songs: Song[]) => {
         if (!this.endOfPage) {
-          setTimeout(() => {
-            this.myUploadedSongs = songs;
-            this.myUploadedSongsListed.next([...this.myUploadedSongs]);
-            this.uiHelperService.loadingStateChanged.next(false);
-          }, 500);
+          this.myUploadedSongs = songs;
+          this.myUploadedSongsListed.next([...this.myUploadedSongs]);
+          this.uiHelperService.loadingStateChanged.next(false);
+        } else if (this.endOfPage) {
+          this.uiHelperService.loadingStateChanged.next(false);
         } else {
           this.uiHelperService.loadingStateChanged.next(false);
         }

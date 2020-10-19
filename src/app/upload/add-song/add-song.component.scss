@@ -1,6 +1,24 @@
 @import "../../../styles.scss";
 @import "../../browse/song-card/song-card.component.scss";
 
+.allSongsNew {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.songCardNew {
+  padding: 10px;
+  min-width: 300px;
+  width: 305px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 32px;
+}
+
 .addSong {
   display: flex;
   flex-direction: column;
