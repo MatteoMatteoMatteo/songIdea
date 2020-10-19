@@ -9,12 +9,12 @@ import * as fromRoot from "./../app.reducer";
 import * as UI from "./../uiHelper/ui.actions";
 import * as AUTH from "./auth.actions";
 import { Subject } from "rxjs";
+import { deleteUser } from "../../utilities/searchFunction";
 
 @Injectable()
 export class AuthService {
   public isAuth: boolean;
   public email: string;
-
   authDataListed: Subject<string>;
 
   constructor(
@@ -45,7 +45,6 @@ export class AuthService {
     this.angularFireAuth
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
-        let res = result;
         localStorage.setItem("uid", result.user.uid);
         this.store.dispatch(new UI.StopLoading());
       })
@@ -60,7 +59,6 @@ export class AuthService {
     this.angularFireAuth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((result) => {
-        let res = result;
         localStorage.setItem("uid", result.user.uid);
         this.store.dispatch(new UI.StopLoading());
       })
@@ -79,6 +77,6 @@ export class AuthService {
   }
 
   deleteAccount() {
-    console.log(this.angularFireAuth.authState);
+    deleteUser();
   }
 }

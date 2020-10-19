@@ -1,5 +1,4 @@
-const functions = require("firebase-functions");
-const admin = require("firebase-admin");
+var firebase = require("firebase");
 
 export function searchArray(nameKey, myArray) {
   for (var i = 0; i < myArray.length; i++) {
@@ -9,29 +8,14 @@ export function searchArray(nameKey, myArray) {
   }
 }
 
-exports.deleteUserByEmail = functions.https.onReques(async (req, res) => {
-  const userEmail = req.body.userEmail;
-
-  await admin
-    .auth()
-    .getUserByEmail(userEmail)
-    .then((userRecord) => {
-      const uid = userRecord.uid;
-
-      admin
-        .auth()
-        .deleteUser(uid)
-        .then(() => {
-          console.log("Success");
-          res.status(200).send("Deleted User");
-        })
-        .catch((error) => {
-          console.log("Error deleting user", error);
-          res.status(500).send("Failed to delete User");
-        });
+export function deleteUser() {
+  var user = firebase.auth().currentUser;
+  user
+    .delete()
+    .then(function () {
+      // User deleted.
     })
-    .catch((error) => {
-      console.log("Error fetchung user data", error);
-      res.status(500).send("Failed");
+    .catch(function (error) {
+      // An error happened.
     });
-});
+}
