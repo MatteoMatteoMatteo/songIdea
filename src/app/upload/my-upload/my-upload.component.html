@@ -2,6 +2,10 @@
   <mat-card class="songCard" *ngFor="let song of mySongs; let i = index" [value]="song.id">
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
 
+    <div style="margin-top: 30px">
+      <a class="findIt" routerLink="/mySongs">Listen to it in "My Drops"</a>
+    </div>
+
     <button
       mat-button
       class="deleteButton"
@@ -13,7 +17,7 @@
 </div>
 
 <div class="noUploadsYet" *ngIf="!isLoading && mySongs.length === 0">
-  <span style="font-size: 1rem">You have no songs yet, upload your first one! :)</span>
+  <span style="font-size: 1rem">No Uploads yet!</span>
 </div>
 
 <mat-spinner style="margin: auto" color="accent" *ngIf="isLoading" diameter="68"></mat-spinner>
