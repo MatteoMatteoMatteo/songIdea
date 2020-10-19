@@ -49,6 +49,7 @@ export class MyUploadComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.uid = localStorage.getItem("uid");
     this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
       this.isLoading = isLoading;
     });
@@ -90,6 +91,14 @@ export class MyUploadComponent implements OnInit, OnDestroy {
         this.songService.deleteSong(songId, heartDocId);
       }
     });
+  }
+
+  onNextPage(hearts: number, name: string) {
+    this.songService.myUploadsNext(this.uid, name);
+  }
+
+  onPrevPage(hearts: number, name: string) {
+    this.songService.myUploadsPrevious(this.uid, name);
   }
 
   init() {

@@ -1,35 +1,9 @@
 <div class="allSongs" *ngIf="!isLoading">
   <mat-card class="songCard" *ngFor="let song of myUploadedSongs; let i = index" [value]="song.id">
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
-    <div style="margin-top: 15px">{{ song.genre }}</div>
-    <h2 class="h2">
-      <span class="span">{{ song.hearts }} </span>
-    </h2>
-    <div class="heartHowManyHolder">
-      <div class="heartHowMany"></div>
-    </div>
 
-    <div
-      [id]="song.videoId"
-      style="
-        pointer-events: none;
-        margin-bottom: 20px;
-        margin-top: 15px;
-        border-radius: 8px;
-        border: solid 5px #e6e6e6;
-        border-top-left-radius: 0px;
-      "
-    ></div>
-
-    <div>
-      <app-drop-button
-        [buttonStyling]="playPauseButton"
-        [spinnerStyling]="spinnerStyling"
-        [buttonTitle]="playStopTitle"
-        [dropStates]="dropStates[i]"
-        [songsLoading]="songsLoading[i]"
-        (dropped)="dropSong(i)"
-      ></app-drop-button>
+    <div style="margin-top: 30px">
+      <a class="findIt" routerLink="/mySongs">Listen to it in "My Drops"</a>
     </div>
 
     <button
@@ -40,6 +14,29 @@
       Delete
     </button>
   </mat-card>
+</div>
+
+<div
+  *ngIf="!isLoading && myUploadedSongs.length != 0"
+  style="display: flex; justify-content: center; margin-bottom: 230px; margin-top: 20px"
+>
+  <button
+    class="morePlease"
+    (click)="onPrevPage(myUploadedSongs[0].hearts, myUploadedSongs[0].name)"
+  >
+    Previous
+  </button>
+  <button
+    (click)="
+      onNextPage(
+        myUploadedSongs[myUploadedSongs.length - 1].hearts,
+        myUploadedSongs[myUploadedSongs.length - 1].name
+      )
+    "
+    class="morePlease"
+  >
+    Next Page
+  </button>
 </div>
 
 <div class="noUploadsYet" *ngIf="!isLoading && myUploadedSongs.length === 0">

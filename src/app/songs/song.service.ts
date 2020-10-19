@@ -634,9 +634,7 @@ export class SongService {
     this.clearAllTimers();
     this.uiHelperService.loadingStateChanged.next(true);
     this.mySongsSub = this.db
-      .collection("songs", (ref) =>
-        ref.orderBy("name", "desc").where("userId", "==", uid).limit(this.howManySongsFetched)
-      )
+      .collection("songs", (ref) => ref.orderBy("name", "desc").where("userId", "==", uid).limit(9))
       .snapshotChanges()
       .pipe(
         map((docs) => {
@@ -671,11 +669,7 @@ export class SongService {
     this.uiHelperService.loadingStateChanged.next(true);
     this.mySongsSub = this.db
       .collection("songs", (ref) =>
-        ref
-          .orderBy("name", "desc")
-          .where("userId", "==", uid)
-          .startAfter(name)
-          .limit(this.howManySongsFetched)
+        ref.orderBy("name", "desc").where("userId", "==", uid).startAfter(name).limit(9)
       )
       .snapshotChanges()
       .pipe(
@@ -699,11 +693,15 @@ export class SongService {
         })
       )
       .subscribe((songs: Song[]) => {
-        setTimeout(() => {
-          this.myUploadedSongs = songs;
-          this.myUploadedSongsListed.next([...this.myUploadedSongs]);
+        if (!this.endOfPage) {
+          setTimeout(() => {
+            this.myUploadedSongs = songs;
+            this.myUploadedSongsListed.next([...this.myUploadedSongs]);
+            this.uiHelperService.loadingStateChanged.next(false);
+          }, 500);
+        } else {
           this.uiHelperService.loadingStateChanged.next(false);
-        }, 500);
+        }
         this.endOfPage = false;
       });
   }
@@ -713,11 +711,7 @@ export class SongService {
     this.uiHelperService.loadingStateChanged.next(true);
     this.mySongsSub = this.db
       .collection("songs", (ref) =>
-        ref
-          .orderBy("name", "desc")
-          .where("userId", "==", uid)
-          .endBefore(name)
-          .limitToLast(this.howManySongsFetched)
+        ref.orderBy("name", "desc").where("userId", "==", uid).endBefore(name).limitToLast(9)
       )
       .snapshotChanges()
       .pipe(
@@ -745,11 +739,15 @@ export class SongService {
         })
       )
       .subscribe((songs: Song[]) => {
-        setTimeout(() => {
-          this.myUploadedSongs = songs;
-          this.myUploadedSongsListed.next([...this.myUploadedSongs]);
+        if (!this.endOfPage) {
+          setTimeout(() => {
+            this.myUploadedSongs = songs;
+            this.myUploadedSongsListed.next([...this.myUploadedSongs]);
+            this.uiHelperService.loadingStateChanged.next(false);
+          }, 500);
+        } else {
           this.uiHelperService.loadingStateChanged.next(false);
-        }, 500);
+        }
         this.endOfPage = false;
       });
   }
