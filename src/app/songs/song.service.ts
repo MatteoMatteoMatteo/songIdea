@@ -546,7 +546,6 @@ export class SongService {
 
   nextPage(hearts: number, name: string, uid: string) {
     this.clearAllTimers();
-    this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.moreSongsSub = this.db
       .collection("songs", (ref) =>
         ref
@@ -584,9 +583,8 @@ export class SongService {
         if (!this.heartOperation && !this.endOfPage) {
           this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
         } else if (!this.heartOperation && this.endOfPage) {
-          this.uiHelperService.allSongsLoadingStateChanged.next(false);
+          this.uiHelperService.mySavedSongsLoadingStateChanged.next(false);
         } else {
-          this.uiHelperService.allSongsLoadingStateChanged.next(false);
         }
         this.endOfPage = false;
       });
@@ -629,9 +627,8 @@ export class SongService {
         if (!this.heartOperation && !this.endOfPage) {
           this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
         } else if (!this.heartOperation && this.endOfPage) {
-          this.uiHelperService.allSongsLoadingStateChanged.next(false);
+          this.uiHelperService.mySavedSongsLoadingStateChanged.next(false);
         } else {
-          this.uiHelperService.allSongsLoadingStateChanged.next(false);
         }
         this.endOfPage = false;
       });
