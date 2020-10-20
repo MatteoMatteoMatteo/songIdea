@@ -3,21 +3,24 @@
     <form #f="ngForm" style="width: 80%" (ngSubmit)="onUpload(f)">
       <mat-card-title class="title">UPLOAD</mat-card-title>
       <mat-form-field style="width: 100%" appearance="" color="accent">
-        <mat-label>Youtube Url</mat-label>
-        <input matInput ngModel name="youtubeUrl" required />
-      </mat-form-field>
-      <br />
-      <mat-form-field style="width: 100%" appearance="" color="accent">
-        <mat-label>Time of the drop in seconds</mat-label>
+        <mat-label>Youtube URL</mat-label>
         <input
           matInput
-          type="number"
-          placeholder="78 seconds = 1:18 on Youtube"
           ngModel
-          name="dropTime"
+          name="youtubeUrl"
+          placeholder="https://www.youtube.com/watch?v=DPHsToh4z3Y"
           required
         />
       </mat-form-field>
+      <br />
+      <mat-form-field style="width: 100%" appearance="" color="accent">
+        <mat-label>Time of the drop</mat-label>
+        <input matInput type="text" placeholder="2:36" ngModel name="dropTime" required />
+      </mat-form-field>
+      <div style="width: 220px; height: auto">
+        <img style="width: 100%; border-radius: 6px" src="../../../assets/image/youtubeTime4.jpg" />
+      </div>
+
       <br />
       <mat-form-field style="width: 100%" appearance="" color="accent">
         <mat-label>Name your drop</mat-label>

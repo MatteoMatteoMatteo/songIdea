@@ -389,7 +389,9 @@ export class SongService {
       }
     });
     this.allSongs = [...songs];
-    this.uiHelperService.allSongsLoadingStateChanged.next(false);
+    if (this.allSongs.length != 0) {
+      this.uiHelperService.allSongsLoadingStateChanged.next(false);
+    }
     return this.allSongs;
   }
 

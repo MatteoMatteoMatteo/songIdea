@@ -29,11 +29,13 @@
   transition: 200ms ease;
 }
 .element:hover {
-  background-color: $first-color;
+  background-color: $second-color;
   transition: 200ms ease;
+  color: black;
 }
 
 .elementActive:hover {
-  background-color: $first-color;
+  background-color: $second-color;
   transition: 200ms ease;
+  color: black;
 }

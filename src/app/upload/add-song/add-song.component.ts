@@ -26,6 +26,7 @@ export class AddSongComponent implements OnInit, OnDestroy {
   genres: string[] = [
     "House",
     "Electro",
+    "Electro House",
     "Chill",
     "Future Bass",
     "Drum & Bass",
@@ -65,10 +66,33 @@ export class AddSongComponent implements OnInit, OnDestroy {
     this.genres.sort();
   }
 
+  getTime(time: any) {
+    var timeNoSpaces = time.replace(/\s/g, "");
+
+    var divider = timeNoSpaces.indexOf(":");
+    var minutes = parseInt(timeNoSpaces.substring(0, divider));
+    var seconds = parseInt(timeNoSpaces.substring(divider + 1));
+
+    var minutesToSeconds = minutes * 60;
+
+    var dropTime = minutesToSeconds + seconds;
+    console.log(dropTime);
+    return dropTime;
+  }
+
   getVideoIdFromURL(url: string) {
-    var n = url.indexOf("=");
-    var videoId = url.substring(n + 1);
-    return videoId;
+    if (url.includes("&")) {
+      var n = url.indexOf("=");
+      var m = url.indexOf("&");
+      var videoId = url.substring(n + 1, m);
+      console.log(videoId);
+      return videoId;
+    } else {
+      var n = url.indexOf("=");
+      var videoId = url.substring(n + 1);
+      console.log(videoId);
+      return videoId;
+    }
   }
 
   onUpload(form: NgForm) {
@@ -76,7 +100,7 @@ export class AddSongComponent implements OnInit, OnDestroy {
     this.videoId = this.getVideoIdFromURL(form.value.youtubeUrl);
     this.songName = form.value.songName;
     this.url = form.value.youtubeUrl;
-    this.dropTime = form.value.dropTime - 10;
+    this.dropTime = this.getTime(form.value.dropTime) - 10;
     this.songGenre = form.value.genre;
     this.songService.uploadSong(
       this.songName,
