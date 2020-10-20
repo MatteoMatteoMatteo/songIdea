@@ -152,7 +152,10 @@ export class SongService {
       clearTimeout(this.newSongTimer);
       this.whichSongIsDropping = id;
       this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
-      if (this.allSongs[id].playerHolder.getPlayerState() != 1) {
+      if (
+        this.allSongs[id].playerHolder.getPlayerState() != 1 &&
+        this.allSongs[id].playerHolder.getPlayerState() != 3
+      ) {
         this.dropState.fill(false);
         this.dropStateListed.next([...this.dropState]);
         this.allSongs.forEach((song) => {
@@ -166,7 +169,7 @@ export class SongService {
         this.dropState[id] = true;
         this.dropStateListed.next([...this.dropState]);
         this.audioPlayingListed.next(true);
-      } else {
+      } else if (this.allSongs[id].playerHolder.getPlayerState() != 3) {
         clearInterval(this.countdown);
         clearTimeout(this.newSongTimer);
         this.countdownNumber = 30;
@@ -603,7 +606,7 @@ export class SongService {
         map((docArray) => {
           if (docArray.length == 0) {
             this.endOfPage = true;
-            this.uiHelperService.showSnackbar("There is no previous page yet!", "ok", 3000);
+            this.uiHelperService.showSnackbar("There are no previous songs yet!", "ok", 3000);
           } else {
             this.uiHelperService.allSongsLoadingStateChanged.next(true);
           }
@@ -730,7 +733,7 @@ export class SongService {
         map((docs) => {
           if (docs.length == 0) {
             this.endOfPage = true;
-            this.uiHelperService.showSnackbar("There is no previous page yet!", "ok", 3000);
+            this.uiHelperService.showSnackbar("There are no previous songs yet!", "ok", 3000);
           }
           return docs.map((doc) => {
             return {
