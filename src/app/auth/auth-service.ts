@@ -34,10 +34,10 @@ export class AuthService {
         localStorage.setItem("email", user.email);
         this.store.dispatch(new AUTH.SetAuthenticated());
         this.store.dispatch(new AUTH.Uid(user.uid));
-        this.router.navigate(["/browse"]);
+        this.router.navigate(["/"]);
       } else {
         this.store.dispatch(new AUTH.SetUnauthenticated());
-        this.router.navigate(["/browse"]);
+        this.router.navigate(["/"]);
       }
     });
   }
