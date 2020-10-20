@@ -88,7 +88,6 @@
   padding: 13px;
   border-radius: 6px;
   cursor: pointer;
-  transition: 300ms;
   margin-left: 15px;
   width: 150px;
   height: 60px;
@@ -100,7 +99,6 @@
 }
 
 .morePlease:hover {
-  transition: 300ms;
   background-color: $first-color;
 }
 

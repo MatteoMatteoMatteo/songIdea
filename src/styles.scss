@@ -28,6 +28,62 @@ body {
   font-family: "Quicksand", sans-serif !important;
 }
 
+.formButton {
+  font-size: 1rem;
+  padding: 13px;
+  letter-spacing: 0.5px;
+  margin-top: 20px;
+  color: black;
+  background-color: transparent;
+  border: none;
+  transition: 200ms;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Raleway", serif;
+}
+
+.formButton:hover {
+  background-color: rgba(231, 231, 231, 0.726);
+  font-size: 1rem;
+  padding: 13px;
+  letter-spacing: 0.5px;
+  margin-top: 20px;
+  color: black;
+  border: none;
+  transition: 200ms;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Raleway", serif;
+}
+
+.deleteButton {
+  font-size: 1rem;
+  padding: 13px;
+  letter-spacing: 0.5px;
+  margin-top: 20px;
+  color: $heart-red;
+  background-color: transparent;
+  border: none;
+  transition: 200ms;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Raleway", serif;
+}
+
+.deleteButton:hover {
+  background-color: rgba(255, 255, 255, 0.726);
+  font-size: 1rem;
+  padding: 13px;
+  letter-spacing: 0.5px;
+  margin-top: 20px;
+  color: $heart-red;
+  border: none;
+  transition: 200ms;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Raleway", serif;
+}
+
 p {
   color: white;
 }
@@ -153,18 +209,17 @@ a {
   font-size: 1rem;
 }
 
-.deleteButton {
-  padding: 5px;
-  margin-top: 20px;
-  color: $heart-red;
-}
-
 button:focus {
   outline: 0;
 }
 
 span.mat-button-raised {
   font-family: "Raleway", serif;
+}
+
+span.mat-button-wrapper {
+  color: white;
+  border-bottom: 2px white solid;
 }
 
 .mat-progress-spinner circle,

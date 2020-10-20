@@ -7,13 +7,13 @@
 
     <button
       (click)="onLogout()"
-      mat-button
+      class="formButton specialButton"
       style="
         font-size: 1rem;
         margin-top: 30px;
-        border-bottom: solid 5px #e6e6e6;
-        border-top: solid 5px #e6e6e6;
-        border-radius: 0px !important;
+        border-bottom: solid 5px rgba(231, 231, 231, 0.726);
+        border-top: solid 5px rgba(231, 231, 231, 0.726);
+        border-radius: 0px;
       "
     >
       Logout
@@ -26,7 +26,6 @@
     <button
       (click)="onDeleteAccount()"
       style="font-size: 1rem; margin-top: 10px !important"
-      mat-button
       class="deleteButton"
     >
       Delete Account
