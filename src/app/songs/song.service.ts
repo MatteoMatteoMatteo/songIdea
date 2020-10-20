@@ -12,10 +12,13 @@ import * as Tone from "tone";
 @Injectable()
 export class SongService {
   howManySongsFetched: number = 6;
-  howManyUploadsFetched: number = 8;
+  howManyUploadsFetched: number = 3;
   item = [
     this.db.collection("songs", (ref) =>
       ref.orderBy("name", "desc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("date", "desc").limit(this.howManySongsFetched)
     ),
     this.db.collection("songs", (ref) =>
       ref.orderBy("videId", "desc").limit(this.howManySongsFetched)
@@ -49,6 +52,9 @@ export class SongService {
     ),
     this.db.collection("songs", (ref) =>
       ref.orderBy("hearts", "asc").limit(this.howManySongsFetched)
+    ),
+    this.db.collection("songs", (ref) =>
+      ref.orderBy("date", "asc").limit(this.howManySongsFetched)
     ),
     this.db.collection("songs", (ref) => ref.orderBy("url", "asc").limit(this.howManySongsFetched)),
     this.db.collection("songs", (ref) =>
@@ -633,7 +639,7 @@ export class SongService {
     this.uiHelperService.loadingStateChanged.next(true);
     this.mySongsSub = this.db
       .collection("songs", (ref) =>
-        ref.orderBy("name", "desc").where("userId", "==", uid).limit(this.howManyUploadsFetched)
+        ref.orderBy("date", "desc").where("userId", "==", uid).limit(this.howManyUploadsFetched)
       )
       .snapshotChanges()
       .pipe(
@@ -664,14 +670,14 @@ export class SongService {
       });
   }
 
-  myUploadsNext(uid: string, name: string) {
+  myUploadsNext(uid: string, name: string, date: any) {
     this.clearAllTimers();
     this.mySongsSub = this.db
       .collection("songs", (ref) =>
         ref
-          .orderBy("name", "desc")
+          .orderBy("date", "desc")
           .where("userId", "==", uid)
-          .startAfter(name)
+          .startAfter(date)
           .limit(this.howManyUploadsFetched)
       )
       .snapshotChanges()
@@ -709,14 +715,14 @@ export class SongService {
       });
   }
 
-  myUploadsPrevious(uid: string, name: string) {
+  myUploadsPrevious(uid: string, name: string, date: any) {
     this.clearAllTimers();
     this.mySongsSub = this.db
       .collection("songs", (ref) =>
         ref
-          .orderBy("name", "desc")
+          .orderBy("date", "desc")
           .where("userId", "==", uid)
-          .endBefore(name)
+          .endBefore(date)
           .limitToLast(this.howManyUploadsFetched)
       )
       .snapshotChanges()

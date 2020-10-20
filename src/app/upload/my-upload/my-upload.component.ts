@@ -93,12 +93,12 @@ export class MyUploadComponent implements OnInit, OnDestroy {
     });
   }
 
-  onNextPage(hearts: number, name: string) {
-    this.songService.myUploadsNext(this.uid, name);
+  onNextPage(date: any, name: string) {
+    this.songService.myUploadsNext(this.uid, name, date);
   }
 
-  onPrevPage(hearts: number, name: string) {
-    this.songService.myUploadsPrevious(this.uid, name);
+  onPrevPage(date: any, name: string) {
+    this.songService.myUploadsPrevious(this.uid, name, date);
   }
 
   init() {

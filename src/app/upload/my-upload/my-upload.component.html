@@ -1,5 +1,9 @@
 <div class="allSongs" *ngIf="!isLoading">
-  <mat-card class="songCard" *ngFor="let song of myUploadedSongs; let i = index" [value]="song.id">
+  <mat-card
+    class="songCard animate__animated animate__fadeIn"
+    *ngFor="let song of myUploadedSongs; let i = index"
+    [value]="song.id"
+  >
     <mat-card-title class="title">{{ song.name }}</mat-card-title>
 
     <div style="margin-top: 15px">{{ song.genre }}</div>
@@ -64,16 +68,13 @@
   *ngIf="!isLoading && myUploadedSongs.length != 0"
   style="display: flex; justify-content: center; margin-bottom: 230px; margin-top: 20px"
 >
-  <button
-    class="morePlease"
-    (click)="onPrevPage(myUploadedSongs[0].hearts, myUploadedSongs[0].name)"
-  >
+  <button class="morePlease" (click)="onPrevPage(myUploadedSongs[0].date, myUploadedSongs[0].name)">
     Previous
   </button>
   <button
     (click)="
       onNextPage(
-        myUploadedSongs[myUploadedSongs.length - 1].hearts,
+        myUploadedSongs[myUploadedSongs.length - 1].date,
         myUploadedSongs[myUploadedSongs.length - 1].name
       )
     "

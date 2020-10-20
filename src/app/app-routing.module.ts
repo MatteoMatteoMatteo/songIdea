@@ -26,7 +26,7 @@ const routes: Routes = [
   {
     path: "upload",
     component: UploadComponent,
-    data: { animation: "2" },
+    data: { animation: "1" },
     canActivate: [AuthGuard],
   },
   {
