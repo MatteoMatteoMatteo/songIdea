@@ -41,6 +41,8 @@ export class SongCardComponent implements OnInit, OnDestroy {
   wasItHeartedSub: Subscription;
   uidIsSet = false;
 
+  justALittleDelay = true;
+
   whichAudioArray: string = "allSongs";
 
   public YT: any;
@@ -87,6 +89,11 @@ export class SongCardComponent implements OnInit, OnDestroy {
     });
     this.loadingSub = this.uiHelperService.allSongsLoadingStateChanged.subscribe((isLoading) => {
       this.isLoading = isLoading;
+      if (this.justALittleDelay && !isLoading) {
+        setTimeout(() => {
+          this.justALittleDelay = false;
+        }, 3000);
+      }
     });
     this.songService.fetchAllSongs(this.uid);
     this.commentService.fetchAllComments();
@@ -113,6 +120,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
 
   onLoadMoreDrops(hearts: number, name: string) {
     this.songService.loadMoreDrops(hearts, name);
+    this.justALittleDelay = true;
   }
 
   onAddComment(form: NgForm, songId: string, uid: string) {

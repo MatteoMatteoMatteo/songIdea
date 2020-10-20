@@ -34,6 +34,7 @@ export class MyUploadComponent implements OnInit, OnDestroy {
   @Output() exit = new EventEmitter();
 
   whichAudioArray: string = "myUploadedSongs";
+  justALittleDelay = true;
 
   public YT: any;
   public video: any;
@@ -52,6 +53,11 @@ export class MyUploadComponent implements OnInit, OnDestroy {
     this.uid = localStorage.getItem("uid");
     this.loadingSub = this.uiHelperService.loadingStateChanged.subscribe((isLoading) => {
       this.isLoading = isLoading;
+      if (this.justALittleDelay && !isLoading) {
+        setTimeout(() => {
+          this.justALittleDelay = false;
+        }, 3000);
+      }
     });
     this.myUploadedSongsSub = this.songService.myUploadedSongsListed.subscribe((songs) => {
       this.myUploadedSongs = songs;
@@ -95,10 +101,12 @@ export class MyUploadComponent implements OnInit, OnDestroy {
 
   onNextPage(date: any, name: string) {
     this.songService.myUploadsNext(this.uid, name, date);
+    this.justALittleDelay = true;
   }
 
   onPrevPage(date: any, name: string) {
     this.songService.myUploadsPrevious(this.uid, name, date);
+    this.justALittleDelay = true;
   }
 
   init() {
@@ -159,5 +167,6 @@ export class MyUploadComponent implements OnInit, OnDestroy {
     this.myUploadedSongsSub.unsubscribe();
     this.loadingSub.unsubscribe();
     this.allCommentsSubscription.unsubscribe();
+    this.songService.hideAudioPlayer = true;
   }
 }

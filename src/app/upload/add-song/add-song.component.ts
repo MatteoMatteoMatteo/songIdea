@@ -3,7 +3,7 @@ import { UiHelperService } from "./../../uiHelper/uiHelper.service";
 import { SongService } from "./../../songs/song.service";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { NgForm } from "@angular/forms";
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from "@angular/core";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../../app.reducer";
 
@@ -12,7 +12,7 @@ import * as fromRoot from "../../app.reducer";
   templateUrl: "./add-song.component.html",
   styleUrls: ["./add-song.component.scss"],
 })
-export class AddSongComponent implements OnInit {
+export class AddSongComponent implements OnInit, OnDestroy {
   isLoading = false;
   videoId: string;
   songName: string;
@@ -86,5 +86,10 @@ export class AddSongComponent implements OnInit {
       this.url,
       this.dropTime
     );
+  }
+
+  ngOnDestroy() {
+    this.songService.hideAudioPlayer = true;
+    if (this.loadingSub) this.loadingSub.unsubscribe();
   }
 }

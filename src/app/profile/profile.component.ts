@@ -1,3 +1,4 @@
+import { SongService } from "./../songs/song.service";
 import { CancelComponent } from "./../uiHelper/cancel/cancel.component";
 import { MatDialog } from "@angular/material/dialog";
 import { UiHelperService } from "./../uiHelper/uiHelper.service";
@@ -18,7 +19,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private authService: AuthService,
-    private uiHelperService: UiHelperService
+    private uiHelperService: UiHelperService,
+    private songService: SongService
   ) {}
 
   ngOnInit(): void {
@@ -45,5 +47,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.authSub) this.authSub.unsubscribe();
+    this.songService.hideAudioPlayer = true;
   }
 }

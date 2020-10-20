@@ -39,6 +39,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
 
   whichSongIsDropping: number;
 
+  justALittleDelay = true;
   public YT: any;
   public video: any;
   public reframed: Boolean = false;
@@ -65,6 +66,11 @@ export class MySongsComponent implements OnInit, OnDestroy {
     this.loadingSub = this.uiHelperService.mySavedSongsLoadingStateChanged.subscribe(
       (isLoading) => {
         this.isLoading = isLoading;
+        if (this.justALittleDelay && !isLoading) {
+          setTimeout(() => {
+            this.justALittleDelay = false;
+          }, 3000);
+        }
       }
     );
     this.mySavedSongsSubscription = this.songService.mySavedSongsListed.subscribe((songs) => {
@@ -89,9 +95,10 @@ export class MySongsComponent implements OnInit, OnDestroy {
 
   onHeartSong(hearts: number, heartedBy: string[], songId: string, index: number) {
     if (this.authService.isAuth) {
-      this.mySavedSongs.splice(index, 1);
-
       this.songService.heartSong(hearts, heartedBy, songId, this.uid, index, true);
+      this.mySavedSongs.splice(index, 1);
+      this.songService.mySavedSongs.splice(index, 1);
+      this.songService.clearAllTimers();
     } else
       this.uiHelperService.showSnackbar(
         "Login or Signup to save your favourite drops",
@@ -106,10 +113,12 @@ export class MySongsComponent implements OnInit, OnDestroy {
 
   onNextPage(hearts: number, name: string) {
     this.songService.nextPage(hearts, name, this.uid);
+    this.justALittleDelay = true;
   }
 
   onPrevPage(hearts: number, name: string) {
     this.songService.prevPage(hearts, name, this.uid);
+    this.justALittleDelay = true;
   }
 
   dropMySavedSong(id: number) {
@@ -170,5 +179,6 @@ export class MySongsComponent implements OnInit, OnDestroy {
     if (this.allCommentsSubscription) this.allCommentsSubscription.unsubscribe();
     if (this.wasItHeartedSub) this.wasItHeartedSub.unsubscribe();
     if (this.dropStatesSub) this.dropStatesSub.unsubscribe();
+    this.songService.hideAudioPlayer = true;
   }
 }

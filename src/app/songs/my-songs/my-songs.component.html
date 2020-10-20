@@ -38,7 +38,7 @@
         margin-bottom: 20px;
       "
     >
-      <div>
+      <div *ngIf="!justALittleDelay" class="animate__animated animate__fadeIn">
         <app-drop-button
           [buttonStyling]="playPauseButton"
           [spinnerStyling]="spinnerStyling"

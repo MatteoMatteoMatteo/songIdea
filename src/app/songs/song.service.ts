@@ -11,7 +11,7 @@ import * as Tone from "tone";
 
 @Injectable()
 export class SongService {
-  howManySongsFetched: number = 6;
+  howManySongsFetched: number = 9;
   howManyUploadsFetched: number = 3;
   item = [
     this.db.collection("songs", (ref) =>
@@ -67,7 +67,7 @@ export class SongService {
   newSongTimer: any;
   private moreAllSongs: Song[] = [];
   private myUploadedSongs: Song[] = [];
-  private mySavedSongs: Song[] = [];
+  public mySavedSongs: Song[] = [];
   public allSongs: Song[] = [];
   wasItHearted: boolean;
   private songLoading: boolean[] = [];
@@ -84,6 +84,8 @@ export class SongService {
   whichSongIsDroppingListed = new Subject<number>();
   destroyAudioPlayer = new Subject<boolean>();
   audioPlayingListed = new Subject<boolean>();
+
+  justALittleDelay = new Subject<boolean>();
 
   hideAudioPlayer = true;
   hideAudioPlayerListed = new Subject<boolean>();
