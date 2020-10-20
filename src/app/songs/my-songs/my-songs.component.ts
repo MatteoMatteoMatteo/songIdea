@@ -147,6 +147,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
         playerVars: {
           autoplay: 0,
           modestbranding: 0,
+          origin: "http://localhost:4200",
           controls: 0,
           disablekb: 1,
           rel: 0,

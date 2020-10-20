@@ -154,10 +154,7 @@ export class SongService {
       clearTimeout(this.newSongTimer);
       this.whichSongIsDropping = id;
       this.whichSongIsDroppingListed.next(this.whichSongIsDropping);
-      if (
-        this.allSongs[id].playerHolder.getPlayerState() != 1 &&
-        this.allSongs[id].playerHolder.getPlayerState() != 3
-      ) {
+      if (this.allSongs[id].playerHolder.getPlayerState() != 1) {
         this.dropState.fill(false);
         this.dropStateListed.next([...this.dropState]);
         this.allSongs.forEach((song) => {
@@ -171,7 +168,7 @@ export class SongService {
         this.dropState[id] = true;
         this.dropStateListed.next([...this.dropState]);
         this.audioPlayingListed.next(true);
-      } else if (this.allSongs[id].playerHolder.getPlayerState() != 3) {
+      } else {
         clearInterval(this.countdown);
         clearTimeout(this.newSongTimer);
         this.countdownNumber = 30;

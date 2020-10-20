@@ -160,6 +160,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
             autoplay: 0,
             modestbranding: 0,
             controls: 0,
+            origin: "http://localhost:4200",
             disablekb: 1,
             rel: 0,
             ecver: 2,
