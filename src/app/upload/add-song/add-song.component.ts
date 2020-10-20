@@ -30,6 +30,7 @@ export class AddSongComponent implements OnInit, OnDestroy {
     "Chill",
     "Future Bass",
     "Drum & Bass",
+    "Deep House",
     "Jazz",
     "Country",
     "Trap",
@@ -67,17 +68,33 @@ export class AddSongComponent implements OnInit, OnDestroy {
   }
 
   getTime(time: any) {
-    var timeNoSpaces = time.replace(/\s/g, "");
+    var regExp = /[a-zA-Z]/g;
 
-    var divider = timeNoSpaces.indexOf(":");
-    var minutes = parseInt(timeNoSpaces.substring(0, divider));
-    var seconds = parseInt(timeNoSpaces.substring(divider + 1));
+    if (regExp.test(time)) {
+      this.uiHelperService.showSnackbar("Invalid time format", "ok", 3000);
+      return;
+    } else {
+      var timeNoSpaces = time.replace(/\s/g, "");
 
-    var minutesToSeconds = minutes * 60;
+      var divider = timeNoSpaces.indexOf(":");
+      var minutes = parseInt(timeNoSpaces.substring(0, divider));
+      var seconds = parseInt(timeNoSpaces.substring(divider + 1));
 
-    var dropTime = minutesToSeconds + seconds;
-    console.log(dropTime);
-    return dropTime;
+      var minutesToSeconds = minutes * 60;
+
+      var dropTime = minutesToSeconds + seconds;
+      console.log(dropTime);
+      return dropTime;
+    }
+  }
+
+  matchYoutubeUrl(url) {
+    var p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    if (url.match(p)) {
+      return url.match(p)[1];
+    }
+    this.uiHelperService.showSnackbar("Invalid Youtube URL", "ok", 3000);
+    return false;
   }
 
   getVideoIdFromURL(url: string) {
@@ -90,17 +107,21 @@ export class AddSongComponent implements OnInit, OnDestroy {
     } else {
       var n = url.indexOf("=");
       var videoId = url.substring(n + 1);
-      console.log(videoId);
       return videoId;
     }
   }
 
   onUpload(form: NgForm) {
+    if (!this.matchYoutubeUrl(form.value.youtubeUrl)) return;
+
+    this.dropTime = this.getTime(form.value.dropTime) - 10;
+    if (isNaN(this.dropTime)) return;
+
     this.isLoading = true;
     this.videoId = this.getVideoIdFromURL(form.value.youtubeUrl);
     this.songName = form.value.songName;
     this.url = form.value.youtubeUrl;
-    this.dropTime = this.getTime(form.value.dropTime) - 10;
+
     this.songGenre = form.value.genre;
     this.songService.uploadSong(
       this.songName,

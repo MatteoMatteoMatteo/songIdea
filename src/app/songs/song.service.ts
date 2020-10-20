@@ -404,7 +404,9 @@ export class SongService {
       }
     });
     this.mySavedSongs = [...songs];
-    this.uiHelperService.mySavedSongsLoadingStateChanged.next(false);
+    if (this.mySavedSongs.length != 0) {
+      this.uiHelperService.mySavedSongsLoadingStateChanged.next(false);
+    }
     return this.mySavedSongs;
   }
 
