@@ -22,11 +22,12 @@
   font-weight: normal;
   font-family: "Raleway", serif;
   padding-top: 100%;
-  padding-bottom: 21px;
+  padding-bottom: 17px;
   padding-left: 20px;
   padding-right: 20px;
   color: black;
   background-color: $second-color;
+  border-bottom: $third-color solid 5px;
 }
 
 .icon {

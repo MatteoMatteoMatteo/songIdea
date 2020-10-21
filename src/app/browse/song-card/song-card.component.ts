@@ -96,7 +96,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
       }
     });
     this.songService.fetchAllSongs(this.uid);
-    this.commentService.fetchAllComments();
   }
 
   dropSong(id: number) {

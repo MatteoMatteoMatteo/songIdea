@@ -66,6 +66,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
     this.loadingSub = this.uiHelperService.mySavedSongsLoadingStateChanged.subscribe(
       (isLoading) => {
         this.isLoading = isLoading;
+        if (this.isLoading) this.justALittleDelay = true;
         if (this.justALittleDelay && !isLoading) {
           setTimeout(() => {
             this.justALittleDelay = false;
@@ -90,7 +91,6 @@ export class MySongsComponent implements OnInit, OnDestroy {
     });
 
     this.songService.fetchMySavedSongs(this.uid);
-    this.commentService.fetchAllComments();
   }
 
   onHeartSong(hearts: number, heartedBy: string[], songId: string, index: number) {
@@ -113,12 +113,10 @@ export class MySongsComponent implements OnInit, OnDestroy {
 
   onNextPage(hearts: number, name: string) {
     this.songService.nextPage(hearts, name, this.uid);
-    this.justALittleDelay = true;
   }
 
   onPrevPage(hearts: number, name: string) {
     this.songService.prevPage(hearts, name, this.uid);
-    this.justALittleDelay = true;
   }
 
   dropMySavedSong(id: number) {

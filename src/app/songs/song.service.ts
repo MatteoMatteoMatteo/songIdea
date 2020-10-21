@@ -388,10 +388,8 @@ export class SongService {
         el.isHearted = false;
       }
     });
-    this.allSongs = [...songs];
-    if (this.allSongs.length != 0) {
-      this.uiHelperService.allSongsLoadingStateChanged.next(false);
-    }
+    this.allSongs = songs;
+    this.uiHelperService.allSongsLoadingStateChanged.next(false);
     return this.allSongs;
   }
 
@@ -403,7 +401,7 @@ export class SongService {
         el.isHearted = false;
       }
     });
-    this.mySavedSongs = [...songs];
+    this.mySavedSongs = songs;
     this.uiHelperService.mySavedSongsLoadingStateChanged.next(false);
     return this.mySavedSongs;
   }
@@ -455,17 +453,14 @@ export class SongService {
       )
       .subscribe(
         (songs: Song[]) => {
+          console.log(songs);
           if (!this.heartOperation) {
-            setTimeout(() => {
-              this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
-            }, 500);
+            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
+
             this.endOfPage = false;
           }
         },
-        (error) => {
-          console.log(error);
-          this.uiHelperService.allSongsLoadingStateChanged.next(true);
-        }
+        (error) => {}
       );
   }
 
@@ -536,9 +531,7 @@ export class SongService {
       )
       .subscribe((songs: Song[]) => {
         if (!this.heartOperation) {
-          setTimeout(() => {
-            this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
-          }, 500);
+          this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
         }
         this.endOfPage = false;
       });
@@ -663,11 +656,9 @@ export class SongService {
         })
       )
       .subscribe((songs: Song[]) => {
-        setTimeout(() => {
-          this.myUploadedSongs = songs;
-          this.myUploadedSongsListed.next([...this.myUploadedSongs]);
-          this.uiHelperService.loadingStateChanged.next(false);
-        }, 500);
+        this.myUploadedSongs = songs;
+        this.myUploadedSongsListed.next([...this.myUploadedSongs]);
+        this.uiHelperService.loadingStateChanged.next(false);
       });
   }
 

@@ -74,7 +74,6 @@ export class MyUploadComponent implements OnInit, OnDestroy {
       this.uid = uid;
       this.songService.fetchMyUploads(uid);
     });
-    this.commentService.fetchAllComments();
   }
 
   dropSong(id: number) {
@@ -101,12 +100,10 @@ export class MyUploadComponent implements OnInit, OnDestroy {
 
   onNextPage(date: any, name: string) {
     this.songService.myUploadsNext(this.uid, name, date);
-    this.justALittleDelay = true;
   }
 
   onPrevPage(date: any, name: string) {
     this.songService.myUploadsPrevious(this.uid, name, date);
-    this.justALittleDelay = true;
   }
 
   init() {
