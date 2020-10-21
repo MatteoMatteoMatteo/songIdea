@@ -1,6 +1,6 @@
-/login /
-/signup /
-/browse /
-/mySongs /
-/upload / 
-/profile /
+/login /index.html
+/signup /index.html
+/browse /index.html
+/mySongs /index.html
+/upload /index.html
+/profile /index.html
