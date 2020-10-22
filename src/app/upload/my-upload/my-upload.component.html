@@ -80,8 +80,20 @@
   </button>
 </div>
 
-<div class="noUploadsYet" *ngIf="!isLoading && myUploadedSongs.length === 0">
-  <span style="font-size: 1rem">No Uploads yet!</span>
+<div class="section" *ngIf="!isLoading && myUploadedSongs.length === 0">
+  <h1 class="title">UPLOAD YOUR FIRST DROP</h1>
+  <div class="border"></div>
+
+  <p class="thePP">
+    If you have a drop that you would like to
+    <span [ngStyle]="{ color: '#90d1db' }">share</span> you are at the right place!
+  </p>
+  <p class="thePP">
+    In <span [ngStyle]="{ color: '#90d1db' }">My Uploads</span> you can find and edit all your
+    uploads.
+  </p>
+
+  <img src="./../../assets/image/logo.png" class="logoPic" />
 </div>
 
 <mat-spinner style="margin: auto" color="accent" *ngIf="isLoading" diameter="68"></mat-spinner>

@@ -102,9 +102,24 @@
   </button>
 </div>
 
-<div class="noUploadsYet" *ngIf="!isLoading && mySavedSongs.length === 0">
-  <span style="font-size: 1rem">You have no saved drops yet!</span>
-</div>
+<a routerLink="/browse">
+  <div class="section" *ngIf="!isLoading && mySavedSongs.length === 0">
+    <h1 class="title">SAVE YOUR FAVOURITE DROPS</h1>
+    <div class="border"></div>
+
+    <p class="theP">
+      All your saved drops will be stored in the
+      <span [ngStyle]="{ color: '#90d1db' }">My Drops</span> section.
+    </p>
+
+    <p class="theP">
+      Get started by pressing the <span [ngStyle]="{ color: '#a46260' }">Heart Icon</span> on a drop
+      you like.
+    </p>
+
+    <img src="./../../assets/image/logo.png" class="logoPic" />
+  </div>
+</a>
 
 <mat-spinner diameter="68" color="accent" style="margin: auto" *ngIf="isLoading"></mat-spinner>
 

@@ -1,6 +1,7 @@
 @import "../../../styles.scss";
 @import "../../browse/song-card/song-card.component.scss";
 @import "../../../utilities/variables.scss";
+@import "../../start/start.component.scss";
 
 .title {
   padding: 15px;
@@ -51,16 +52,20 @@
   transition: 300ms ease;
 }
 
-.noUploadsYet {
-  margin: auto;
+h1.title {
+  margin: 0px;
+  margin-bottom: 15px;
+}
+
+.section {
+  margin-top: 12px;
+}
+
+.thePP {
   color: white;
-  cursor: default;
-  padding: 20px;
-  border-radius: 7px;
-  box-shadow: none;
-  width: fit-content;
-  border: solid white 2px;
-  background-color: black;
+  letter-spacing: 2px;
+  font-family: "Raleway", serif;
+  font-size: 1rem;
 }
 
 @media only screen and (max-width: 500px) {

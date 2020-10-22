@@ -36,7 +36,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
   dropStatesSub: Subscription;
   allCommentsSubscription: Subscription;
   allSongsSubscription: Subscription;
-  getSongsAgainSub: Subscription;
   loadingSub: Subscription;
   wasItHeartedSub: Subscription;
   uidIsSet = false;
@@ -71,12 +70,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
       this.dropStates = dropStates;
     });
 
-    this.songsLoadingSub = this.songService.songLoadingListed.subscribe((songsLoading) => {
-      this.songsLoading = songsLoading;
-    });
-    this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
-      this.allComments = comments;
-    });
     this.allSongsSubscription = this.songService.allSongsListed.subscribe((songs) => {
       this.allSongs = songs;
       this.init();
@@ -89,6 +82,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     });
     this.loadingSub = this.uiHelperService.allSongsLoadingStateChanged.subscribe((isLoading) => {
       this.isLoading = isLoading;
+      if (this.isLoading) this.justALittleDelay = true;
       if (this.justALittleDelay && !isLoading) {
         setTimeout(() => {
           this.justALittleDelay = false;
@@ -119,7 +113,6 @@ export class SongCardComponent implements OnInit, OnDestroy {
 
   onLoadMoreDrops(hearts: number, name: string) {
     this.songService.loadMoreDrops(hearts, name);
-    this.justALittleDelay = true;
   }
 
   onAddComment(form: NgForm, songId: string, uid: string) {
@@ -127,11 +120,12 @@ export class SongCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.songsLoadingSub.unsubscribe();
-    this.allCommentsSubscription.unsubscribe();
-    this.dropStatesSub.unsubscribe();
-    this.allSongsSubscription.unsubscribe();
-    this.loadingSub.unsubscribe();
+    if (this.songsLoadingSub) this.songsLoadingSub.unsubscribe();
+    if (this.allCommentsSubscription) this.allCommentsSubscription.unsubscribe();
+    if (this.dropStatesSub) this.dropStatesSub.unsubscribe();
+    if (this.wasItHeartedSub) this.wasItHeartedSub.unsubscribe();
+    if (this.allSongsSubscription) this.allSongsSubscription.unsubscribe();
+    if (this.loadingSub) this.loadingSub.unsubscribe();
     this.songService.hideAudioPlayer = true;
   }
 

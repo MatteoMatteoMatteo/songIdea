@@ -12,7 +12,7 @@ import * as Tone from "tone";
 @Injectable()
 export class SongService {
   howManySongsFetched: number = 9;
-  howManyUploadsFetched: number = 3;
+  howManyUploadsFetched: number = 1;
   item = [
     this.db.collection("songs", (ref) =>
       ref.orderBy("name", "desc").limit(this.howManySongsFetched)
@@ -21,7 +21,7 @@ export class SongService {
       ref.orderBy("date", "desc").limit(this.howManySongsFetched)
     ),
     this.db.collection("songs", (ref) =>
-      ref.orderBy("videId", "desc").limit(this.howManySongsFetched)
+      ref.orderBy("videoId", "desc").limit(this.howManySongsFetched)
     ),
     this.db.collection("songs", (ref) =>
       ref.orderBy("dropTime", "desc").limit(this.howManySongsFetched)
@@ -42,7 +42,7 @@ export class SongService {
       ref.orderBy("name", "asc").limit(this.howManySongsFetched)
     ),
     this.db.collection("songs", (ref) =>
-      ref.orderBy("videId", "asc").limit(this.howManySongsFetched)
+      ref.orderBy("videoId", "asc").limit(this.howManySongsFetched)
     ),
     this.db.collection("songs", (ref) =>
       ref.orderBy("dropTime", "asc").limit(this.howManySongsFetched)
@@ -501,6 +501,7 @@ export class SongService {
 
   //---------------My Saved Songs
   fetchMySavedSongs(uid: string) {
+    this.uid = uid;
     this.hideAudioPlayerListed.next(true);
     this.clearAllTimers();
     this.uiHelperService.mySavedSongsLoadingStateChanged.next(true);
@@ -557,6 +558,8 @@ export class SongService {
               "ok",
               3000
             );
+          } else {
+            this.uiHelperService.mySavedSongsLoadingStateChanged.next(true);
           }
           return docArray.map((doc) => {
             return {
@@ -600,7 +603,7 @@ export class SongService {
             this.endOfPage = true;
             this.uiHelperService.showSnackbar("There are no previous songs yet!", "ok", 3000);
           } else {
-            this.uiHelperService.allSongsLoadingStateChanged.next(true);
+            this.uiHelperService.mySavedSongsLoadingStateChanged.next(true);
           }
           return docArray.map((doc) => {
             return {
@@ -678,6 +681,8 @@ export class SongService {
           if (docs.length == 0) {
             this.endOfPage = true;
             this.uiHelperService.showSnackbar("That's all your uploads!", "ok", 3000);
+          } else {
+            this.uiHelperService.loadingStateChanged.next(true);
           }
           return docs.map((doc) => {
             return {
@@ -723,6 +728,8 @@ export class SongService {
           if (docs.length == 0) {
             this.endOfPage = true;
             this.uiHelperService.showSnackbar("There are no previous songs yet!", "ok", 3000);
+          } else {
+            this.uiHelperService.loadingStateChanged.next(true);
           }
           return docs.map((doc) => {
             return {

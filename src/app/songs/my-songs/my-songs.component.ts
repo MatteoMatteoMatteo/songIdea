@@ -86,10 +86,6 @@ export class MySongsComponent implements OnInit, OnDestroy {
       thisSong.heartedBy = heartObject.heartedBy;
     });
 
-    this.allCommentsSubscription = this.commentService.allCommentsListed.subscribe((comments) => {
-      this.allComments = comments;
-    });
-
     this.songService.fetchMySavedSongs(this.uid);
   }
 

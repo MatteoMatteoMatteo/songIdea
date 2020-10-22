@@ -1,6 +1,7 @@
 @import "../../../styles.scss";
 @import "../../browse/song-card/song-card.component.scss";
 @import "../../upload/my-upload/my-upload.component.scss";
+@import "../../start/start.component.scss";
 
 .allSongsNew {
   display: flex;
@@ -18,4 +19,14 @@
   align-items: center;
   margin: 0px 25px 30px 25px;
   padding-bottom: 32px;
+}
+
+.section {
+  margin-top: 12px;
+}
+
+h1.title {
+  margin: 0px;
+  margin-bottom: 15px;
+  text-align: center;
 }

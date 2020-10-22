@@ -34,10 +34,15 @@ export class AddSongComponent implements OnInit, OnDestroy {
     "Jazz",
     "Country",
     "Trap",
-    "Other",
     "Hard Bass",
+    "Reggeaton",
+    "Bass House",
     "Dubstep",
+    "Future House",
     "Drumstep",
+    "Chillstep",
+    "Tropical House",
+    "Lofi",
     "Dancehall",
     "Reggae",
     "Dance",
@@ -83,7 +88,6 @@ export class AddSongComponent implements OnInit, OnDestroy {
       var minutesToSeconds = minutes * 60;
 
       var dropTime = minutesToSeconds + seconds;
-      console.log(dropTime);
       return dropTime;
     }
   }
@@ -102,7 +106,6 @@ export class AddSongComponent implements OnInit, OnDestroy {
       var n = url.indexOf("=");
       var m = url.indexOf("&");
       var videoId = url.substring(n + 1, m);
-      console.log(videoId);
       return videoId;
     } else {
       var n = url.indexOf("=");

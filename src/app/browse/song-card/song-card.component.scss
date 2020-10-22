@@ -77,19 +77,20 @@
   color: $first-color;
 }
 .morePlease {
+  font-weight: lighter;
+  font-family: "Raleway", serif;
+  color: black;
   display: block;
   text-align: center;
-  background-color: black;
+  background-color: $second-color;
   margin: auto;
-  color: white;
   border: solid 4px $third-color;
   font-size: 1rem;
-  font-weight: lighter;
   padding: 13px;
-  border-radius: 6px;
   cursor: pointer;
   margin-left: 15px;
-  width: 150px;
+  width: 120px;
+  border-radius: 7px;
   height: 60px;
   margin-right: 15px;
 }
@@ -100,6 +101,7 @@
 
 .morePlease:hover {
   background-color: $first-color;
+  color: white;
 }
 
 .heartHolder {
