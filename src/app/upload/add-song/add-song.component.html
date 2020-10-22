@@ -39,10 +39,10 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-label [ngStyle]="{ marginBottom: '20px', marginTop: '24px' }" *ngIf="isLoading"
-        >Uploading..</mat-label
-      >
-      <mat-card-actions>
+      <div style="margin-top: 20px" *ngIf="isLoading">
+        <mat-label style="margin-bottom: 30px">Saving Drop..</mat-label>
+      </div>
+      <mat-card-actions style="margin-bottom: 10px">
         <button class="formButton" type="submit" [disabled]="f.invalid || isLoading">Upload</button>
       </mat-card-actions>
     </form>
