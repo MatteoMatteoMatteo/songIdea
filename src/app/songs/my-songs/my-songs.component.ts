@@ -94,7 +94,6 @@ export class MySongsComponent implements OnInit, OnDestroy {
       this.songService.heartSong(hearts, heartedBy, songId, this.uid, index, true);
       this.mySavedSongs.splice(index, 1);
       this.songService.mySavedSongs.splice(index, 1);
-      this.songService.clearAllTimers();
     } else
       this.uiHelperService.showSnackbar(
         "Login or Signup to save your favourite drops",

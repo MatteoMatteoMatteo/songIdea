@@ -11,8 +11,8 @@ import * as Tone from "tone";
 
 @Injectable()
 export class SongService {
-  howManySongsFetched: number = 9;
-  howManyUploadsFetched: number = 1;
+  howManySongsFetched: number = 10;
+  howManyUploadsFetched: number = 10;
   item = [
     this.db.collection("songs", (ref) =>
       ref.orderBy("name", "desc").limit(this.howManySongsFetched)
