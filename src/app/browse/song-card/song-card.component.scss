@@ -95,8 +95,23 @@
   margin-right: 15px;
 }
 
-.morePleasePhone {
-  display: none;
+.morePleaseNew {
+  font-weight: lighter;
+  font-family: "Raleway", serif;
+  color: black;
+  display: block;
+  text-align: center;
+  background-color: $second-color;
+  margin: auto;
+  border: solid 4px $third-color;
+  font-size: 1rem;
+  padding: 13px;
+  cursor: pointer;
+  margin-left: 15px;
+  width: fit-content;
+  border-radius: 7px;
+  height: 60px;
+  margin-right: 15px;
 }
 
 .morePlease:hover {
@@ -246,36 +261,5 @@
 
   100% {
     background-color: $heart-red;
-  }
-}
-
-@media only screen and (max-width: 500px) {
-  // .allSongs {
-  //   display: flex;
-  //   align-self: center;
-  //   flex-direction: column;
-  //   justify-content: space-between;
-  //   padding: 0px;
-  // }
-
-  // .songCard {
-  //   margin: auto;
-  //   margin-bottom: 20px;
-  // }
-
-  .morePleasePhone {
-    display: block;
-    text-align: center;
-    background-color: black;
-    margin: auto;
-    color: white;
-    border: solid 4px $third-color;
-    font-size: 1rem;
-    font-weight: lighter;
-    padding: 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 300ms;
-    margin-bottom: 50px;
   }
 }
