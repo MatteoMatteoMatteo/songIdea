@@ -121,7 +121,7 @@ export class MyUploadComponent implements OnInit, OnDestroy {
     this.reframed = false;
     this.myUploadedSongs.forEach((song) => {
       if (song.playerHolder == null) {
-        song.playerHolder = new window["YT"].Player(song.videoId, {
+        song.playerHolder = new window["YT"].Player(song.videoId + song.date, {
           videoId: song.videoId,
           width: 300,
           start: 100,

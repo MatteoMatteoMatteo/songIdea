@@ -132,7 +132,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
   startVideo() {
     this.reframed = false;
     this.mySavedSongs.forEach((song) => {
-      song.playerHolder = new window["YT"].Player(song.videoId, {
+      song.playerHolder = new window["YT"].Player(song.videoId + song.date, {
         videoId: song.videoId,
         width: 300,
         start: 100,

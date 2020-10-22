@@ -12,7 +12,7 @@ import * as Tone from "tone";
 @Injectable()
 export class SongService {
   howManySongsFetched: number = 10;
-  howManyUploadsFetched: number = 10;
+  howManyUploadsFetched: number = 5;
   item = [
     this.db.collection("songs", (ref) =>
       ref.orderBy("name", "desc").limit(this.howManySongsFetched)
@@ -133,14 +133,21 @@ export class SongService {
   stopAllVideo() {
     clearInterval(this.countdown);
     clearTimeout(this.newSongTimer);
-    if (this.allSongs) {
-      this.allSongs = [];
+
+    if (this.allSongs.length != 0) {
+      this.allSongs.forEach((song) => {
+        song.playerHolder.pauseVideo();
+      });
     }
-    if (this.mySavedSongs) {
-      this.mySavedSongs = [];
+    if (this.mySavedSongs.length != 0) {
+      this.mySavedSongs.forEach((song) => {
+        song.playerHolder.pauseVideo();
+      });
     }
-    if (this.myUploadedSongs) {
-      this.myUploadedSongs = [];
+    if (this.myUploadedSongs.length != 0) {
+      this.myUploadedSongs.forEach((song) => {
+        song.playerHolder.pauseVideo();
+      });
     }
   }
 
@@ -222,6 +229,10 @@ export class SongService {
 
   dropMyUploadedSong(id: number) {
     if (id >= 0 && id < this.myUploadedSongs.length) {
+      if (this.hideAudioPlayer) {
+        this.hideAudioPlayerListed.next(false);
+        this.hideAudioPlayer = false;
+      }
       clearInterval(this.countdown);
       clearTimeout(this.newSongTimer);
       this.whichSongIsDropping = id;
@@ -284,6 +295,8 @@ export class SongService {
       this.allSongs[id].playerHolder.setPlaybackRate(value);
     } else if (whichSongs === "mySavedSongs") {
       this.mySavedSongs[id].playerHolder.setPlaybackRate(value);
+    } else if (whichSongs === "myUploadedSongs") {
+      this.myUploadedSongs[id].playerHolder.setPlaybackRate(value);
     }
   }
   changeVolume(id: number, value: any, whichSongs: string) {
@@ -291,6 +304,8 @@ export class SongService {
       this.allSongs[id].playerHolder.setVolume(value);
     } else if (whichSongs === "mySavedSongs") {
       this.mySavedSongs[id].playerHolder.setVolume(value);
+    } else if (whichSongs === "myUploadedSongs") {
+      this.myUploadedSongs[id].playerHolder.setVolume(value);
     }
   }
   changeFx1(id: number, value: any) {
@@ -313,7 +328,7 @@ export class SongService {
       genre: songGenre,
       videoId: videoId,
       userId: uid,
-      hearts: 1,
+      hearts: 10,
       heartedBy: [uid],
       date: new Date(),
       url: url,

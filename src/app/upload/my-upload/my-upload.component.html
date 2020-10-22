@@ -16,7 +16,7 @@
     </div>
 
     <div
-      [id]="song.videoId"
+      [id]="song.videoId + song.date"
       style="
         pointer-events: none;
         margin-bottom: 20px;
@@ -97,5 +97,10 @@
 </div>
 
 <mat-spinner style="margin: auto" color="accent" *ngIf="isLoading" diameter="68"></mat-spinner>
+
+<app-audio-player
+  [audioArray]="myUploadedSongs"
+  [whichAudioArray]="whichAudioArray"
+></app-audio-player>
 
 <app-footer></app-footer>

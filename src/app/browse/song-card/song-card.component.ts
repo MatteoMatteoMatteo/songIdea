@@ -144,7 +144,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.reframed = false;
     this.allSongs.forEach((song) => {
       if (song.playerHolder == null) {
-        song.playerHolder = new window["YT"].Player(song.videoId, {
+        song.playerHolder = new window["YT"].Player(song.videoId + song.date, {
           videoId: song.videoId,
           width: 300,
           start: 100,

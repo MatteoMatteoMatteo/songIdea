@@ -28,6 +28,10 @@ export class AddSongComponent implements OnInit, OnDestroy {
     "Electro",
     "Electro House",
     "Chill",
+    "Psytrance",
+    "Progressive Trance",
+    "Trance",
+    "Goa",
     "Future Bass",
     "Drum & Bass",
     "Deep House",
@@ -81,14 +85,15 @@ export class AddSongComponent implements OnInit, OnDestroy {
     } else {
       var timeNoSpaces = time.replace(/\s/g, "");
 
-      var divider = timeNoSpaces.indexOf(":");
-      var minutes = parseInt(timeNoSpaces.substring(0, divider));
-      var seconds = parseInt(timeNoSpaces.substring(divider + 1));
+      var divider = timeNoSpaces.split(":");
+      // assuming string is in right format, i.e. mm:ss or hh:mm:ss
+      var seconds = parseInt(divider[divider.length - 1]);
+      seconds += parseInt(divider[divider.length - 2]) * 60;
+      if (divider.length > 2) {
+        seconds += parseInt(divider[divider.length - 3]) * 3600;
+      }
 
-      var minutesToSeconds = minutes * 60;
-
-      var dropTime = minutesToSeconds + seconds;
-      return dropTime;
+      return seconds;
     }
   }
 
