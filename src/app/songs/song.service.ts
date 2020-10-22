@@ -313,7 +313,7 @@ export class SongService {
       genre: songGenre,
       videoId: videoId,
       userId: uid,
-      hearts: 11,
+      hearts: 1,
       heartedBy: [uid],
       date: new Date(),
       url: url,
