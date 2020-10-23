@@ -20,8 +20,8 @@ export class AddSongComponent implements OnInit, OnDestroy {
   dropTime: number;
   url: string;
   file: any;
-  filePath: any;
   uid: string;
+  filePath: any;
   loadingSub: Subscription;
   genres: string[] = [
     "House",
@@ -70,9 +70,9 @@ export class AddSongComponent implements OnInit, OnDestroy {
       this.isLoading = state;
       if (state == false) this.switchWhenUploaded.emit();
     });
-    this.store.select(fromRoot.getUid).subscribe((uid) => {
-      this.uid = uid;
-    });
+
+    this.uid = localStorage.getItem("uid");
+
     this.genres.sort();
   }
 

@@ -77,7 +77,6 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     } else if (this.whichAudioArray === "mySavedSongs") {
       this.songService.dropMySavedSong(id);
     } else if (this.whichAudioArray === "myUploadedSongs") {
-      console.log(this.whichAudioArray);
       this.songService.dropMyUploadedSong(id);
     }
   }

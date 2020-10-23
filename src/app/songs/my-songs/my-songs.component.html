@@ -15,7 +15,7 @@
     </div>
 
     <div
-      [id]="song.videoId + song.date"
+      [id]="song.videoId + song.date + song.dropTime"
       style="
         pointer-events: none;
         margin-bottom: 20px;
@@ -24,9 +24,7 @@
         border: solid 5px #e6e6e6;
         border-top-left-radius: 0px;
       "
-    >
-      {{ song.videoId }}
-    </div>
+    ></div>
 
     <div
       style="

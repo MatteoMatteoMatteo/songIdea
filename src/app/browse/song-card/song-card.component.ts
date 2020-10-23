@@ -89,7 +89,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
         }, 3000);
       }
     });
-    this.songService.fetchAllSongs(this.uid);
+    this.songService.fetchAllSongs(this.uid, true);
   }
 
   dropSong(id: number) {
@@ -111,8 +111,8 @@ export class SongCardComponent implements OnInit, OnDestroy {
     return this.allComments.filter((comment) => comment.songId === songId);
   }
 
-  onLoadMoreDrops(hearts: number, name: string) {
-    this.songService.loadMoreDrops(hearts, name);
+  onLoadMoreDrops(hearts: number, name: string, iWantedToFetch: boolean) {
+    this.songService.loadMoreDrops(hearts, name, true);
   }
 
   onAddComment(form: NgForm, songId: string, uid: string) {
@@ -144,7 +144,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     this.reframed = false;
     this.allSongs.forEach((song) => {
       if (song.playerHolder == null) {
-        song.playerHolder = new window["YT"].Player(song.videoId + song.date, {
+        song.playerHolder = new window["YT"].Player(song.videoId + song.date + song.genre, {
           videoId: song.videoId,
           width: 300,
           start: 100,

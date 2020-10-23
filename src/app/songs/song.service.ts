@@ -66,10 +66,11 @@ export class SongService {
   whichSongIsDropping: number;
   newSongTimer: any;
   private moreAllSongs: Song[] = [];
-  private myUploadedSongs: Song[] = [];
+  public myUploadedSongs: Song[] = [];
   public mySavedSongs: Song[] = [];
   public allSongs: Song[] = [];
   wasItHearted: boolean;
+  iWantedToFetch: boolean;
   private songLoading: boolean[] = [];
   private dropState: boolean[] = [];
   myUploadedSongsListed = new Subject<Song[]>();
@@ -341,9 +342,7 @@ export class SongService {
       .collection("songs")
       .add(song)
       .then(() => {
-        setTimeout(() => {
-          this.uiHelperService.uploadSongListed.next(false);
-        }, 850);
+        this.uiHelperService.uploadSongListed.next(false);
       });
   }
 
@@ -355,6 +354,7 @@ export class SongService {
     i: number,
     mySavedSongsRemoval?: boolean
   ) {
+    this.iWantedToFetch = true;
     this.heartOperation = true;
     var heartObject: any;
     var newHeartsPlus = hearts + 1;
@@ -367,7 +367,11 @@ export class SongService {
     if (!heartedBy.includes(uid)) {
       heartedBy.push(uid);
       heartObject = { isHearted: true, heartedBy: heartedBy, hearts: newHeartsPlus, songIndex: i };
-      this.wasItHeartedListed.next(heartObject);
+      if (this.iWantedToFetch) {
+        this.wasItHeartedListed.next(heartObject);
+      }
+      this.iWantedToFetch = false;
+
       this.db
         .doc(`songs/${songId}`)
         .update({ hearts: newHeartsPlus, heartedBy: heartedBy })
@@ -385,7 +389,10 @@ export class SongService {
         hearts: newHeartsMinus,
         songIndex: i,
       };
-      this.wasItHeartedListed.next(heartObject);
+      if (this.iWantedToFetch) {
+        this.wasItHeartedListed.next(heartObject);
+      }
+      this.iWantedToFetch = false;
       this.db
         .doc(`songs/${songId}`)
         .update({ hearts: newHeartsMinus, heartedBy: heartedBy })
@@ -421,14 +428,31 @@ export class SongService {
     return this.mySavedSongs;
   }
 
-  deleteSong(songId: string, heartDocId: string) {
-    this.db.doc("songs/" + songId).delete();
-    this.db.doc("hearts/" + heartDocId).delete();
+  checkIfHeartedMyUploads(songs: Song[], uid: string) {
+    songs.forEach((el) => {
+      if (el.heartedBy.includes(uid)) {
+        el.isHearted = true;
+      } else {
+        el.isHearted = false;
+      }
+    });
+    this.myUploadedSongs = songs;
+    this.uiHelperService.loadingStateChanged.next(false);
+    return this.myUploadedSongs;
+  }
+
+  deleteSong(songId: string, heartDocId: string, uid: string) {
+    this.db
+      .doc("songs/" + songId)
+      .delete()
+      .then(() => {
+        this.fetchMyUploads(uid);
+      });
   }
 
   makeid(length) {
     var result = "";
-    var characters = "abcdefghijklmnopqrstuvwxyz";
+    var characters = "abcdefghijklmnopqrstuvwxyz123456789";
     var charactersLength = characters.length;
     for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -437,7 +461,8 @@ export class SongService {
   }
 
   //-----------------Browse
-  fetchAllSongs(uid: string) {
+  fetchAllSongs(uid: string, iWantedToFetch: boolean) {
+    this.iWantedToFetch = true;
     this.hideAudioPlayerListed.next(true);
     this.clearAllTimers();
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
@@ -469,18 +494,21 @@ export class SongService {
       .subscribe(
         (songs: Song[]) => {
           console.log(songs);
-          if (!this.heartOperation) {
+          if (!this.heartOperation && iWantedToFetch) {
             this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
-
-            this.endOfPage = false;
           }
+          iWantedToFetch = false;
+          this.endOfPage = false;
         },
-        (error) => {}
+        (error) => {
+          iWantedToFetch = false;
+        }
       );
   }
 
-  loadMoreDrops(hearts: number, name: string) {
+  loadMoreDrops(hearts: number, name: string, iWantedToFetch: boolean) {
     this.clearAllTimers();
+    this.iWantedToFetch = true;
     var item = this.item[Math.floor(Math.random() * this.item.length)];
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
     this.moreSongsSub = item
@@ -505,17 +533,17 @@ export class SongService {
         })
       )
       .subscribe((songs: Song[]) => {
-        if (!this.heartOperation && !this.endOfPage) {
-          setTimeout(() => {
-            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
-          }, 500);
+        if (!this.heartOperation && !this.endOfPage && iWantedToFetch) {
+          this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
         }
+        iWantedToFetch = false;
         this.endOfPage = false;
       });
   }
 
   //---------------My Saved Songs
   fetchMySavedSongs(uid: string) {
+    this.iWantedToFetch = true;
     this.uid = uid;
     this.hideAudioPlayerListed.next(true);
     this.clearAllTimers();
@@ -546,15 +574,16 @@ export class SongService {
         })
       )
       .subscribe((songs: Song[]) => {
-        if (!this.heartOperation) {
+        if (!this.heartOperation && this.iWantedToFetch) {
           this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
+          this.endOfPage = false;
+          this.iWantedToFetch = false;
         }
-        this.endOfPage = false;
       });
   }
 
   nextPage(hearts: number, name: string, uid: string) {
-    this.clearAllTimers();
+    this.iWantedToFetch = true;
     this.moreSongsSub = this.db
       .collection("songs", (ref) =>
         ref
@@ -575,6 +604,7 @@ export class SongService {
             );
           } else {
             this.uiHelperService.mySavedSongsLoadingStateChanged.next(true);
+            this.clearAllTimers();
           }
           return docArray.map((doc) => {
             return {
@@ -591,18 +621,19 @@ export class SongService {
         })
       )
       .subscribe((songs: Song[]) => {
-        if (!this.heartOperation && !this.endOfPage) {
+        if (!this.heartOperation && !this.endOfPage && this.iWantedToFetch) {
           this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
         } else if (!this.heartOperation && this.endOfPage) {
           this.uiHelperService.mySavedSongsLoadingStateChanged.next(false);
         } else {
         }
         this.endOfPage = false;
+        this.iWantedToFetch = false;
       });
   }
 
   prevPage(hearts: number, name: string, uid: string) {
-    this.clearAllTimers();
+    this.iWantedToFetch = true;
     this.moreSongsSub = this.db
       .collection("songs", (ref) =>
         ref
@@ -619,6 +650,7 @@ export class SongService {
             this.uiHelperService.showSnackbar("There are no previous songs yet!", "ok", 3000);
           } else {
             this.uiHelperService.mySavedSongsLoadingStateChanged.next(true);
+            this.clearAllTimers();
           }
           return docArray.map((doc) => {
             return {
@@ -635,18 +667,20 @@ export class SongService {
         })
       )
       .subscribe((songs: Song[]) => {
-        if (!this.heartOperation && !this.endOfPage) {
+        if (!this.heartOperation && !this.endOfPage && this.iWantedToFetch) {
           this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
         } else if (!this.heartOperation && this.endOfPage) {
           this.uiHelperService.mySavedSongsLoadingStateChanged.next(false);
         } else {
         }
+        this.iWantedToFetch = false;
         this.endOfPage = false;
       });
   }
 
   //----------------My Uploads
   fetchMyUploads(uid: string) {
+    this.iWantedToFetch = true;
     this.clearAllTimers();
     this.uiHelperService.loadingStateChanged.next(true);
     this.mySongsSub = this.db
@@ -674,14 +708,17 @@ export class SongService {
         })
       )
       .subscribe((songs: Song[]) => {
-        this.myUploadedSongs = songs;
-        this.myUploadedSongsListed.next([...this.myUploadedSongs]);
+        if (this.iWantedToFetch && !this.heartOperation) {
+          this.myUploadedSongs = songs;
+          this.myUploadedSongsListed.next([...this.myUploadedSongs]);
+        }
+        this.iWantedToFetch = false;
         this.uiHelperService.loadingStateChanged.next(false);
       });
   }
 
   myUploadsNext(uid: string, name: string, date: any) {
-    this.clearAllTimers();
+    this.iWantedToFetch = true;
     this.mySongsSub = this.db
       .collection("songs", (ref) =>
         ref
@@ -698,6 +735,7 @@ export class SongService {
             this.uiHelperService.showSnackbar("That's all your uploads!", "ok", 3000);
           } else {
             this.uiHelperService.loadingStateChanged.next(true);
+            this.clearAllTimers();
           }
           return docs.map((doc) => {
             return {
@@ -714,7 +752,7 @@ export class SongService {
         })
       )
       .subscribe((songs: Song[]) => {
-        if (!this.endOfPage) {
+        if (!this.endOfPage && !this.heartOperation && this.iWantedToFetch) {
           this.myUploadedSongs = songs;
           this.myUploadedSongsListed.next([...this.myUploadedSongs]);
           this.uiHelperService.loadingStateChanged.next(false);
@@ -723,12 +761,13 @@ export class SongService {
         } else {
           this.uiHelperService.loadingStateChanged.next(false);
         }
+        this.iWantedToFetch = false;
         this.endOfPage = false;
       });
   }
 
   myUploadsPrevious(uid: string, name: string, date: any) {
-    this.clearAllTimers();
+    this.iWantedToFetch = true;
     this.mySongsSub = this.db
       .collection("songs", (ref) =>
         ref
@@ -745,6 +784,7 @@ export class SongService {
             this.uiHelperService.showSnackbar("There are no previous songs yet!", "ok", 3000);
           } else {
             this.uiHelperService.loadingStateChanged.next(true);
+            this.clearAllTimers();
           }
           return docs.map((doc) => {
             return {
@@ -761,7 +801,7 @@ export class SongService {
         })
       )
       .subscribe((songs: Song[]) => {
-        if (!this.endOfPage) {
+        if (!this.endOfPage && !this.heartOperation && this.iWantedToFetch) {
           this.myUploadedSongs = songs;
           this.myUploadedSongsListed.next([...this.myUploadedSongs]);
           this.uiHelperService.loadingStateChanged.next(false);
@@ -771,6 +811,7 @@ export class SongService {
           this.uiHelperService.loadingStateChanged.next(false);
         }
         this.endOfPage = false;
+        this.iWantedToFetch = false;
       });
   }
 

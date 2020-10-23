@@ -70,10 +70,8 @@ export class MyUploadComponent implements OnInit, OnDestroy {
     this.dropStatesSub = this.songService.dropStateListed.subscribe((dropStates) => {
       this.dropStates = dropStates;
     });
-    this.store.select(fromRoot.getUid).subscribe((uid) => {
-      this.uid = uid;
-      this.songService.fetchMyUploads(uid);
-    });
+
+    this.songService.fetchMyUploads(this.uid);
   }
 
   dropSong(id: number) {
@@ -93,7 +91,7 @@ export class MyUploadComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.exit.emit();
-        this.songService.deleteSong(songId, heartDocId);
+        this.songService.deleteSong(songId, heartDocId, this.uid);
       }
     });
   }
