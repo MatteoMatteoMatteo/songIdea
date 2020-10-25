@@ -21,12 +21,12 @@ export class AppComponent implements OnInit, OnDestroy {
       this.audioPlaying = bool;
     });
 
-    document.addEventListener("visibilitychange", (event) => {
-      if (document.visibilityState == "visible") {
-      } else {
-        if (this.detectMobile()) this.songService.stopAllVideo();
-      }
-    });
+    // document.addEventListener("visibilitychange", (event) => {
+    //   if (document.visibilityState == "visible") {
+    //   } else {
+    //     if (this.detectMobile()) this.songService.stopAllVideo();
+    //   }
+    // });
   }
 
   detectMobile() {
