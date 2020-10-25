@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
   audioPlayingSub: Subscription;
   constructor(private authService: AuthService, private songService: SongService) {}
   ngOnInit() {
-    // this.authService.initAuthListener();
+    this.authService.initAuthListener();
     this.audioPlayingSub = this.songService.audioPlayingListed.subscribe((bool) => {
       this.audioPlaying = bool;
     });
