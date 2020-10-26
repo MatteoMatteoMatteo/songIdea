@@ -158,7 +158,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
             rel: 0,
             ecver: 2,
             fs: 0,
-            playsinline: 0,
+            playsinline: 1,
           },
           events: {
             onStateChange: this.onPlayerStateChange.bind(this),
