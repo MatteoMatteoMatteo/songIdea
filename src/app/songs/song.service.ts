@@ -7,7 +7,6 @@ import { Subject } from "rxjs";
 import { Song } from "./song.model";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { map } from "rxjs/operators";
-import * as Tone from "tone";
 
 @Injectable()
 export class SongService {
@@ -101,15 +100,6 @@ export class SongService {
 
   countdownNumber: number;
   countdown: any;
-  autoFilter = new Tone.AutoFilter({
-    frequency: 0,
-    baseFrequency: 30000,
-    octaves: 0,
-  });
-  reverb = new Tone.Reverb({
-    wet: 0,
-    decay: 5,
-  });
 
   constructor(private db: AngularFirestore, private uiHelperService: UiHelperService) {}
 
@@ -309,12 +299,8 @@ export class SongService {
       this.myUploadedSongs[id].playerHolder.setVolume(value);
     }
   }
-  changeFx1(id: number, value: any) {
-    this.autoFilter.baseFrequency = value;
-  }
-  changeFx2(id: number, value: any) {
-    this.reverb.wet.value = value;
-  }
+  changeFx1(id: number, value: any) {}
+  changeFx2(id: number, value: any) {}
 
   uploadSong(
     songName: string,
@@ -480,11 +466,7 @@ export class SongService {
             return {
               isLoading: true,
               songId: doc.payload.doc.id,
-              player: new Tone.Player({
-                url: "",
-                autostart: false,
-                fadeOut: 0.3,
-              }).chain(this.reverb, this.autoFilter, Tone.Destination),
+              player: null,
               playerHolder: null,
               ...(doc.payload.doc.data() as Song),
             };
@@ -522,11 +504,7 @@ export class SongService {
             return {
               songId: doc.payload.doc.id,
               playerHolder: null,
-              player: new Tone.Player({
-                url: "",
-                autostart: false,
-                fadeOut: 0.3,
-              }).chain(this.reverb, this.autoFilter, Tone.Destination),
+              player: null,
               ...(doc.payload.doc.data() as Song),
             };
           });
@@ -564,10 +542,7 @@ export class SongService {
           return docs.map((doc) => {
             return {
               songId: doc.payload.doc.id,
-              player: new Tone.Player({
-                url: "",
-                autostart: false,
-              }).connect(this.autoFilter),
+              player: null,
               ...(doc.payload.doc.data() as Song),
             };
           });
@@ -610,11 +585,7 @@ export class SongService {
             return {
               songId: doc.payload.doc.id,
               playerHolder: null,
-              player: new Tone.Player({
-                url: "",
-                autostart: false,
-                fadeOut: 0.3,
-              }).chain(this.reverb, this.autoFilter, Tone.Destination),
+              player: null,
               ...(doc.payload.doc.data() as Song),
             };
           });
@@ -656,11 +627,7 @@ export class SongService {
             return {
               songId: doc.payload.doc.id,
               playerHolder: null,
-              player: new Tone.Player({
-                url: "",
-                autostart: false,
-                fadeOut: 0.3,
-              }).chain(this.reverb, this.autoFilter, Tone.Destination),
+              player: null,
               ...(doc.payload.doc.data() as Song),
             };
           });
@@ -696,10 +663,7 @@ export class SongService {
           return docs.map((doc) => {
             return {
               songId: doc.payload.doc.id,
-              player: new Tone.Player({
-                url: "",
-                autostart: false,
-              }).connect(this.autoFilter),
+              player: null,
               playerHolder: null,
               isHearted: null,
               ...(doc.payload.doc.data() as Song),
@@ -740,10 +704,7 @@ export class SongService {
           return docs.map((doc) => {
             return {
               songId: doc.payload.doc.id,
-              player: new Tone.Player({
-                url: "",
-                autostart: false,
-              }).connect(this.autoFilter),
+              player: null,
               playerHolder: null,
               isHearted: null,
               ...(doc.payload.doc.data() as Song),
@@ -789,10 +750,7 @@ export class SongService {
           return docs.map((doc) => {
             return {
               songId: doc.payload.doc.id,
-              player: new Tone.Player({
-                url: "",
-                autostart: false,
-              }).connect(this.autoFilter),
+              player: null,
               playerHolder: null,
               isHearted: null,
               ...(doc.payload.doc.data() as Song),

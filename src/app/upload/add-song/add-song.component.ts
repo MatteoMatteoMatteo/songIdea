@@ -41,6 +41,7 @@ export class AddSongComponent implements OnInit, OnDestroy {
     "Hard Bass",
     "Reggeaton",
     "Bass House",
+    "Hip Hop",
     "Dubstep",
     "Future House",
     "Drumstep",
