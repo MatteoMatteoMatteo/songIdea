@@ -108,16 +108,17 @@ export class AddSongComponent implements OnInit, OnDestroy {
   }
 
   getVideoIdFromURL(url: string) {
-    if (url.includes("&")) {
-      var n = url.indexOf("=");
-      var m = url.indexOf("&");
-      var videoId = url.substring(n + 1, m);
-      return videoId;
-    } else {
-      var n = url.indexOf("=");
-      var videoId = url.substring(n + 1);
-      return videoId;
-    }
+    return url.match("(youtu\.be\/|v=)([^&]*)")[2];
+    // if (url.includes("&")) {
+    //   var n = url.indexOf("=");
+    //   var m = url.indexOf("&");
+    //   var videoId = url.substring(n + 1, m);
+    //   return videoId;
+    // } else if(url.includes("")) {
+    //   var n = url.indexOf("=");
+    //   var videoId = url.substring(n + 1);
+    //   return videoId;
+    // }
   }
 
   onUpload(form: NgForm) {

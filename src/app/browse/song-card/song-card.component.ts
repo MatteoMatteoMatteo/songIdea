@@ -123,6 +123,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
   }
 
   onLoadMoreDrops(hearts: number, name: string, iWantedToFetch: boolean) {
+    this.allSongs=[];
     this.songService.loadMoreDrops(hearts, name, true);
   }
 

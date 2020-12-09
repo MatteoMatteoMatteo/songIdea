@@ -177,6 +177,7 @@
 }
 
 .noHeart::after {
+  border-right: solid 3px $second-color;
   background-color: rgb(216, 216, 216);
   width: 20px;
   height: 20px;
@@ -188,6 +189,7 @@
 }
 
 .noHeart::before {
+  border-top: solid 3px $second-color;
   background-color: rgb(216, 216, 216);
   width: 20px;
   height: 20px;
