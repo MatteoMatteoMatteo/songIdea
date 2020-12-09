@@ -1,3 +1,4 @@
+import { SongCardComponent } from './../browse/song-card/song-card.component';
 import { UploadComponent } from "./../upload/upload.component";
 import { Heart } from "./heart.model";
 import { UiHelperService } from "./../uiHelper/uiHelper.service";
@@ -11,7 +12,7 @@ import { map } from "rxjs/operators";
 @Injectable()
 export class SongService {
   howManySongsFetched: number = 10;
-  howManyUploadsFetched: number = 5;
+  howManyUploadsFetched: number = 10;
   item = [
     this.db.collection("songs", (ref) =>
       ref.orderBy("name", "desc").limit(this.howManySongsFetched)
@@ -90,6 +91,8 @@ export class SongService {
   hideAudioPlayer = true;
   hideAudioPlayerListed = new Subject<boolean>();
 
+  public mySavedSongsLength:number;
+
   private firebaseSub: Subscription;
   private moreSongsSub: Subscription;
   private mySongsSub: Subscription;
@@ -100,6 +103,8 @@ export class SongService {
 
   countdownNumber: number;
   countdown: any;
+
+  lastSongDate:any;
 
   constructor(private db: AngularFirestore, private uiHelperService: UiHelperService) {}
 
@@ -125,17 +130,17 @@ export class SongService {
     clearInterval(this.countdown);
     clearTimeout(this.newSongTimer);
 
-    if (this.allSongs.length != 0) {
+    if (typeof this.allSongs !== 'undefined' && this.allSongs.length != 0) {
       this.allSongs.forEach((song) => {
         song.playerHolder.pauseVideo();
       });
     }
-    if (this.mySavedSongs.length != 0) {
+    if (typeof this.mySavedSongs !== 'undefined' && this.mySavedSongs.length != 0) {
       this.mySavedSongs.forEach((song) => {
         song.playerHolder.pauseVideo();
       });
     }
-    if (this.myUploadedSongs.length != 0) {
+    if (typeof this.myUploadedSongs !== 'undefined' && this.myUploadedSongs.length != 0) {
       this.myUploadedSongs.forEach((song) => {
         song.playerHolder.pauseVideo();
       });
@@ -340,6 +345,7 @@ export class SongService {
     i: number,
     mySavedSongsRemoval?: boolean
   ) {
+
     this.iWantedToFetch = true;
     this.heartOperation = true;
     var heartObject: any;
@@ -350,21 +356,40 @@ export class SongService {
     } else {
       newHeartsMinus = 0;
     }
-    if (!heartedBy.includes(uid)) {
-      heartedBy.push(uid);
-      heartObject = { isHearted: true, heartedBy: heartedBy, hearts: newHeartsPlus, songIndex: i };
-      if (this.iWantedToFetch) {
-        this.wasItHeartedListed.next(heartObject);
-      }
-      this.iWantedToFetch = false;
 
-      this.db
-        .doc(`songs/${songId}`)
-        .update({ hearts: newHeartsPlus, heartedBy: heartedBy })
-        .then(() => {
-          this.heartOperation = false;
-        });
+
+
+
+    if (!heartedBy.includes(uid)) {
+
+      if(this.mySavedSongsLength<10){     
+        this.mySavedSongsLength++;
+        heartedBy.push(uid);
+        heartObject = { isHearted: true, heartedBy: heartedBy, hearts: newHeartsPlus, songIndex: i };
+        if (this.iWantedToFetch) {
+          this.wasItHeartedListed.next(heartObject);
+        }
+        this.iWantedToFetch = false;
+  
+        this.db
+          .doc(`songs/${songId}`)
+          .update({ hearts: newHeartsPlus, heartedBy: heartedBy })
+          .then(() => {
+            this.heartOperation = false;
+          });
+      }else{
+        this.uiHelperService.showSnackbar(
+          "You already have 10 saved drops",
+          "ok",
+          3000
+        );
+        this.heartOperation = false;
+      }
+ 
+
     } else {
+      this.mySavedSongsLength--;
+
       const index = heartedBy.indexOf(uid);
       if (index > -1) {
         heartedBy.splice(index, 1);
@@ -388,14 +413,19 @@ export class SongService {
     }
   }
 
-  checkIfHearted(songs: Song[], uid: string) {
+  checkIfHearted(songs: Song[], uid: string, moreSongs:boolean) {
     songs.forEach((el) => {
       if (el.heartedBy.includes(uid)) {
         el.isHearted = true;
       } else {
         el.isHearted = false;
       }
+
+      if(moreSongs){
+        this.lastSongDate=el.date;
+      }
     });
+    this.allSongs=[];
     this.allSongs = songs;
     this.uiHelperService.allSongsLoadingStateChanged.next(false);
     return this.allSongs;
@@ -475,9 +505,8 @@ export class SongService {
       )
       .subscribe(
         (songs: Song[]) => {
-          console.log(songs);
           if (!this.heartOperation && iWantedToFetch) {
-            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
+            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid, false)]);
           }
           iWantedToFetch = false;
           this.endOfPage = false;
@@ -489,6 +518,7 @@ export class SongService {
   }
 
   fetchHottestSongs(uid: string, iWantedToFetch: boolean) {
+    this.allSongs=[];
     this.iWantedToFetch = true;
     this.hideAudioPlayerListed.next(true);
     this.clearAllTimers();
@@ -517,9 +547,8 @@ export class SongService {
       )
       .subscribe(
         (songs: Song[]) => {
-          console.log(songs);
           if (!this.heartOperation && iWantedToFetch) {
-            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
+            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid, false)]);
           }
           iWantedToFetch = false;
           this.endOfPage = false;
@@ -531,6 +560,7 @@ export class SongService {
   }
 
   fetchNewestSongs(uid: string, iWantedToFetch: boolean) {
+    this.allSongs=[];
     this.iWantedToFetch = true;
     this.hideAudioPlayerListed.next(true);
     this.clearAllTimers();
@@ -559,9 +589,8 @@ export class SongService {
       )
       .subscribe(
         (songs: Song[]) => {
-          console.log(songs);
           if (!this.heartOperation && iWantedToFetch) {
-            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
+            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid, true)]);
           }
           iWantedToFetch = false;
           this.endOfPage = false;
@@ -572,12 +601,15 @@ export class SongService {
       );
   }
 
-  loadMoreDrops(hearts: number, name: string, iWantedToFetch: boolean) {
+  loadMoreDrops(hearts: number, date: any, iWantedToFetch: boolean) {
+    this.allSongs=[];
     this.clearAllTimers();
     this.iWantedToFetch = true;
     var item = this.item[Math.floor(Math.random() * this.item.length)];
     this.uiHelperService.allSongsLoadingStateChanged.next(true);
-    this.moreSongsSub = item
+    this.moreSongsSub = this.db.collection("songs", (ref) =>
+    ref.orderBy("date", "desc").limit(this.howManySongsFetched).startAfter(this.lastSongDate)
+  )
       .snapshotChanges()
       .pipe(
         map((docArray) => {
@@ -596,7 +628,7 @@ export class SongService {
       )
       .subscribe((songs: Song[]) => {
         if (!this.heartOperation && !this.endOfPage && iWantedToFetch) {
-          this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
+          this.allSongsListed.next([...this.checkIfHearted(songs, this.uid, true)]);
         }
         iWantedToFetch = false;
         this.endOfPage = false;
@@ -605,6 +637,7 @@ export class SongService {
 
   //---------------My Saved Songs
   fetchMySavedSongs(uid: string) {
+    this.mySavedSongs=[];
     this.iWantedToFetch = true;
     this.uid = uid;
     this.hideAudioPlayerListed.next(true);
@@ -637,6 +670,7 @@ export class SongService {
           this.mySavedSongsListed.next([...this.checkIfHeartedMySavedSong(songs, this.uid)]);
           this.endOfPage = false;
           this.iWantedToFetch = false;
+          this.mySavedSongsLength=songs.length;
         }
       });
   }
@@ -657,13 +691,14 @@ export class SongService {
           if (docArray.length == 0) {
             this.endOfPage = true;
             this.uiHelperService.showSnackbar(
-              "You have listened to all your saved songs!",
+              "You have listened to all your saved drops!",
               "ok",
               3000
             );
           } else {
             this.uiHelperService.mySavedSongsLoadingStateChanged.next(true);
             this.clearAllTimers();
+            this.mySavedSongs=[];
           }
           return docArray.map((doc) => {
             return {
@@ -702,10 +737,11 @@ export class SongService {
         map((docArray) => {
           if (docArray.length == 0) {
             this.endOfPage = true;
-            this.uiHelperService.showSnackbar("There are no previous songs yet!", "ok", 3000);
+            this.uiHelperService.showSnackbar("There are no previous drops yet!", "ok", 3000);
           } else {
             this.uiHelperService.mySavedSongsLoadingStateChanged.next(true);
             this.clearAllTimers();
+            this.mySavedSongs=[];
           }
           return docArray.map((doc) => {
             return {
@@ -731,6 +767,7 @@ export class SongService {
 
   //----------------My Uploads
   fetchMyUploads(uid: string) {
+    this.myUploadedSongs=[];
     this.iWantedToFetch = true;
     this.clearAllTimers();
     this.uiHelperService.loadingStateChanged.next(true);
@@ -780,10 +817,11 @@ export class SongService {
         map((docs) => {
           if (docs.length == 0) {
             this.endOfPage = true;
-            this.uiHelperService.showSnackbar("That's all your uploads!", "ok", 3000);
+            this.uiHelperService.showSnackbar("That's all your Uploads!", "ok", 3000);
           } else {
             this.uiHelperService.loadingStateChanged.next(true);
             this.clearAllTimers();
+            this.myUploadedSongs=[];
           }
           return docs.map((doc) => {
             return {
@@ -826,10 +864,11 @@ export class SongService {
         map((docs) => {
           if (docs.length == 0) {
             this.endOfPage = true;
-            this.uiHelperService.showSnackbar("There are no previous songs yet!", "ok", 3000);
+            this.uiHelperService.showSnackbar("There are no previous Drops yet!", "ok", 3000);
           } else {
             this.uiHelperService.loadingStateChanged.next(true);
             this.clearAllTimers();
+            this.myUploadedSongs=[];
           }
           return docs.map((doc) => {
             return {

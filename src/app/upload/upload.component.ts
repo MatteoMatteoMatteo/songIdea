@@ -15,7 +15,7 @@ export class UploadComponent implements OnInit {
   constructor(private songService: SongService) {}
 
   public onSwitchTab() {
-    this.isActive = true;
+    this.isActive = !this.isActive;
   }
 
   handleSwitch(value: boolean) {

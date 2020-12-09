@@ -5,4 +5,4 @@
   </div>
 </div>
 <app-add-song *ngIf="!isActive" (switchWhenUploaded)="onSwitchTab()"></app-add-song>
-<app-my-upload *ngIf="isActive"></app-my-upload>
+<app-my-upload *ngIf="isActive" (switchOnClicked)="onSwitchTab()"></app-my-upload>

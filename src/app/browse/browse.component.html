@@ -1,5 +1,5 @@
 <div *ngIf="!songOn" class="elementHolder">
-  <div [ngClass]="isActive ? 'element' : 'elementActive'" (click)="handleSwitch(true)">Newest</div>
+  <div [ngClass]="isActive ? 'element' : 'elementActive'" (click)="handleSwitch(true)">New</div>
   <div [ngClass]="!isActive ? 'element' : 'elementActive'" (click)="handleSwitch(false)">
     Selected
   </div>

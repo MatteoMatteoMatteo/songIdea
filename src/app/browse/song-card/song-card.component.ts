@@ -28,10 +28,12 @@ export class SongCardComponent implements OnInit, OnDestroy {
   uid: string;
   whichSongIsDropping: number;
   lastSongName: string;
+  mySavedSongs: Song[] = [];
   allSongs: Song[] = [];
   allHearts: Song[] = [];
   allComments: Comment[] = [];
   buttonTitle = "DROP";
+  mySavedSongsSub:Subscription;
   songsLoadingSub: Subscription;
   dropStatesSub: Subscription;
   allCommentsSubscription: Subscription;
@@ -41,6 +43,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
   uidIsSet = false;
 
   justALittleDelay = true;
+  justALittleTimeout:any;
 
   whichAudioArray: string = "allSongs";
 
@@ -60,6 +63,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.allSongs=[];
     // this.store.select(fromRoot.getUid).subscribe((uid) => {
     //   this.uid = uid;
     // });
@@ -76,6 +80,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
       this.allSongs = songs;
       this.init();
     });
+
     this.wasItHeartedSub = this.songService.wasItHeartedListed.subscribe((heartObject) => {
       var thisSong = this.allSongs[heartObject.songIndex];
       thisSong.isHearted = heartObject.isHearted;
@@ -86,10 +91,10 @@ export class SongCardComponent implements OnInit, OnDestroy {
       this.isLoading = isLoading;
       if (this.isLoading) this.justALittleDelay = true;
       if (this.justALittleDelay && !isLoading) {
-        setTimeout(() => {
+       this.justALittleTimeout = setTimeout(() => {
           this.justALittleDelay = false;
           this.allSongs.forEach(song=>{
-            song.playerHolder.pauseVideo();
+            // song.playerHolder.pauseVideo();
           })
         }, 3000);
       }
@@ -100,6 +105,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     }else if(this.searchCriteria===2){
       this.songService.fetchHottestSongs(this.uid, true);
     }
+    this.songService.fetchMySavedSongs(this.uid);
 
   }
 
@@ -108,23 +114,24 @@ export class SongCardComponent implements OnInit, OnDestroy {
   }
 
   onHeartSong(hearts: number, heartedBy: string[], songId: string, index: number) {
-    if (this.authService.isAuth)
-      this.songService.heartSong(hearts, heartedBy, songId, this.uid, index);
-    else
+    if (!this.authService.isAuth){
       this.uiHelperService.showSnackbar(
-        "Login or Signup to save your favourite drops",
+        "Signup or Login to save a drop",
         "ok",
         10000
       );
+    }else{
+      this.songService.heartSong(hearts, heartedBy, songId, this.uid, index);
+    }
   }
 
   getMyComments(songId: string) {
     return this.allComments.filter((comment) => comment.songId === songId);
   }
 
-  onLoadMoreDrops(hearts: number, name: string, iWantedToFetch: boolean) {
+  onLoadMoreDrops(hearts: number, date: any, iWantedToFetch: boolean) {
     this.allSongs=[];
-    this.songService.loadMoreDrops(hearts, name, true);
+    this.songService.loadMoreDrops(hearts, date, true);
   }
 
   onAddComment(form: NgForm, songId: string, uid: string) {
@@ -138,6 +145,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
     if (this.wasItHeartedSub) this.wasItHeartedSub.unsubscribe();
     if (this.allSongsSubscription) this.allSongsSubscription.unsubscribe();
     if (this.loadingSub) this.loadingSub.unsubscribe();
+    clearTimeout(this.justALittleTimeout);
     this.songService.hideAudioPlayer = true;
   }
 

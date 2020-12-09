@@ -30,7 +30,6 @@ export class MySongsComponent implements OnInit, OnDestroy {
   allCommentsSubscription: Subscription;
   dropStatesSub: Subscription;
   wasItHeartedSub: Subscription;
-  mySongs: Song[] = [];
   mySavedSongs: Song[] = [];
   allComments: Comment[] = [];
   @Output() exit = new EventEmitter();
@@ -40,6 +39,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
   whichSongIsDropping: number;
 
   justALittleDelay = true;
+  justALittleTimeout:any;
   public YT: any;
   public video: any;
   public reframed: Boolean = false;
@@ -54,6 +54,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.mySavedSongs=[];
     this.uid = window.localStorage.getItem("uid");
     this.whichSongIsDropping = this.songService.whichSongIsDropping;
     if (this.whichSongIsDropping >= 0) {
@@ -68,14 +69,18 @@ export class MySongsComponent implements OnInit, OnDestroy {
         this.isLoading = isLoading;
         if (this.isLoading) this.justALittleDelay = true;
         if (this.justALittleDelay && !isLoading) {
-          setTimeout(() => {
+          this.justALittleTimeout=setTimeout(() => {
             this.justALittleDelay = false;
+            this.mySavedSongs.forEach(song=>{
+              // song.playerHolder.pauseVideo();
+            })
           }, 3000);
         }
       }
     );
     this.mySavedSongsSubscription = this.songService.mySavedSongsListed.subscribe((songs) => {
       this.mySavedSongs = songs;
+      console.log(this.mySavedSongs);
       this.init();
     });
 
@@ -173,6 +178,7 @@ export class MySongsComponent implements OnInit, OnDestroy {
     if (this.allCommentsSubscription) this.allCommentsSubscription.unsubscribe();
     if (this.wasItHeartedSub) this.wasItHeartedSub.unsubscribe();
     if (this.dropStatesSub) this.dropStatesSub.unsubscribe();
+    clearTimeout(this.justALittleTimeout);
     this.songService.hideAudioPlayer = true;
   }
 }

@@ -30,9 +30,9 @@
           <mat-hint align="end">{{ pwInput.value?.length }} / 6</mat-hint>
           <mat-error>6 characters please!</mat-error>
         </mat-form-field>
-        <mat-checkbox color="accent" required ngModel name="agree" class="terms"
+        <!-- <mat-checkbox color="accent" required ngModel name="agree" class="terms"
           >Give me some drops</mat-checkbox
-        >
+        > -->
         <button
           *ngIf="!(isLoading$ | async)"
           [disabled]="f.invalid"

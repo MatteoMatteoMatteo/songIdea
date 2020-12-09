@@ -60,7 +60,7 @@
   </mat-card>
 </div>
 
-<div
+<!-- <div
   *ngIf="!isLoading && myUploadedSongs.length != 0"
   style="display: flex; justify-content: center; margin-bottom: 230px; margin-top: 20px"
 >
@@ -78,9 +78,9 @@
   >
     Next Page
   </button>
-</div>
+</div> -->
 
-<div class="section" *ngIf="!isLoading && myUploadedSongs.length === 0">
+<div class="section" *ngIf="!isLoading && myUploadedSongs.length === 0" (click)="switchOnClick()">
   <h1 class="title">UPLOAD YOUR FIRST DROP</h1>
   <div class="border"></div>
 

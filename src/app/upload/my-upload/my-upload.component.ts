@@ -41,6 +41,8 @@ export class MyUploadComponent implements OnInit, OnDestroy {
   private player: any;
   public reframed: Boolean = false;
 
+  @Output() switchOnClicked: EventEmitter<any> = new EventEmitter();
+
   constructor(
     private commentService: CommentService,
     private dialog: MatDialog,
@@ -72,6 +74,10 @@ export class MyUploadComponent implements OnInit, OnDestroy {
     });
 
     this.songService.fetchMyUploads(this.uid);
+  }
+
+  switchOnClick(){
+    this.switchOnClicked.emit();
   }
 
   dropSong(id: number) {
