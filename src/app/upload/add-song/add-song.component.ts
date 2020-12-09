@@ -75,6 +75,8 @@ export class AddSongComponent implements OnInit, OnDestroy {
     this.uid = localStorage.getItem("uid");
 
     this.genres.sort();
+
+    this.songService.fetchMyUploads(this.uid);
   }
 
   getTime(time: any) {

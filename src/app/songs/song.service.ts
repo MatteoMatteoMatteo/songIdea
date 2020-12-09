@@ -92,6 +92,7 @@ export class SongService {
   hideAudioPlayerListed = new Subject<boolean>();
 
   public mySavedSongsLength:number;
+  public myUploadedSongsLength:number;
 
   private firebaseSub: Subscription;
   private moreSongsSub: Subscription;
@@ -315,17 +316,29 @@ export class SongService {
     url: string,
     dropTime: number
   ) {
-    this.songToDatabase({
-      name: songName,
-      genre: songGenre,
-      videoId: videoId,
-      userId: uid,
-      hearts: 10,
-      heartedBy: [uid],
-      date: new Date(),
-      url: url,
-      dropTime,
-    });
+
+    if(this.myUploadedSongsLength<10){
+      this.songToDatabase({
+        name: songName,
+        genre: songGenre,
+        videoId: videoId,
+        userId: uid,
+        hearts: 10,
+        heartedBy: [],
+        date: new Date(),
+        url: url,
+        dropTime,
+      });
+    }else{
+      this.uiHelperService.showSnackbar(
+        "You can only have 10 uploads at a time!",
+        "ok",
+        15000
+      );
+      this.uiHelperService.uploadSongListed.next(false);
+    }
+
+
   }
 
   songToDatabase(song: Song) {
@@ -379,9 +392,9 @@ export class SongService {
           });
       }else{
         this.uiHelperService.showSnackbar(
-          "You already have 10 saved drops",
+          "You can only save 10 drops at a time!",
           "ok",
-          3000
+          6000
         );
         this.heartOperation = false;
       }
@@ -799,6 +812,7 @@ export class SongService {
         }
         this.iWantedToFetch = false;
         this.uiHelperService.loadingStateChanged.next(false);
+        this.myUploadedSongsLength=songs.length;
       });
   }
 

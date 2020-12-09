@@ -94,7 +94,9 @@ export class SongCardComponent implements OnInit, OnDestroy {
        this.justALittleTimeout = setTimeout(() => {
           this.justALittleDelay = false;
           this.allSongs.forEach(song=>{
-            // song.playerHolder.pauseVideo();
+            if(song.playerHolder){
+              song.playerHolder.pauseVideo();
+            }
           })
         }, 3000);
       }
@@ -116,7 +118,7 @@ export class SongCardComponent implements OnInit, OnDestroy {
   onHeartSong(hearts: number, heartedBy: string[], songId: string, index: number) {
     if (!this.authService.isAuth){
       this.uiHelperService.showSnackbar(
-        "Signup or Login to save a drop",
+        "Signup or Login to save a drop!",
         "ok",
         10000
       );

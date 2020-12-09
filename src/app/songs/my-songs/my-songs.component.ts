@@ -72,7 +72,9 @@ export class MySongsComponent implements OnInit, OnDestroy {
           this.justALittleTimeout=setTimeout(() => {
             this.justALittleDelay = false;
             this.mySavedSongs.forEach(song=>{
-              // song.playerHolder.pauseVideo();
+              if(song.playerHolder){
+                song.playerHolder.pauseVideo();
+              }
             })
           }, 3000);
         }
