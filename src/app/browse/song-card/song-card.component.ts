@@ -6,7 +6,7 @@ import { Subscription } from "rxjs";
 import { CommentService } from "./../../comments/comment.service";
 import { NgForm } from "@angular/forms";
 import { Song } from "./../../songs/song.model";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { Comment } from "../../comments/comment.model";
 import { Store } from "@ngrx/store";
 import * as fromRoot from "../../app.reducer";
@@ -49,6 +49,8 @@ export class SongCardComponent implements OnInit, OnDestroy {
   private player: any;
   public reframed: Boolean = false;
 
+  @Input() searchCriteria:number;
+
   constructor(
     private commentService: CommentService,
     private songService: SongService,
@@ -86,10 +88,19 @@ export class SongCardComponent implements OnInit, OnDestroy {
       if (this.justALittleDelay && !isLoading) {
         setTimeout(() => {
           this.justALittleDelay = false;
+          this.allSongs.forEach(song=>{
+            song.playerHolder.pauseVideo();
+          })
         }, 3000);
       }
     });
-    this.songService.fetchAllSongs(this.uid, true);
+
+    if(this.searchCriteria===1){
+      this.songService.fetchNewestSongs(this.uid, true);
+    }else if(this.searchCriteria===2){
+      this.songService.fetchHottestSongs(this.uid, true);
+    }
+
   }
 
   dropSong(id: number) {

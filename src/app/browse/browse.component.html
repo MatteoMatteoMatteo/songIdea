@@ -1,5 +1,10 @@
-<mat-tab-group color="accent" mat-align-tabs="center" animationDuration="660ms">
-  <mat-tab label="Popular">
-    <app-song-card></app-song-card>
-  </mat-tab>
-</mat-tab-group>
+<div *ngIf="!songOn" class="elementHolder">
+  <div [ngClass]="isActive ? 'element' : 'elementActive'" (click)="handleSwitch(true)">Newest</div>
+  <div [ngClass]="!isActive ? 'element' : 'elementActive'" (click)="handleSwitch(false)">
+    Selected
+  </div>
+</div>
+
+
+<app-song-card [searchCriteria]="searchCriteria1" *ngIf="!isActive"></app-song-card>
+<app-song-card [searchCriteria]="searchCriteria2" *ngIf="isActive"></app-song-card>

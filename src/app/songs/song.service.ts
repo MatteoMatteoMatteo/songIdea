@@ -488,6 +488,90 @@ export class SongService {
       );
   }
 
+  fetchHottestSongs(uid: string, iWantedToFetch: boolean) {
+    this.iWantedToFetch = true;
+    this.hideAudioPlayerListed.next(true);
+    this.clearAllTimers();
+    this.uiHelperService.allSongsLoadingStateChanged.next(true);
+    this.uid = uid;
+    this.destroyAudioPlayer.next(false);
+    this.firebaseSub = this.db.collection("songs", (ref) =>
+    ref.orderBy("hearts", "desc").where("userId", "==", "BytqnJepvLeaDNr7pN1AelXVnQY2").limit(this.howManySongsFetched)
+  )
+      .snapshotChanges()
+      .pipe(
+        map((docArray) => {
+          if (docArray.length == 0) {
+            this.endOfPage = true;
+          }
+          return docArray.map((doc) => {
+            return {
+              isLoading: true,
+              songId: doc.payload.doc.id,
+              player: null,
+              playerHolder: null,
+              ...(doc.payload.doc.data() as Song),
+            };
+          });
+        })
+      )
+      .subscribe(
+        (songs: Song[]) => {
+          console.log(songs);
+          if (!this.heartOperation && iWantedToFetch) {
+            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
+          }
+          iWantedToFetch = false;
+          this.endOfPage = false;
+        },
+        (error) => {
+          iWantedToFetch = false;
+        }
+      );
+  }
+
+  fetchNewestSongs(uid: string, iWantedToFetch: boolean) {
+    this.iWantedToFetch = true;
+    this.hideAudioPlayerListed.next(true);
+    this.clearAllTimers();
+    this.uiHelperService.allSongsLoadingStateChanged.next(true);
+    this.uid = uid;
+    this.destroyAudioPlayer.next(false);
+    this.firebaseSub = this.db.collection("songs", (ref) =>
+    ref.orderBy("date", "desc").limit(this.howManySongsFetched)
+  )
+      .snapshotChanges()
+      .pipe(
+        map((docArray) => {
+          if (docArray.length == 0) {
+            this.endOfPage = true;
+          }
+          return docArray.map((doc) => {
+            return {
+              isLoading: true,
+              songId: doc.payload.doc.id,
+              player: null,
+              playerHolder: null,
+              ...(doc.payload.doc.data() as Song),
+            };
+          });
+        })
+      )
+      .subscribe(
+        (songs: Song[]) => {
+          console.log(songs);
+          if (!this.heartOperation && iWantedToFetch) {
+            this.allSongsListed.next([...this.checkIfHearted(songs, this.uid)]);
+          }
+          iWantedToFetch = false;
+          this.endOfPage = false;
+        },
+        (error) => {
+          iWantedToFetch = false;
+        }
+      );
+  }
+
   loadMoreDrops(hearts: number, name: string, iWantedToFetch: boolean) {
     this.clearAllTimers();
     this.iWantedToFetch = true;
