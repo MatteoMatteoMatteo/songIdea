@@ -496,7 +496,7 @@ export class SongService {
     this.uid = uid;
     this.destroyAudioPlayer.next(false);
     this.firebaseSub = this.db.collection("songs", (ref) =>
-    ref.orderBy("hearts", "desc").where("userId", "==", "BytqnJepvLeaDNr7pN1AelXVnQY2").limit(this.howManySongsFetched)
+    ref.where("selected", "==", true).limit(this.howManySongsFetched)
   )
       .snapshotChanges()
       .pipe(
