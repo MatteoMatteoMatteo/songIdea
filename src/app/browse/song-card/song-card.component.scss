@@ -126,6 +126,7 @@
 
 .heartHolder {
   width: 80px;
+  border: solid 3px transparent;
 }
 
 .heart {
@@ -142,7 +143,6 @@
 }
 
 .heart::after {
-  border-right: solid 3px $third-color;
   background-color: $heart-red;
   width: 20px;
   height: 20px;
@@ -154,7 +154,6 @@
 }
 
 .heart::before {
-  border-top: solid 3px $third-color;
   background-color: $heart-red;
   width: 20px;
   height: 20px;
@@ -177,7 +176,6 @@
 }
 
 .noHeart::after {
-  border-right: solid 3px $second-color;
   background-color: rgb(216, 216, 216);
   width: 20px;
   height: 20px;
@@ -189,7 +187,6 @@
 }
 
 .noHeart::before {
-  border-top: solid 3px $second-color;
   background-color: rgb(216, 216, 216);
   width: 20px;
   height: 20px;

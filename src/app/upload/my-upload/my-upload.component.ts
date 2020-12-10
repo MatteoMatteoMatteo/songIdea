@@ -58,6 +58,11 @@ export class MyUploadComponent implements OnInit, OnDestroy {
       if (this.justALittleDelay && !isLoading) {
         setTimeout(() => {
           this.justALittleDelay = false;
+          this.myUploadedSongs.forEach(song=>{
+            if(song.playerHolder){
+              song.playerHolder.pauseVideo();
+            }
+          })
         }, 3000);
       }
     });

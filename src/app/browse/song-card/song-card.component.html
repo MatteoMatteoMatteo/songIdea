@@ -50,10 +50,10 @@
         <div
           [ngClass]="song.isHearted ? 'heart' : 'noHeart'"
         ></div>
-        <p *ngIf="song.isHearted == false" style="margin-top: 10px; cursor: pointer">Save Drop</p>
+        <p *ngIf="song.isHearted == false" style="margin-top: 10px; margin-left: 5px; cursor: pointer">Save Drop</p>
         <p
           *ngIf="song.isHearted == true"
-          style="margin-top: 10px; cursor: default; letter-spacing: 1.3px"
+          style="margin-top: 10px; margin-left: 5px; cursor: default; letter-spacing: 1.3px"
         >
           Saved
         </p>
