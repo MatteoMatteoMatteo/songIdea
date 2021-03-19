@@ -1,7 +1,7 @@
-@import "utilities/variables";
+@import 'utilities/variables';
 
 * {
-  font-family: "Quicksand", sans-serif;
+  font-family: 'Quicksand', sans-serif;
   box-sizing: border-box;
 }
 
@@ -17,15 +17,14 @@ code {
   padding: 0;
   height: 100%;
   font-size: 1rem;
-  font-family: "Quicksand", sans-serif !important;
+  font-family: 'Quicksand', sans-serif !important;
   color: white !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  overflow: hidden;
 }
 body {
-  font-family: "Quicksand", sans-serif !important;
+  font-family: 'Quicksand', sans-serif !important;
 }
 
 .formButton {
@@ -39,7 +38,7 @@ body {
   transition: 200ms;
   border-radius: 5px;
   cursor: pointer;
-  font-family: "Raleway", serif;
+  font-family: 'Raleway', serif;
 }
 
 .formButton:hover {
@@ -53,7 +52,7 @@ body {
   transition: 200ms;
   border-radius: 5px;
   cursor: pointer;
-  font-family: "Raleway", serif;
+  font-family: 'Raleway', serif;
 }
 
 .deleteButton {
@@ -67,7 +66,7 @@ body {
   transition: 200ms;
   border-radius: 5px;
   cursor: pointer;
-  font-family: "Raleway", serif;
+  font-family: 'Raleway', serif;
 }
 
 .deleteButton:hover {
@@ -81,7 +80,7 @@ body {
   transition: 200ms;
   border-radius: 5px;
   cursor: pointer;
-  font-family: "Raleway", serif;
+  font-family: 'Raleway', serif;
 }
 
 p {
@@ -140,7 +139,7 @@ div.mat-ripple.mat-tab-header-pagination.mat-tab-header-pagination-before.mat-el
   opacity: 1 !important;
   font-weight: bolder;
   letter-spacing: 1px;
-  font-family: "Raleway", serif;
+  font-family: 'Raleway', serif;
 }
 
 .mat-tab-label {
@@ -215,7 +214,7 @@ button:focus {
 }
 
 span.mat-button-raised {
-  font-family: "Raleway", serif;
+  font-family: 'Raleway', serif;
 }
 
 span.mat-button-wrapper {
@@ -229,13 +228,14 @@ span.mat-button-wrapper {
 }
 
 .all {
-  background-image: url("../src/assets/image/bed.jpeg") !important;
+  background-image: url('../src/assets/image/bed.jpeg') !important;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
   height: calc(100vh - 64px);
   width: 100%;
+  border-bottom: 5px white solid;
 }
 
 .mat-drawer-inner-container {
