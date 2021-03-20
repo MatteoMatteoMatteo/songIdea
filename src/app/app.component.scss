@@ -11,9 +11,19 @@ mat-sidenav {
 
 .wrapper {
   width: 100%;
-  height: 100vh;
-  position: absolute;
+  min-height: 100vh;
+  height: 400%;
   z-index: -200;
+  background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
+    linear-gradient(-45deg, transparent 20%, white 20%, transparent 0),
+    radial-gradient(white 2px, transparent 0),
+    -webkit-linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
+    -webkit-linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
+    -webkit-linear-gradient(-45deg, transparent 20%, white 20%, transparent 0),
+    -webkit-radial-gradient(white 2px, transparent 0);
+  background-size: 30px 30px, 30px 30px;
+  background-repeat: repeat;
 }
 
 .waveMe {
@@ -21,8 +31,8 @@ mat-sidenav {
   z-index: 1;
   top: 0;
   left: 0;
-  width: 200%;
-  height: 400%;
+  width: 100%;
+  height: 100%;
   content: '';
   background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
     linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
@@ -41,8 +51,8 @@ mat-sidenav {
   z-index: 1;
   top: 0;
   left: 0;
-  width: 200%;
-  height: 400%;
+  width: 100%;
+  height: 100%;
   content: '';
   background-image: linear-gradient(45deg, transparent 20%, white 25%, transparent 25%),
     linear-gradient(-45deg, transparent 20%, white 25%, transparent 25%),
